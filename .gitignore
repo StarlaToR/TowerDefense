@@ -3,3 +3,4 @@ src/**/*.d
 tower
 tower.exe
 build.tar.gz
+.vscode/settings.json
