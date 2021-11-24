@@ -44,7 +44,22 @@ void renderStartAnim(DataHolder* in)
 
 void renderMainMenu(DataHolder* in)
 {
-    DrawText("Menu", 100,100,30,Fade(BLACK,getFade(in->framecounter)));
+    float width = in->screenWidth;
+    float heigth = in->screenHeight;
+    float buttonDiviser[4] = {3, 2, 1.5 ,1.2};
+    DrawTexturePro(in->background,Rectangle{0,0,600,600},Rectangle{0,0,width,heigth},Vector2{0,0},0,WHITE);
+    DrawTexturePro(in->title,Rectangle{0,0,450,400},Rectangle{width/4,0,1000,400},Vector2{150,150},0,WHITE);
+    DrawTexturePro(in->logoIsart,Rectangle{0,0,250,250},Rectangle{0,800,100,100},Vector2{0,0},0,WHITE);
+    for (int i = 0; i < 4; i++)
+    {
+        DrawTexturePro(in->button,Rectangle{0,0,500,500},Rectangle{width/2,heigth/buttonDiviser[i], 300, 300},Vector2{150,150},0,WHITE);
+    }
+
+    DrawText("Play", width/2.16,heigth/3.4,50,Fade(BLACK,getFade(in->framecounter)));
+    DrawText("Load", width/2.16,heigth/2.15,50,Fade(BLACK,getFade(in->framecounter)));
+    DrawText("Option", width/2.22,heigth/1.6,50,Fade(BLACK,getFade(in->framecounter)));
+    DrawText("Credit", width/2.22,heigth/1.26,50,Fade(BLACK,getFade(in->framecounter)));
+    DrawText("Tower Defense", width/3.3,heigth/20,80,Fade(BLACK,getFade(in->framecounter)));
 }
 
 void renderEditor(DataHolder* in)

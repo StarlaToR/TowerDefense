@@ -12,6 +12,10 @@ int main(void)
     SetExitKey(KEY_NULL);
     holder.logo = LoadTexture("assets/logo_group.png");
     holder.tileTexture = LoadTexture("assets/towerDefense_tilesheet.png");
+    holder.logoIsart= LoadTexture("assets/logo.png");
+    holder.background = LoadTexture("assets/Marie-Antoine.png");
+    holder.title = LoadTexture("assets/title.png");
+    holder.button = LoadTexture("assets/button.png");
     holder.map = TileMap();
     holder.tiles.registerTiles();
 
