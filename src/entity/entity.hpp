@@ -6,6 +6,8 @@ class Entity
 protected:
     Vec2D position;
     float rotation;
+    int health;
+    int maxHealth;
 
 public:
     Entity()
@@ -16,6 +18,16 @@ public:
     ~Entity()
     {
 
+    }
+
+    virtual int getAttacked(int damage)
+    {
+        health -= damage;
+        if(health <= 0)
+        {
+            
+        }
+        
     }
 
     virtual void update();
