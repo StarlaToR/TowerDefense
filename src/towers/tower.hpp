@@ -4,8 +4,7 @@
 class Tower: public Entity
 {
 protected:
-    int damage;
-    int attackSpeed;
+    
 public:
     Tower()
     {
@@ -16,7 +15,4 @@ public:
     {
 
     }
-
-    virtual void attack();
-
 };

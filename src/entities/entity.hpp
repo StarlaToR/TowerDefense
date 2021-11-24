@@ -1,11 +1,9 @@
 #pragma once
-#include "../util/mathHelper.hpp"
+#include "../object/object.hpp"
 
-class Entity
+class Entity : public Object
 {
 protected:
-    Vec2D position;
-    float rotation;
     int health;
     int maxHealth;
     int damage;
@@ -25,14 +23,4 @@ public:
     virtual void attack();
     virtual void update();
     virtual void getTexture();
-
-    Vec2D getPosition()
-    {
-        return this->position;
-    }
-
-    float getRotation()
-    {
-        return this->rotation;
-    }
 };
