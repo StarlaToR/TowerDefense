@@ -21,16 +21,8 @@ public:
 
     }
 
-    virtual int getAttacked(int damage)
-    {
-        health -= damage;
-        if(health <= 0)
-        {
-            
-        }
-        
-    }
-
+    virtual int getAttacked(int damage);
+    virtual void attack();
     virtual void update();
     virtual void getTexture();
 
@@ -43,6 +35,4 @@ public:
     {
         return this->rotation;
     }
-
-    virtual void attack();
 };
