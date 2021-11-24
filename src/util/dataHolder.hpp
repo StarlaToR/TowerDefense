@@ -2,6 +2,7 @@
 
 #include <raylib.h>
 #include <cstddef>
+#include "../tile/tileMap.hpp"
 
 class DataHolder
 {
@@ -11,6 +12,7 @@ public:
     int gameState = 0;
     size_t framecounter = 0;
     Texture2D logo;
+    TileMap map;
 
     DataHolder() {}
     ~DataHolder() {}

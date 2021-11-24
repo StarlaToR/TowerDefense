@@ -1,0 +1,29 @@
+#pragma once
+
+#include "../util/direction.hpp"
+#include <raylib.h>
+
+enum Tiles : char
+{
+    ROAD_STRAIGHT_EASTWEST = 0,
+    ROAD_STRAIGHT_NORTHSOUTH,
+    ROAD_TURN_NORTHEAST,
+    ROAD_TURN_EASTSOUTH,
+    ROAD_TURN_SOUTHWEST,
+    ROAD_TURN_WESTNORTH,
+    ROAD_THREEWAY_NORTH,
+    ROAD_THREEWAY_EAST,
+    ROAD_THREEWAY_SOUTH,
+    ROAD_THREEWAY_WEST,
+    ROAD_FOURWAY,
+    ROAD_FOURWAY_TURN_RIGHT,
+    ROAD_FOURWAY_TURN_LEFT,
+    ROAD_THREEWAY_FORCE_NORTH,
+    ROAD_THREEWAY_FORCE_EAST,
+    ROAD_THREEWAY_FORCE_SOUTH,
+    ROAD_THREEWAY_FORCE_WEST,
+    GRASS,
+    STONE,
+};
+
+Direction getNextDirection(char tilePos, Direction dir);

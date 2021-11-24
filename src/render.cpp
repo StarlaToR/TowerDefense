@@ -23,7 +23,7 @@ void renderStartAnim(DataHolder* in)
 {
     float width = in->screenWidth;
     float heigth = in->screenHeight;
-    int frames = in->framecounter;
+    size_t frames = in->framecounter;
     if (frames < 180)
     {
         DrawTexturePro(in->logo,Rectangle{0,0,300,300},Rectangle{width/2,heigth/2,frames*1.66666f,frames*1.6666f},Vector2{150,150},frames*2.0f,getRGB(frames));
@@ -39,5 +39,5 @@ void renderStartAnim(DataHolder* in)
 }
 
 void renderMainMenu(DataHolder* in) {
-    DrawText("Menu", 100,100,30,BLACK);
+    DrawText("Menu", 100,100,30,Fade(BLACK,getFade(in->framecounter)));
 }

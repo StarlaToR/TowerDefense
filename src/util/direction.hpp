@@ -10,14 +10,14 @@
 class Direction
 {
     public:
-        int dir;
+        char dir;
 
         Direction();
-        Direction(int value);
+        Direction(char value);
         ~Direction();
 
         Vec2D getFowardTile(Vec2D pos);
-        int getOpposite();
-        int getRight();
-        int getLeft();
+        Direction getOpposite();
+        Direction getRight();
+        Direction getLeft();
 };

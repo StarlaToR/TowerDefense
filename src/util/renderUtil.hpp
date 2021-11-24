@@ -1,5 +1,7 @@
 #pragma once
 
 #include <raylib.h>
+#include <cstddef>
 
-Color getRGB(int frame);
+Color getRGB(size_t frame);
+float getFade(size_t frame);
