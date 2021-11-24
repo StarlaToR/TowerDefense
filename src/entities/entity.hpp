@@ -20,7 +20,7 @@ public:
     }
 
     
-    virtual void attack(int damageDealt);
+    virtual void getDamage(int damageDealt);
     virtual void update();
     virtual void getTexture();
 };

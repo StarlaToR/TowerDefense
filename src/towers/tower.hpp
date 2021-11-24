@@ -6,6 +6,7 @@ class Tower: public Entity
 protected:
     int range;
     int cost;
+    int attackCooldown;
 public:
     Tower()
     {
@@ -15,5 +16,10 @@ public:
     ~Tower()
     {
 
+    }
+
+    void getDamage(int damageDealt)
+    {
+        health -= damageDealt;
     }
 };

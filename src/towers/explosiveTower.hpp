@@ -1,17 +1,17 @@
 #include "tower.hpp"
 
-class ClassicTower : public Tower
+class ExplosiveTower : public Tower
 {
 public:
-    ClassicTower()
+    ExplosiveTower()
     {
-        damage = 5;
+        damage = 10;
         range = 50;
         health = 100;
         maxHealth = 100;
-        attackSpeed = 25;
-        attackCooldown = 25;
-        cost = 10;
+        attackSpeed = 50;
+        attackCooldown = 50;
+        cost = 20;
     }
 
     void update();
