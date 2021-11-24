@@ -9,18 +9,8 @@ protected:
     int damage;
     int attackSpeed;
 public:
-    Entity()
-    {
-
-    }
-
-    ~Entity()
-    {
-
-    }
-
     
-    virtual void getDamage(int damageDealt);
-    virtual void update();
-    virtual void getTexture();
+    virtual void getDamage(int damageDealt) = 0;
+    virtual void update() = 0;
+    virtual void getTexture() = 0;
 };
