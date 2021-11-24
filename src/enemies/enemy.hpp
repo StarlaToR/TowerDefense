@@ -3,10 +3,10 @@
 
 class Enemy : public Entity
 {
-    protected:
-        int speed;
-        int reward;
-    
-    public:
+protected:
+    int speed;
+    int reward;
+
+public:
 
 };
