@@ -4,8 +4,8 @@
 class Enemy : public Entity
 {
     protected:
-    int speed;
-    
+        int speed;
+        int reward;
     
     public:
 

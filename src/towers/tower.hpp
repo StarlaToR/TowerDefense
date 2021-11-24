@@ -4,7 +4,8 @@
 class Tower: public Entity
 {
 protected:
-    
+    int range;
+    int cost;
 public:
     Tower()
     {

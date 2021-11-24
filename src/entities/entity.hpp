@@ -19,8 +19,8 @@ public:
 
     }
 
-    virtual int getAttacked(int damage);
-    virtual void attack();
+    
+    virtual void attack(int damageDealt);
     virtual void update();
     virtual void getTexture();
 };
