@@ -8,16 +8,6 @@ protected:
     int cost;
     int attackCooldown;
 public:
-    Tower()
-    {
-
-    }
-
-    ~Tower()
-    {
-
-    }
-
     void getDamage(int damageDealt)
     {
         health -= damageDealt;
