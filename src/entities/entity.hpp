@@ -8,7 +8,8 @@ protected:
     float rotation;
     int health;
     int maxHealth;
-
+    int damage;
+    int attackSpeed;
 public:
     Entity()
     {
@@ -43,5 +44,5 @@ public:
         return this->rotation;
     }
 
-     
+    virtual void attack();
 };
