@@ -8,6 +8,7 @@ protected:
     int maxHealth;
     int damage;
     int attackSpeed;
+    int level;
 public:
     
     virtual void getDamage(int damageDealt) = 0;

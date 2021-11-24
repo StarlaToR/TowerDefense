@@ -15,5 +15,5 @@ public:
     }
 
     void update();
-    void getTexture();
+    int getTexture();
 };
