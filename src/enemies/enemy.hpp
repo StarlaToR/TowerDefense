@@ -8,6 +8,5 @@ class Enemy : public Entity
         int reward;
     
     public:
-    virtual void update() = 0;
 
 };

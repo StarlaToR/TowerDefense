@@ -12,5 +12,5 @@ public:
     
     virtual void getDamage(int damageDealt) = 0;
     virtual void update() = 0;
-    virtual void getTexture() = 0;
+    virtual int getTexture() = 0;
 };
