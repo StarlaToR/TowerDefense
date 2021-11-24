@@ -1,9 +1,9 @@
 #include "tower.hpp"
 
-class Classic : public Tower
+class ClassicTower : public Tower
 {
 public:
-    Classic()
+    ClassicTower()
     {
         damage = 1;
         range = 100;

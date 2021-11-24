@@ -1,16 +1,16 @@
 #include "classic.hpp"
 
-void Classic::update()
+void ClassicTower::update()
 {
 
 }
 
-void Classic::getTexture()
+void ClassicTower::getTexture()
 {
 
 }
 
-void Classic::attack(int damageDealt)
+void ClassicTower::attack(int damageDealt)
 {
     this->health -= damageDealt;
 }
