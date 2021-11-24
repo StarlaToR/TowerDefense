@@ -1,29 +1,43 @@
 #include "render.hpp"
 #include <raylib.h>
+#include "util/renderUtil.hpp"
 
-void renderMain() {
+void renderMain(DataHolder* in)
+{
     BeginDrawing();
-
     ClearBackground(RAYWHITE);
-    rgb = mod(rgb+0.013f, 0.0f, 1.0f);
-    if (anim < 180)
+    if (in->gameState == 0)
     {
-        DrawTexturePro(logo,Rectangle{0,0,300,300},Rectangle{screenWidth/2,screenHeight/2,anim*1.66666f,anim*1.6666f},Vector2{150,150},anim*2.0f,ColorFromHSV(rgb*360.0f,0.5,1.0));
+        renderStartAnim(in);
     }
-    else if (anim < 300)
+    else if (in->gameState == 1)
     {
-        DrawTexturePro(logo,Rectangle{0,0,300,300},Rectangle{screenWidth/2,screenHeight/2,300,300},Vector2{150,150},0,ColorFromHSV(rgb*360.0f,0.5,1.0));
-    }
-    else if (anim < 360)
-    {
-        DrawTexturePro(logo,Rectangle{0,0,300,300},Rectangle{screenWidth/2,screenHeight/2,300,300},Vector2{150,150},0,Fade(ColorFromHSV(rgb*360.0f,0.5,1.0),(360-anim)/60.0f));
+        renderMainMenu(in);
     }
     
     DrawFPS(10, 10);
     EndDrawing();
 }
 
-void renderStartAnim()
+void renderStartAnim(DataHolder* in)
 {
+    float width = in->screenWidth;
+    float heigth = in->screenHeight;
+    int frames = in->framecounter;
+    if (frames < 180)
+    {
+        DrawTexturePro(in->logo,Rectangle{0,0,300,300},Rectangle{width/2,heigth/2,frames*1.66666f,frames*1.6666f},Vector2{150,150},frames*2.0f,getRGB(frames));
+    }
+    else if (frames < 260)
+    {
+        DrawTexturePro(in->logo,Rectangle{0,0,300,300},Rectangle{width/2,heigth/2,300,300},Vector2{150,150},0,getRGB(frames));
+    }
+    else if (frames < 320)
+    {
+        DrawTexturePro(in->logo,Rectangle{0,0,300,300},Rectangle{width/2,heigth/2,300,300},Vector2{150,150},0,Fade(getRGB(frames),(320-frames)/60.0f));
+    }
+}
 
+void renderMainMenu(DataHolder* in) {
+    DrawText("Menu", 100,100,30,BLACK);
 }

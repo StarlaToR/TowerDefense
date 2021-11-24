@@ -1,27 +1,24 @@
 #include <raylib.h>
-#include "mathHelper.hpp"
+#include "util/mathHelper.hpp"
+#include "util/dataHolder.hpp"
+#include "render.hpp"
 
 int main(void)
 {
-    const int screenWidth  = 800;
-    const int screenHeight = 450;
-
     SetConfigFlags(FLAG_VSYNC_HINT);
-    InitWindow(screenWidth, screenHeight, "Tower Defense");
-    Texture2D logo = LoadTexture("assets/logo_group.png");
+    DataHolder holder = DataHolder();
+    InitWindow(holder.screenWidth, holder.screenHeight, "Tower Defense");
     InitAudioDevice();
-    
-
-
-    int anim = 0;
-    static float rgb = 0.5;
+    SetExitKey(KEY_NULL);
+    holder.logo = LoadTexture("assets/logo_group.png");
 
     // Main game loop
     while (!WindowShouldClose())
     {
-        anim++;
+        holder.handleGameState();
+        renderMain(&holder);
     }
-
+    holder.unloadDatas();
     CloseAudioDevice();
     CloseWindow();
 

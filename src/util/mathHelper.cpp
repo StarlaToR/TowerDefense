@@ -1,4 +1,4 @@
-#include "util/mathHelper.hpp"
+#include "mathHelper.hpp"
 
 
     float Vec2D::lengthSquared() {
