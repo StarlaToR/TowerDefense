@@ -8,16 +8,6 @@ protected:
     float rotation;
     int damage;
 public:
-    Object()
-    {
-
-    }
-
-    ~Object()
-    {
-
-    }
-
     Vec2D getPosition()
     {
         return this->position;
