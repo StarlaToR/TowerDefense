@@ -13,11 +13,11 @@ public:
     int gameState = 0;
     size_t framecounter = 0;
     Texture2D logo;
-    Texture2D logoIsart;
-    Texture2D title;
-    Texture2D button;
-    Texture2D background;
     Texture2D tileTexture;
+    Texture2D background;
+    Texture2D button;
+    Texture2D title;
+    Texture2D logoIsart;
     TileMap map;
     Tiles tiles = Tiles();
 
