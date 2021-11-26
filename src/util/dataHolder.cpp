@@ -3,6 +3,7 @@
 void DataHolder::unloadDatas()
 {
     UnloadTexture(logo);
+    UnloadTexture(tileTexture);
 }
 
 void DataHolder::handleGameState()
