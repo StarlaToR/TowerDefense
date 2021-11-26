@@ -11,7 +11,9 @@ int main(void)
     InitAudioDevice();
     SetExitKey(KEY_NULL);
     holder.logo = LoadTexture("assets/logo_group.png");
+    holder.tileTexture = LoadTexture("assets/towerDefense_tilesheet.png");
     holder.map = TileMap();
+    holder.tiles.registerTiles();
 
     // Main game loop
     while (!WindowShouldClose())

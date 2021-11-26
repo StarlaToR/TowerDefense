@@ -2,10 +2,13 @@
 
 #include "../util/direction.hpp"
 #include <raylib.h>
+#include <vector>
 
-enum Tiles : char
+enum TileID : char
 {
-    ROAD_STRAIGHT_EASTWEST = 0,
+    GRASS = 0,
+    SAND,
+    ROAD_STRAIGHT_EASTWEST,
     ROAD_STRAIGHT_NORTHSOUTH,
     ROAD_TURN_NORTHEAST,
     ROAD_TURN_EASTSOUTH,
@@ -22,8 +25,13 @@ enum Tiles : char
     ROAD_THREEWAY_FORCE_EAST,
     ROAD_THREEWAY_FORCE_SOUTH,
     ROAD_THREEWAY_FORCE_WEST,
-    GRASS,
-    STONE,
+};
+
+class Tiles {
+    public:
+        std::vector<Rectangle> tileCrops = std::vector<Rectangle>();
+
+        void registerTiles();
 };
 
 Direction getNextDirection(char tilePos, Direction dir);
