@@ -42,16 +42,18 @@ float dirToAngle(char dir)
         return 3*M_PI/2;
     else if (dir == 3)
         return M_PI;
+    return 0;
 }
 
 char angleToDir(float angle)
 {
-    if (angle == M_PI/2)
+    if (angle <= M_PI/2 + 0.001 && angle >= M_PI/2 - 0.001)
         return 0;
-    else if (angle == 0)
+    else if (angle <= 0 + 0.001 && angle >= 0 - 0.001)
         return 1;
-    else if (angle == 3*M_PI/2)
+    else if (angle <= 3*M_PI/2 + 0.001 && angle >= 3*M_PI/2 - 0.001)
         return 2;
-    else if (angle == M_PI)
+    else if (angle <= M_PI + 0.001 && angle >= M_PI - 0.001)
         return 3;
+    return 0;
 }
