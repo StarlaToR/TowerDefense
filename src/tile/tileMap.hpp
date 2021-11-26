@@ -1,6 +1,7 @@
 #pragma once
 
 #include <new>
+
 #include "../util/mathHelper.hpp"
 
 #define MAP_WIDTH 24
@@ -16,8 +17,12 @@ class TileMap
         char secondLayer[MAP_HEIGHT*MAP_WIDTH];
 
         TileMap();
-        TileMap(const char* in, Vec2D start, Vec2D end);
+        TileMap(Vec2D start, Vec2D end);
+        TileMap(const char* in, const char* in2, Vec2D start, Vec2D end);
         ~TileMap() {}
         char getTileAt(Vec2D pos);
         void setTileAt(Vec2D pos, char tile);
+
+        static int getWidth() {return MAP_WIDTH;}
+        static int getHeight() {return MAP_HEIGHT;}
 };

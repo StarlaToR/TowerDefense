@@ -11,6 +11,7 @@ int main(void)
     InitAudioDevice();
     SetExitKey(KEY_NULL);
     holder.logo = LoadTexture("assets/logo_group.png");
+    holder.map = TileMap();
 
     // Main game loop
     while (!WindowShouldClose())

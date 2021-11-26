@@ -1,3 +1,7 @@
+#define VEC2_TO_RAYLIB_VECTOR2                                       \
+    Vec2D(const Vector2& f) { x = f.x; y = f.y; }                        \
+    operator Vector2() const { return Vector2{x,y}; }
+
 #include "render.hpp"
 #include <raylib.h>
 #include "util/renderUtil.hpp"
@@ -13,6 +17,10 @@ void renderMain(DataHolder* in)
     else if (in->gameState == 1)
     {
         renderMainMenu(in);
+    }
+    else if (in->gameState == 2)
+    {
+        renderEditor(in);
     }
     
     DrawFPS(10, 10);
@@ -38,6 +46,18 @@ void renderStartAnim(DataHolder* in)
     }
 }
 
-void renderMainMenu(DataHolder* in) {
+void renderMainMenu(DataHolder* in)
+{
     DrawText("Menu", 100,100,30,Fade(BLACK,getFade(in->framecounter)));
+}
+
+void renderEditor(DataHolder* in)
+{
+    for (int i = 0; i < in->map.getWidth()*in->map.getHeight(); i++)
+    {
+        Vec2D tilePos = Vec2D(i%in->map.getWidth(),i/in->map.getWidth());
+        Vec2D origin = Vec2D(50,50)+Vec2D(48,48)*tilePos;
+        DrawRectangleRec(toRayLibRectangle(origin,Vec2D(48,48)),ColorFromHSV(in->map.getTileAt(tilePos)*10, 0.5f,1.0f));
+        DrawRectangleLinesEx(toRayLibRectangle(origin,Vec2D(48,48)),1,BLACK);
+    }
 }
