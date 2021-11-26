@@ -31,3 +31,27 @@ Direction Direction::getLeft()
 {
     return Direction((dir+3)%4);
 }
+
+float dirToAngle(char dir)
+{
+    if (dir == 0)
+        return M_PI/2;
+    else if (dir == 1)
+        return 0;
+    else if (dir == 2)
+        return 3*M_PI/2;
+    else if (dir == 3)
+        return M_PI;
+}
+
+char angleToDir(float angle)
+{
+    if (angle == M_PI/2)
+        return 0;
+    else if (angle == 0)
+        return 1;
+    else if (angle == 3*M_PI/2)
+        return 2;
+    else if (angle == M_PI)
+        return 3;
+}

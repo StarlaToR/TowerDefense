@@ -1,3 +1,5 @@
+#pragma once
+
 #include "tower.hpp"
 
 class ClassicTower : public Tower

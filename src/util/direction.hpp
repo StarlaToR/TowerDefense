@@ -21,3 +21,6 @@ class Direction
         Direction getRight();
         Direction getLeft();
 };
+
+float dirToAngle(char dir);
+char angleToDir(float angle);

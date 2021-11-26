@@ -7,6 +7,8 @@ protected:
     int range;
     int cost;
     int attackCooldown;
+    int level;
+
 public:
     void getDamage(int damageDealt)
     {
