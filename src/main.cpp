@@ -2,6 +2,7 @@
 #include "util/mathHelper.hpp"
 #include "util/dataHolder.hpp"
 #include "render.hpp"
+#include <cstdio>
 
 int main(void)
 {
@@ -16,7 +17,12 @@ int main(void)
     holder.background = LoadTexture("assets/Marie-Antoine.png");
     holder.title = LoadTexture("assets/title.png");
     holder.button = LoadTexture("assets/button.png");
+    holder.logo = LoadTexture("assets/textures/logo_group.png");
+    holder.tileTexture = LoadTexture("assets/textures/towerDefense_tilesheet.png");
     holder.map = TileMap();
+    FILE* sv = fopen("assets/maps/default.bin","rb");
+    fread(&holder.map,1,sizeof(holder.map),sv);
+    fclose(sv);
     holder.tiles.registerTiles();
 
     // Main game loop

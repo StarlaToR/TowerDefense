@@ -65,3 +65,12 @@ void DrawTileMap(DataHolder* in, RenderType type)
         }
     }
 }
+
+bool drawButton(const char* text, Vec2D pos, Vec2D size, Vec2D mousePos) {
+    Vec2D tmp = pos+size;
+    bool isInside = (mousePos.x > pos.x && mousePos.y > pos.y && mousePos.x <= tmp.x && mousePos.y <= tmp.y);
+    DrawRectangleRounded(toRayLibRectangle(pos,size),0.2f,10,isInside?SKYBLUE:LIGHTGRAY);
+    DrawRectangleRoundedLines(toRayLibRectangle(pos,size),0.2f,10,2.0f,BLACK);
+    DrawText(text,pos.x+10,pos.y+(size.y/2)-15,30,DARKGRAY);
+    return isInside;
+}

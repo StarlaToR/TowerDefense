@@ -7,6 +7,14 @@
 #define MAP_WIDTH 24
 #define MAP_HEIGHT 12
 
+enum RenderType : char
+{
+    NORMAL = 0,
+    EXTENDED,
+    BORDER,
+    DEBUG,
+};
+
 class TileMap
 {
     public:

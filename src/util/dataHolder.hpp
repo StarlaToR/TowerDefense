@@ -20,6 +20,9 @@ public:
     Texture2D logoIsart;
     TileMap map;
     Tiles tiles = Tiles();
+    Vec2D mousePos;
+    int buttonSelected;
+    RenderType tileRenderType = BORDER;
 
     DataHolder() {}
     ~DataHolder() {}

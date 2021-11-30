@@ -133,5 +133,18 @@ void renderMainMenu(DataHolder* in)
 
 void renderEditor(DataHolder* in)
 {
-    DrawTileMap(in,DEBUG);
+    in->buttonSelected = 0;
+    if (drawButton("Save Map", Vec2D(1300,70),Vec2D(200,50), in->mousePos))
+    {
+        in->buttonSelected = 1;
+    }
+    if (drawButton("Clear Map", Vec2D(1300,170),Vec2D(200,50), in->mousePos))
+    {
+        in->buttonSelected = 2;
+    }
+    if (drawButton("Change view", Vec2D(1300,270),Vec2D(200,50), in->mousePos))
+    {
+        in->buttonSelected = 3;
+    }
+    DrawTileMap(in,in->tileRenderType);
 }
