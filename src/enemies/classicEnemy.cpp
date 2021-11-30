@@ -10,5 +10,8 @@ void ClassicEnemy::update(TileMap& t)
     Direction currentDirection(dir);
     Direction nextDirection = getNextDirection(currentTile, currentDirection);
 
+    this->rotation = dirToAngle(nextDirection.dir);
+
     this->position.x += this->speed * cosf(rotation);
+    this->position.y += this->speed * sinf(rotation);
 }
