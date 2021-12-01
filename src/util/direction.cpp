@@ -14,7 +14,7 @@ Direction::~Direction()
 
 Vec2D Direction::getFowardTile(Vec2D pos)
 {
-    return pos + Vec2D((dir==1)-(dir==3),(dir==0)-(dir==2));
+    return pos + Vec2D((dir==1)-(dir==3),(dir==2)-(dir==0));
 }
 
 Direction Direction::getOpposite()

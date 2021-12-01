@@ -15,6 +15,8 @@ public:
         this->speed = 2;
         this->currentDirection.dir = RIGHT;
         currentTile = Vec2D((int)t.startPos.x,(int)t.startPos.y);
+        targetDirection = 0;
+        targetPos = currentTile + Vec2D(1.5f,0.5f);
     }
 
     ClassicEnemy() {};

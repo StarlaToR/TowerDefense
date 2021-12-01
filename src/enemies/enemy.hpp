@@ -9,7 +9,9 @@ protected:
     int reward;
     int slowTimer;
     Direction currentDirection;
+    float targetDirection;
     Vec2D currentTile;
+    Vec2D targetPos;
 public:
     void setSlowed(int value);
 };
