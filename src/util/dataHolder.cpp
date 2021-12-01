@@ -10,21 +10,21 @@ void DataHolder::unloadDatas()
 void DataHolder::handleGameState()
 {
     mousePos = Vec2D(GetMousePosition().x,GetMousePosition().y);
-    if (gameState == 0)
+    if (gameState == INTRO)
     {
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) || framecounter > 360)
         {
-            gameState = 1;
+            gameState = MENU;
         }
     }
-    else if (gameState == 1)
+    /*else if (gameState == MENU)
     {
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
         {
-            gameState = 2;
+            gameState = GAMEPLAY;
         }
-    }
-    else if (gameState == 2)
+    }*/
+    else if (gameState == GAMEPLAY)
     {
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
         {

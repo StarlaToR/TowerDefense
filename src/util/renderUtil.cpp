@@ -74,3 +74,11 @@ bool drawButton(const char* text, Vec2D pos, Vec2D size, Vec2D mousePos) {
     DrawText(text,pos.x+10,pos.y+(size.y/2)-15,30,DARKGRAY);
     return isInside;
 }
+
+bool drawButtonMenu(DataHolder* in, const char* text, Vec2D textSize, Vec2D pos, Vec2D size, Vec2D mousePos) {
+    Vec2D tmp = pos+size;
+    bool isInside = (mousePos.x > pos.x && mousePos.y > pos.y && mousePos.x <= tmp.x && mousePos.y <= tmp.y);
+    DrawTexturePro(in->button, Rectangle{0,0,440,400}, Rectangle{pos.x-22,pos.y-90,size.x+25,size.y+150}, Vector2{0,0}, 0, WHITE);
+    DrawTextEx(in->fontButton, text, Vector2{textSize.x,textSize.y},50,2,isInside?Fade(BLACK,getFade(in->framecounter)):BLACK);
+    return isInside;
+}

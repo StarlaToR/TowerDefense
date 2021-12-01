@@ -1,68 +1,3 @@
-/*#define VEC2_TO_RAYLIB_VECTOR2                                       \
-    Vec2D(const Vector2& f) { x = f.x; y = f.y; }                        \
-    operator Vector2() const { return Vector2{x,y}; }
-
-#include "render.hpp"
-#include <raylib.h>
-#include "util/renderUtil.hpp"
-
-void renderMain(DataHolder* in)
-{
-    BeginDrawing();
-    ClearBackground(RAYWHITE);
-    if (in->gameState == 0)
-    {
-        renderStartAnim(in);
-    }
-    else if (in->gameState == 1)
-    {
-        renderMainMenu(in);
-    }
-    else if (in->gameState == 2)
-    {
-        renderEditor(in);
-    }
-    
-    DrawFPS(10, 10);
-    EndDrawing();
-}
-
-void renderStartAnim(DataHolder* in)
-{
-    float width = in->screenWidth;
-    float heigth = in->screenHeight;
-    size_t frames = in->framecounter;
-    if (frames < 180)
-    {
-        DrawTexturePro(in->logo,Rectangle{0,0,300,300},Rectangle{width/2,heigth/2,frames*1.66666f,frames*1.6666f},Vector2{150,150},frames*2.0f,getRGB(frames));
-    }
-    else if (frames < 260)
-    {
-        DrawTexturePro(in->logo,Rectangle{0,0,300,300},Rectangle{width/2,heigth/2,300,300},Vector2{150,150},0,getRGB(frames));
-    }
-    else if (frames < 320)
-    {
-        DrawTexturePro(in->logo,Rectangle{0,0,300,300},Rectangle{width/2,heigth/2,300,300},Vector2{150,150},0,Fade(getRGB(frames),(320-frames)/60.0f));
-    }
-}
-
-void renderMainMenu(DataHolder* in)
-{
-    DrawText("Menu", 100,100,30,Fade(BLACK,getFade(in->framecounter)));
-
-}
-
-void renderEditor(DataHolder* in)
-{
-    for (int i = 0; i < in->map.getWidth()*in->map.getHeight(); i++)
-    {
-        Vec2D tilePos = Vec2D(i%in->map.getWidth(),i/in->map.getWidth());
-        Vec2D origin = Vec2D(50,50)+Vec2D(48,48)*tilePos;
-        DrawRectangleRec(toRayLibRectangle(origin,Vec2D(48,48)),ColorFromHSV(in->map.getTileAt(tilePos)*10, 0.5f,1.0f));
-        DrawRectangleLinesEx(toRayLibRectangle(origin,Vec2D(48,48)),1,BLACK);
-    }
-}*/
-
 #define VEC2_TO_RAYLIB_VECTOR2                                       \
     Vec2D(const Vector2& f) { x = f.x; y = f.y; }                        \
     operator Vector2() const { return Vector2{x,y}; }
@@ -71,21 +6,38 @@ void renderEditor(DataHolder* in)
 #include <raylib.h>
 #include "util/renderUtil.hpp"
 
-void renderMain(DataHolder* in)
+void renderMain(DataHolder* in) 
 {
     BeginDrawing();
     ClearBackground(RAYWHITE);
-    if (in->gameState == 0)
+    if (in->gameState == INTRO)
     {
         renderStartAnim(in);
     }
-    else if (in->gameState == 1)
+    else if (in->gameState == MENU)
     {
         renderMainMenu(in);
+        menuEditor(in);
     }
-    else if (in->gameState == 2)
+    else if (in->gameState == GAMEPLAY)
     {
         renderEditor(in);
+    }
+    else if (in->gameState == LOAD)
+    {
+        renderLoad(in);
+    }
+    else if (in->gameState == OPTION)
+    {
+        renderOption(in);
+    }
+    else if (in->gameState == CREDIT)
+    {
+        renderCredit(in);
+    }
+    else if (in->gameState == EXIT)
+    {
+        exit (EXIT_SUCCESS);
     }
     
     DrawFPS(10, 10);
@@ -115,20 +67,10 @@ void renderMainMenu(DataHolder* in)
 {
     float width = in->screenWidth;
     float heigth = in->screenHeight;
-    float buttonDivider[4] = {3, 2, 1.2f, 1.5f};
     DrawTexturePro(in->background, Rectangle{0,0,600,600},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
     DrawTexturePro(in->title, Rectangle{0,0,500,500},Rectangle{450, 0,1000,450},Vector2{150,150}, 0, WHITE);
-    DrawTexturePro(in->logoIsart, Rectangle{0,0,250,250},Rectangle{width/16, heigth,100,100},Vector2{100,100}, 0, WHITE);
     DrawTexturePro(in->logo, Rectangle{0,0,300,300},Rectangle{width, heigth,100,100},Vector2{100,100}, 0, WHITE);
-    for(int i = 0; i < 4; i++)
-    {
-        DrawTexturePro(in->button, Rectangle{0,0,500,500},Rectangle{width/2,heigth/buttonDivider[i],300,300},Vector2{150,150}, 0, WHITE);
-    }
-    DrawText("Play", width/2.16f,heigth/3.4f,50,Fade(BLACK,getFade(in->framecounter)));
-    DrawText("Load", width/2.16f,heigth/2.17f,50,Fade(BLACK,getFade(in->framecounter)));
-    DrawText("Option", width/2.22f,heigth/1.6f,50,Fade(BLACK,getFade(in->framecounter)));
-    DrawText("Credit", width/2.22f,heigth/1.26f,50,Fade(BLACK,getFade(in->framecounter)));
-    DrawText("Tower Defense", 475,20,80,Fade(BLACK,getFade(in->framecounter)));
+    DrawTextEx(in->fontTitle, "Tower Defense", Vector2{480,27},70,4,BLACK);
     
 }
 
@@ -148,8 +90,64 @@ void renderEditor(DataHolder* in)
         in->buttonSelected = 3;
     }
     DrawTileMap(in,in->tileRenderType);
+
     for (unsigned int i = 0; i < in->t.size(); i++)
     {
         DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(in->t[i]->getTexture()),toRayLibRectangle(in->t[i]->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(16,16)),Vec2D(8,8),in->t[i]->getRotation()*RAD2DEG,GRAY);
     } 
+
+}
+
+void menuEditor(DataHolder* in)
+{
+    in->gameState = MENU;
+    if (drawButtonMenu(in, "Play", Vec2D(735,280), Vec2D(690, 230),Vec2D(250,140), in->mousePos) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    {
+        in->gameState = GAMEPLAY;
+    }
+    if (drawButtonMenu(in, "Load", Vec2D(538, 467), Vec2D(495, 440),Vec2D(250,100), in->mousePos) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    {
+        in->gameState = LOAD;
+    }
+    if (drawButtonMenu(in, "Option",Vec2D(915, 467), Vec2D(900, 440),Vec2D(250,100), in->mousePos) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    {
+        in->gameState = OPTION;
+    }
+    if (drawButtonMenu(in, "Credit",Vec2D(515, 667), Vec2D(495, 640),Vec2D(250,100), in->mousePos) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    {
+        in->gameState = CREDIT;
+    }
+    if (drawButtonMenu(in, "Exit",Vec2D(965, 670), Vec2D(900, 640),Vec2D(250,100), in->mousePos) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    {
+        in->gameState = EXIT;
+    }
+}
+
+void renderCredit(DataHolder* in)
+{
+    float width = in->screenWidth;
+    float heigth = in->screenHeight;
+    DrawTexturePro(in->background, Rectangle{0,0,600,600},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
+    DrawTexturePro(in->credit, Rectangle{0,0,450,400},Rectangle{680,100,600,350},Vector2{150,150}, 0, WHITE);
+    DrawTextEx(in->fontTitle, "Credit", Vector2{660,100},100,4,BLACK);
+    DrawTextEx(in->fontTitle, "Quentin Lepine", Vector2{520,300},70,4,WHITE);
+    DrawTextEx(in->fontTitle, "Antoine Mordant", Vector2{480,450},70,4,WHITE);
+    DrawTextEx(in->fontTitle, "Umut Osmanoglu", Vector2{490,600},70,4,WHITE);
+    
+}
+
+void renderOption(DataHolder* in)
+{
+    float width = in->screenWidth;
+    float heigth = in->screenHeight;
+    DrawTexturePro(in->background, Rectangle{0,0,600,600},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
+    DrawTextEx(in->fontTitle, "Option", Vector2{660,100},100,4,WHITE);
+}
+
+void renderLoad(DataHolder* in)
+{
+    float width = in->screenWidth;
+    float heigth = in->screenHeight;
+    DrawTexturePro(in->background, Rectangle{0,0,600,600},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
+    DrawTextEx(in->fontTitle, "Load", Vector2{660,100},100,4,WHITE);
 }
