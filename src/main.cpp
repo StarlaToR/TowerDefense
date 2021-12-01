@@ -26,7 +26,7 @@ int main(void)
     fread(&holder.map,1,sizeof(holder.map),sv);
     fclose(sv);
     holder.tiles.registerTiles();
-    for (int i = 0; i < 100; i++) holder.t.push_back(new ClassicEnemy(holder.map));
+    for (int i = 0; i < 100; i++) holder.t.push_back(new ClassicEnemy(&holder.map));
 
     // Main game loop
     while (!WindowShouldClose())
@@ -35,7 +35,7 @@ int main(void)
         if (IsKeyReleased(KEY_TAB)) SetTargetFPS(60);
         holder.handleGameState();
         if (holder.gameState == 2)
-        for (int i = 0; i < 100; i++) holder.t[i]->update(holder.map);
+        for (int i = 0; i < 100; i++) holder.t[i]->update(&holder.map);
         renderMain(&holder);
     }
     holder.unloadDatas();
