@@ -13,6 +13,7 @@ int main(void)
     DataHolder holder = DataHolder();
     InitWindow(holder.screenWidth, holder.screenHeight, "Tower Defense");
     InitAudioDevice();
+    SetTargetFPS(60);
     holder.logo = LoadTexture("assets/textures/logo_group.png");
     holder.tileTexture = LoadTexture("assets/textures/towerDefense_tilesheet.png");
     holder.background = LoadTexture("assets/textures/Marie-Antoine.png");
