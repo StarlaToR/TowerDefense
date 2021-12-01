@@ -12,6 +12,9 @@ protected:
     float targetDirection;
     Vec2D currentTile;
     Vec2D targetPos;
+    float 
 public:
     void setSlowed(int value);
+    void update(TileMap& t);
+
 };
