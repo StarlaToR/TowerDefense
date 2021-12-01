@@ -18,5 +18,6 @@ public:
     void setSlowed(int value);
     void update(TileMap* t);
     void getDamage(int damageDealt) {}
+    int getTexture() {return 0;}
 
 };

@@ -1,4 +1,4 @@
-#include "healerEnenmy.hpp"
+#include "healerEnemy.hpp"
 
 HealerEnemy::HealerEnemy(TileMap* t)
 {
