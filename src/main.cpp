@@ -4,6 +4,8 @@
 #include "render.hpp"
 #include <cstdio>
 #include "enemies/classicEnemy.hpp"
+#include "enemies/bigEnemy.hpp"
+#include "enemies/healerEnemy.hpp"
 
 int main(void)
 {

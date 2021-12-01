@@ -8,5 +8,5 @@ public:
     HealerEnemy() {};
 
     void heal();
-    int getTexture() {return 0;}
+    int getTexture() {return 2;}
 };

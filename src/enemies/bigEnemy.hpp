@@ -8,5 +8,5 @@ public:
 
     BigEnemy() {};
 
-    int getTexture() {return 0;}
+    int getTexture() {return 1;}
 };

@@ -1,7 +1,7 @@
 PROGRAM=tower
 
 # Add your objs to generate in OBJS var
-OBJS=src/main.o src/util/mathHelper.o src/render.o src/util/dataHolder.o src/util/renderUtil.o src/util/direction.o src/tile/tileMap.o src/tile/tiles.o src/enemies/classicEnemy.o
+OBJS=src/main.o src/util/mathHelper.o src/render.o src/util/dataHolder.o src/util/renderUtil.o src/util/direction.o src/tile/tileMap.o src/tile/tiles.o src/enemies/enemy.o src/enemies/classicEnemy.o src/enemies/bigEnemy.o src/enemies/healerEnemy.o
 
 CXX?=g++
 TARGET?=$(shell $(CXX) -dumpmachine)
