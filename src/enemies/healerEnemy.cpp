@@ -6,7 +6,7 @@ HealerEnemy::HealerEnemy(TileMap* t)
     slowTimer = 0;
     maxHealth = 20;
     health = 20;
-    reward = 5;
+    reward = 3;
     rotation = 0;
     speed = 3;
     damage = 1;
