@@ -12,9 +12,11 @@ protected:
     float targetDirection;
     Vec2D currentTile;
     Vec2D targetPos;
-    float 
+    float angularVelocity;
+    float distanceToCenter;
 public:
     void setSlowed(int value);
-    void update(TileMap& t);
+    void update(TileMap* t);
+    void getDamage(int damageDealt) {}
 
 };
