@@ -150,6 +150,6 @@ void renderEditor(DataHolder* in)
     DrawTileMap(in,in->tileRenderType);
     for (unsigned int i = 0; i < in->t.size(); i++)
     {
-        DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(1),toRayLibRectangle(in->t[i]->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(16,16)),Vec2D(8,8),in->t[i]->getRotation()*RAD2DEG,WHITE);
+        DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(in->t[i]->getTexture()),toRayLibRectangle(in->t[i]->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(16,16)),Vec2D(8,8),in->t[i]->getRotation()*RAD2DEG,GRAY);
     } 
 }

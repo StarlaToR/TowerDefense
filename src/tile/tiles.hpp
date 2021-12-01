@@ -29,6 +29,14 @@ enum TileID : char
     ROAD_EAST,
     ROAD_SOUTH,
     ROAD_WEST,
+    START_NORTH,
+    START_EAST,
+    START_SOUTH,
+    START_WEST,
+    END_NORTH,
+    END_EAST,
+    END_SOUTH,
+    END_WEST,
 };
 
 class Tiles {
