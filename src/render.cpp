@@ -119,6 +119,7 @@ void renderMainMenu(DataHolder* in)
     DrawTexturePro(in->background, Rectangle{0,0,600,600},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
     DrawTexturePro(in->title, Rectangle{0,0,500,500},Rectangle{450, 0,1000,450},Vector2{150,150}, 0, WHITE);
     DrawTexturePro(in->logoIsart, Rectangle{0,0,250,250},Rectangle{width/16, heigth,100,100},Vector2{100,100}, 0, WHITE);
+    DrawTexturePro(in->logo, Rectangle{0,0,300,300},Rectangle{width, heigth,100,100},Vector2{100,100}, 0, WHITE);
     for(int i = 0; i < 4; i++)
     {
         DrawTexturePro(in->button, Rectangle{0,0,500,500},Rectangle{width/2,heigth/buttonDivider[i],300,300},Vector2{150,150}, 0, WHITE);
