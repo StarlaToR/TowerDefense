@@ -1,6 +1,6 @@
 #include "tileMap.hpp"
 
-TileMap::TileMap() : startPos(Vec2D(0,6)), endPos(Vec2D(23,6))
+TileMap::TileMap() : startPos(Vec2D(0,0)), endPos(Vec2D(23,6))
 {
     for (int i = 0; i < MAP_WIDTH*MAP_HEIGHT; i++)
     {

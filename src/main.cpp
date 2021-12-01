@@ -3,14 +3,16 @@
 #include "util/dataHolder.hpp"
 #include "render.hpp"
 #include <cstdio>
+#include "enemies/classicEnemy.hpp"
 
 int main(void)
 {
-    SetConfigFlags(FLAG_VSYNC_HINT);
+    
     DataHolder holder = DataHolder();
     InitWindow(holder.screenWidth, holder.screenHeight, "Tower Defense");
     InitAudioDevice();
     SetExitKey(KEY_NULL);
+    SetTargetFPS(60);
     holder.logo = LoadTexture("assets/logo_group.png");
     holder.tileTexture = LoadTexture("assets/towerDefense_tilesheet.png");
     holder.logoIsart= LoadTexture("assets/logo.png");
@@ -24,14 +26,21 @@ int main(void)
     fread(&holder.map,1,sizeof(holder.map),sv);
     fclose(sv);
     holder.tiles.registerTiles();
+    holder.t = new ClassicEnemy[100];
+    for (int i = 0; i < 100; i++) holder.t[i] = ClassicEnemy(holder.map);
 
     // Main game loop
     while (!WindowShouldClose())
     {
+        if (IsKeyPressed(KEY_TAB)) SetTargetFPS(600);
+        if (IsKeyReleased(KEY_TAB)) SetTargetFPS(60);
         holder.handleGameState();
+        if (holder.gameState == 2)
+        for (int i = 0; i < 100; i++) holder.t[i].update(holder.map);
         renderMain(&holder);
     }
     holder.unloadDatas();
+    delete[] holder.t;
     CloseAudioDevice();
     CloseWindow();
 

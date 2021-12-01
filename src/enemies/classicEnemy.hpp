@@ -1,13 +1,12 @@
 #pragma once
 #include "enemy.hpp"
-#include "../tile/tileMap.hpp"
 
 class ClassicEnemy: public Enemy
 {
 public:
     ClassicEnemy(TileMap& t)
     {
-        this->position = t.startPos;
+        this->position = t.startPos + Vec2D(0.5f,0.5f);
         this->slowTimer = 0;
         this->maxHealth = 20;
         this->health = 20;
@@ -15,7 +14,12 @@ public:
         this->rotation = 0;
         this->speed = 2;
         this->currentDirection.dir = RIGHT;
+        currentTile = Vec2D((int)t.startPos.x,(int)t.startPos.y);
     }
 
+    ClassicEnemy() {};
+
     void update(TileMap& t);
+    void getDamage(int damageDealt) {}
+    int getTexture() {return 0;}
 };

@@ -148,4 +148,5 @@ void renderEditor(DataHolder* in)
         in->buttonSelected = 3;
     }
     DrawTileMap(in,in->tileRenderType);
+    for (int i = 0; i < 100; i++) DrawRectangle(in->t[i].getPosition().x*48+38,in->t[i].getPosition().y*48+38,24,24,RED);
 }

@@ -4,6 +4,7 @@
 #include <cstddef>
 #include "../tile/tileMap.hpp"
 #include "../tile/tiles.hpp"
+#include "../enemies/enemy.hpp"
 
 class DataHolder
 {
@@ -22,7 +23,8 @@ public:
     Tiles tiles = Tiles();
     Vec2D mousePos;
     int buttonSelected;
-    RenderType tileRenderType = BORDER;
+    RenderType tileRenderType = EXTENDED;
+    Enemy* t;
 
     DataHolder() {}
     ~DataHolder() {}
