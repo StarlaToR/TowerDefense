@@ -6,13 +6,10 @@ void ClassicEnemy::update(TileMap& t)
     if ((currentTilePosition.x != currentTile.x || currentTilePosition.y != currentTile.y) && (position-targetPos).lengthSquared() < 0.1) {
         
         currentTile = currentTilePosition;
-        //position = currentTilePosition + Vec2D(0.5f,0.5f);
         char newTile = t.getTileAt(currentTilePosition);
         
         currentDirection = getNextDirection(newTile, currentDirection);
         targetPos = currentDirection.getFowardTile(currentTilePosition) + Vec2D(0.5f,0.5f);
-        //this->rotation = dirToAngle(nextDirection.dir);
-        TraceLog(LOG_INFO,"%f %f",targetPos.x, targetPos.y);
         
     }
     Vec2D dif = targetPos - position;
