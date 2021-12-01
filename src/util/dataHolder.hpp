@@ -24,7 +24,8 @@ public:
     Vec2D mousePos;
     int buttonSelected;
     RenderType tileRenderType = EXTENDED;
-    Enemy* t;
+    Vec2D dragPos = Vec2D(-1,-1);
+    std::vector<Enemy*> t = std::vector<Enemy*>();
 
     DataHolder() {}
     ~DataHolder() {}

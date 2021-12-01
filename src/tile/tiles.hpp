@@ -25,6 +25,10 @@ enum TileID : char
     ROAD_THREEWAY_FORCE_EAST,
     ROAD_THREEWAY_FORCE_SOUTH,
     ROAD_THREEWAY_FORCE_WEST,
+    ROAD_NORTH,
+    ROAD_EAST,
+    ROAD_SOUTH,
+    ROAD_WEST,
 };
 
 class Tiles {
@@ -35,3 +39,4 @@ class Tiles {
 };
 
 Direction getNextDirection(char tilePos, Direction dir);
+char getTileConnexions(char tile);

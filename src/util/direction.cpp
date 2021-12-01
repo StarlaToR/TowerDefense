@@ -8,6 +8,14 @@ Direction::Direction(char value) : dir(value%4)
 {
 }
 
+Direction::Direction(Vec2D value)
+{
+    if (value.y < -0.5f) dir = 0;
+    else if (value.x > 0.5f) dir = 1;
+    else if (value.y > 0.5f) dir = 2;
+    else dir = 3;
+}
+
 Direction::~Direction()
 {
 }

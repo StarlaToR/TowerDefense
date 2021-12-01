@@ -36,7 +36,53 @@ Direction getNextDirection(char tilePos, Direction dir)
     }
 }
 
-void Tiles::registerTiles() {
+char getTileConnexions(char tile)
+{
+    switch (tile)
+    {
+    case ROAD_STRAIGHT_EASTWEST :
+        return 0b1010;
+    case ROAD_STRAIGHT_NORTHSOUTH :
+        return 0b0101;
+    case ROAD_TURN_NORTHEAST :
+        return 0b0011;
+    case ROAD_TURN_EASTSOUTH :
+        return 0b0110;
+    case ROAD_TURN_SOUTHWEST :
+        return 0b1100;
+    case ROAD_TURN_WESTNORTH :
+        return 0b1001;
+    case ROAD_THREEWAY_NORTH :
+    case ROAD_THREEWAY_FORCE_NORTH :
+        return 0b1011;
+    case ROAD_THREEWAY_EAST :
+    case ROAD_THREEWAY_FORCE_EAST :
+        return 0b0111;
+    case ROAD_THREEWAY_SOUTH :
+    case ROAD_THREEWAY_FORCE_SOUTH :
+        return 0b1110;
+    case ROAD_THREEWAY_WEST :
+    case ROAD_THREEWAY_FORCE_WEST :
+        return 0b1101;
+    case ROAD_FOURWAY :
+    case ROAD_FOURWAY_TURN_RIGHT :
+    case ROAD_FOURWAY_TURN_LEFT :
+        return 0b1111;
+    case ROAD_NORTH:
+        return 0b0001;
+    case ROAD_EAST:
+        return 0b0010;
+    case ROAD_SOUTH:
+        return 0b0100;
+    case ROAD_WEST:
+        return 0b1000;
+    default:
+        return 0;
+    }
+}
+
+void Tiles::registerTiles()
+{
     tileCrops.push_back(Rectangle{ 384, 896, 128, 128});
     tileCrops.push_back(Rectangle{ 256, 128, 128, 128});
     tileCrops.push_back(Rectangle{ 0, 768, 128, 128});
@@ -56,5 +102,8 @@ void Tiles::registerTiles() {
     tileCrops.push_back(Rectangle{ 128, 768, 128, 128});
     tileCrops.push_back(Rectangle{ 384, 768, 128, 128});
     tileCrops.push_back(Rectangle{ 512, 512, 128, 128});
-    
+    tileCrops.push_back(Rectangle{ 128, 896, 128, 128});
+    tileCrops.push_back(Rectangle{ 0, 768, 128, 128});
+    tileCrops.push_back(Rectangle{ 128, 896, 128, 128});
+    tileCrops.push_back(Rectangle{ 0, 768, 128, 128});
 }

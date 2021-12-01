@@ -14,6 +14,7 @@ class Direction
 
         Direction();
         Direction(char value);
+        Direction(Vec2D dir);
         ~Direction();
 
         Vec2D getFowardTile(Vec2D pos);

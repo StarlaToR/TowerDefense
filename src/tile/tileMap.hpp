@@ -3,6 +3,7 @@
 #include <new>
 
 #include "../util/mathHelper.hpp"
+#include "tiles.hpp"
 
 #define MAP_WIDTH 24
 #define MAP_HEIGHT 12
@@ -30,6 +31,11 @@ class TileMap
         ~TileMap() {}
         char getTileAt(Vec2D pos);
         void setTileAt(Vec2D pos, char tile);
+        void setTileAndUpdate(Vec2D pos, char tile);
+        void drawRoad(Vec2D pos, Direction direction);
+        void setAltTile(Vec2D pos);
+        void updateTileAt(Vec2D pos);
+        bool isRoad(char tile);
 
         static int getWidth() {return MAP_WIDTH;}
         static int getHeight() {return MAP_HEIGHT;}

@@ -28,12 +28,6 @@ void DataHolder::handleGameState()
     {
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
         {
-            Vec2D tmpPos = mousePos-Vec2D(50,50);
-            if (tmpPos.x > 0 && tmpPos.y > 0 && tmpPos.x <= 48*map.getWidth() && tmpPos.y <= 48*map.getHeight())
-            {
-                Vec2D tilePos = Vec2D( (int)(tmpPos.x/48), (int)(tmpPos.y/48));
-                map.setTileAt(tilePos,(map.getTileAt(tilePos)+1)%19);
-            }
             if (buttonSelected == 1) {
                 FILE* sv = fopen("assets/maps/default.bin","wb");
                 fwrite(&map,1,sizeof(map),sv);
@@ -62,6 +56,29 @@ void DataHolder::handleGameState()
                 }
             }
         }
+        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+        {
+            Vec2D tmpPos = mousePos-Vec2D(50,50);
+            if (tmpPos.x > 0 && tmpPos.y > 0 && tmpPos.x <= 48*map.getWidth() && tmpPos.y <= 48*map.getHeight())
+            {
+                Vec2D tilePos = Vec2D( (int)(tmpPos.x/48), (int)(tmpPos.y/48));
+                if (dragPos.x > -0.9f && (tilePos-dragPos).lengthSquared() < 1.1 && (tilePos-dragPos).lengthSquared() > 0.9)
+                {
+                    map.drawRoad(dragPos,Direction(tilePos-dragPos));
+                }
+                dragPos = tilePos;
+            }
+        }
+        if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
+        {
+            Vec2D tmpPos = mousePos-Vec2D(50,50);
+            if (tmpPos.x > 0 && tmpPos.y > 0 && tmpPos.x <= 48*map.getWidth() && tmpPos.y <= 48*map.getHeight())
+            {
+                Vec2D tilePos = Vec2D( (int)(tmpPos.x/48), (int)(tmpPos.y/48));
+                map.setAltTile(tilePos);
+            }
+        }
+        if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) dragPos = Vec2D(-1,-1);
     }
     framecounter++;
 }
