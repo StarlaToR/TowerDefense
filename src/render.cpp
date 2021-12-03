@@ -101,25 +101,26 @@ void renderEditor(DataHolder* in)
 void menuEditor(DataHolder* in)
 {
     in->gameState = MENU;
-    if (drawButtonMenu(in, "Play", Vec2D(735,280), Vec2D(690, 230),Vec2D(250,140), in->mousePos) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    in->buttonSelected = 0;
+    if (drawButtonMenu(in, "Play", Vec2D(735,280), Vec2D(690, 230),Vec2D(250,140), in->mousePos))
     {
-        in->gameState = GAMEPLAY;
+        in->buttonSelected = 1;
     }
-    if (drawButtonMenu(in, "Load", Vec2D(538, 467), Vec2D(495, 440),Vec2D(250,100), in->mousePos) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    if (drawButtonMenu(in, "Load", Vec2D(538, 467), Vec2D(495, 440),Vec2D(250,100), in->mousePos))
     {
-        in->gameState = LOAD;
+        in->buttonSelected = 2;
     }
-    if (drawButtonMenu(in, "Option",Vec2D(915, 467), Vec2D(900, 440),Vec2D(250,100), in->mousePos) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    if (drawButtonMenu(in, "Option",Vec2D(915, 467), Vec2D(900, 440),Vec2D(250,100), in->mousePos))
     {
-        in->gameState = OPTION;
+        in->buttonSelected = 3;
     }
-    if (drawButtonMenu(in, "Credit",Vec2D(515, 667), Vec2D(495, 640),Vec2D(250,100), in->mousePos) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    if (drawButtonMenu(in, "Credit",Vec2D(515, 667), Vec2D(495, 640),Vec2D(250,100), in->mousePos))
     {
-        in->gameState = CREDIT;
+        in->buttonSelected = 4;
     }
-    if (drawButtonMenu(in, "Exit",Vec2D(965, 670), Vec2D(900, 640),Vec2D(250,100), in->mousePos) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    if (drawButtonMenu(in, "Exit",Vec2D(965, 670), Vec2D(900, 640),Vec2D(250,100), in->mousePos))
     {
-        in->gameState = EXIT;
+        in->buttonSelected = 5;
     }
 }
 
