@@ -2,6 +2,7 @@
 
 #include <raylib.h>
 #include <cstddef>
+#include <forward_list>
 #include "../tile/tileMap.hpp"
 #include "../tile/tiles.hpp"
 #include "../enemies/enemy.hpp"
@@ -41,7 +42,7 @@ public:
     int buttonSelected;
     RenderType tileRenderType = EXTENDED;
     Vec2D dragPos = Vec2D(-1,-1);
-    std::vector<Enemy*> t = std::vector<Enemy*>();
+    std::forward_list<Enemy*> enemies = std::forward_list<Enemy*>();
 
     DataHolder() {}
     ~DataHolder() {}

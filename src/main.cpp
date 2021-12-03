@@ -29,11 +29,11 @@ int main(void)
     fread(&holder.map,1,sizeof(holder.map),sv);
     fclose(sv);
     holder.tiles.registerTiles();
-    for (int i = 0; i < 20; i++)
+    for (int i = 0; i < 80; i++)
     {
-        holder.t.push_back(new ClassicEnemy(&holder.map));
-        holder.t.push_back(new BigEnemy(&holder.map));
-        holder.t.push_back(new HealerEnemy(&holder.map));
+        holder.enemies.push_front(new ClassicEnemy(&holder.map));
+        holder.enemies.push_front(new BigEnemy(&holder.map));
+        holder.enemies.push_front(new HealerEnemy(&holder.map));
     }
 
     // Main game loop
@@ -43,11 +43,11 @@ int main(void)
         if (IsKeyReleased(KEY_TAB)) SetTargetFPS(60);
         holder.handleGameState();
         if (holder.gameState == 2)
-        for (unsigned int i = 0; i < holder.t.size(); i++) holder.t[i]->update(&holder.map);
+        for (std::forward_list<Enemy*>::iterator i = holder.enemies.begin(); i != holder.enemies.end(); i++) (*i)->update(&holder.map);
         renderMain(&holder);
     }
     holder.unloadDatas();
-    for (unsigned int i = 0; i < holder.t.size(); i++) delete holder.t[i];
+    for (std::forward_list<Enemy*>::iterator i = holder.enemies.begin(); i != holder.enemies.end(); i++) delete *i;
     CloseAudioDevice();
     CloseWindow();
 

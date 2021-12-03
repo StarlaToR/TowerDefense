@@ -91,10 +91,13 @@ void renderEditor(DataHolder* in)
     }
     DrawTileMap(in,in->tileRenderType);
 
-    for (unsigned int i = 0; i < in->t.size(); i++)
+    int counter = 0;
+    for (std::forward_list<Enemy*>::iterator i = in->enemies.begin(); i != in->enemies.end(); i++)
     {
-        DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(in->t[i]->getTexture()),toRayLibRectangle(in->t[i]->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(16,16)),Vec2D(8,8),in->t[i]->getRotation()*RAD2DEG,GRAY);
+        DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at((*i)->getTexture()),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(16,16)),Vec2D(8,8),(*i)->getRotation()*RAD2DEG,GRAY);
+        counter++;
     } 
+    DrawText(TextFormat("Enemies : %d",counter),10,50,20,BLACK);
 
 }
 
