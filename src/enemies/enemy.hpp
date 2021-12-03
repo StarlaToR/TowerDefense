@@ -1,6 +1,6 @@
 #pragma once
 #include "../entities/entity.hpp"
-#include "../tile/tiles.hpp"
+#include "../tile/tileMap.hpp"
 
 class Enemy : public Entity
 {
