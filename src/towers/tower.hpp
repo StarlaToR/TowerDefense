@@ -18,6 +18,6 @@ public:
     }
 
     void update(DataHolder* t);
-    void attack(Enemy* e);
+    virtual void attack(Enemy* e);
     Enemy* getNearestEnemy(DataHolder* t);
 };

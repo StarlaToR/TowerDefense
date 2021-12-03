@@ -1,11 +1,11 @@
 #include "classicTower.hpp"
 
-void ClassicTower::update()
+int ClassicTower::getTexture()
 {
 
 }
 
-int ClassicTower::getTexture()
+void ClassicTower::attack(Enemy* e)
 {
-
+    e->getDamage(damage);
 }
