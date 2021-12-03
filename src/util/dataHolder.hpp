@@ -37,6 +37,7 @@ public:
     TileMap map;
     Tiles tiles = Tiles();
     Vec2D mousePos;
+    bool closeWindow = false;
     int buttonSelected;
     RenderType tileRenderType = EXTENDED;
     Vec2D dragPos = Vec2D(-1,-1);

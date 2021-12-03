@@ -37,7 +37,7 @@ int main(void)
     }
 
     // Main game loop
-    while (!WindowShouldClose())
+    while (!WindowShouldClose() && !holder.closeWindow == true)
     {
         if (IsKeyPressed(KEY_TAB)) SetTargetFPS(600);
         if (IsKeyReleased(KEY_TAB)) SetTargetFPS(60);

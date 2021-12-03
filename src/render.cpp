@@ -37,7 +37,7 @@ void renderMain(DataHolder* in)
     }
     else if (in->gameState == EXIT)
     {
-        exit (EXIT_SUCCESS);
+        in->closeWindow = true;
     }
     
     DrawFPS(10, 10);

@@ -17,13 +17,6 @@ void DataHolder::handleGameState()
             gameState = MENU;
         }
     }
-    /*else if (gameState == MENU)
-    {
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-        {
-            gameState = GAMEPLAY;
-        }
-    }*/
     else if (gameState == GAMEPLAY)
     {
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
