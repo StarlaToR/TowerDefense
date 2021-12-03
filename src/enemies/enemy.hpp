@@ -18,5 +18,5 @@ public:
     void setSlowed(int value);
     void update(TileMap* t);
     void getDamage(int damageDealt) {}
-
+    virtual ~Enemy() =0;
 };

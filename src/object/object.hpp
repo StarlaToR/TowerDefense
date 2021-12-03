@@ -1,5 +1,6 @@
 #pragma once
 #include "../util/mathHelper.hpp"
+#include <forward_list>
 
 class Object
 {

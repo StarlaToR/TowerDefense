@@ -1,6 +1,7 @@
 #pragma once
 #include "../entities/entity.hpp"
 #include "../enemies/enemy.hpp"
+#include "../util/dataHolder.hpp"
 
 class Tower: public Entity
 {
@@ -16,6 +17,7 @@ public:
         health -= damageDealt;
     }
 
-    void update(TileMap* t);
+    void update(DataHolder* t);
     void attack(Enemy* e);
+    Enemy* getNearestEnemy(DataHolder* t);
 };

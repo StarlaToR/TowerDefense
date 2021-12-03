@@ -16,6 +16,6 @@ public:
         cost = 5;
     }
 
-    void update();
+
     int getTexture();
 };
