@@ -4,4 +4,5 @@ void SlowingTower::attack(Enemy* e)
 {
     e->getDamage(damage);
     e->setSlowed(slowingTime);
+    attackCooldown = attackSpeed;
 }

@@ -3,25 +3,33 @@
 void Tower::update(DataHolder *t)
 {
     Enemy *target = getNearestEnemy(t);
-    Vec2D dif = target->getPosition() - position;
-    float tmpDir;
-    if (dif.x == 0)
+    
+    if(target != nullptr)
     {
-        if (dif.y > 0)
-            tmpDir = PI / 2.0f;
-        else
-            tmpDir = -PI / 2.0f;
-    }
-    else
-    {
-        tmpDir = (atanf(dif.y / dif.x));
-        if (dif.x < 0)
+        Vec2D dif = target->getPosition() - position;
+        float tmpDir;
+        if (dif.x == 0)
         {
-            tmpDir += PI;
+            if (dif.y > 0)
+                tmpDir = PI / 2.0f;
+            else
+                tmpDir = -PI / 2.0f;
         }
+        else
+        {
+            tmpDir = (atanf(dif.y / dif.x));
+            if (dif.x < 0)
+            {
+                tmpDir += PI;
+            }
+        }
+        rotation = tmpDir;
+        attack(target);
     }
-    rotation = tmpDir;
-    attack(target);
+    if (attackCooldown > 0)
+    {
+        attackCooldown --;
+    }
 }
 
 Enemy *Tower::getNearestEnemy(DataHolder *holder)
