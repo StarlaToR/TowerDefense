@@ -8,6 +8,8 @@ enum TileID : char
 {
     GRASS = 0,
     SAND,
+    GRASS_ALT,
+    SAND_ALT,
     ROAD_STRAIGHT_EASTWEST,
     ROAD_STRAIGHT_NORTHSOUTH,
     ROAD_TURN_NORTHEAST,

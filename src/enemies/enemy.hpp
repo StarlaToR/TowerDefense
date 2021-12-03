@@ -16,7 +16,8 @@ protected:
     float distanceToCenter;
 public:
     void setSlowed(int value);
-    void update(TileMap* t);
+    bool update(TileMap* t);
     void getDamage(int damageDealt) {}
-    virtual ~Enemy() =0;
+    virtual ~Enemy() = 0;
+
 };

@@ -26,35 +26,11 @@ void DrawTileMap(DataHolder* in, RenderType type)
         Vec2D tilePos = Vec2D(i%in->map.getWidth(),i/in->map.getWidth());
         Vec2D origin = Vec2D(50,50)+Vec2D(48,48)*tilePos;
         char tile = in->map.getTileAt(tilePos);
-        DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(tile),toRayLibRectangle(origin,Vec2D(48,48)),{0,0},0.0f,WHITE);
-        if (type >= EXTENDED)
+        if (type == NORMAL && tile >= ROAD_THREEWAY_FORCE_NORTH && tile <= ROAD_THREEWAY_FORCE_WEST)
         {
-            if (tile >= ROAD_THREEWAY_FORCE_NORTH && tile <= ROAD_THREEWAY_FORCE_WEST)
-            {
-                Vec2D center = origin + Vec2D(24,24);
-                switch (tile)
-                {
-                case ROAD_THREEWAY_FORCE_NORTH:
-                    DrawTriangle(center+Vec2D(-10,4),center+Vec2D(10,4),center+Vec2D(0,-6),Fade(RED,0.4));
-                    break;
-
-                case ROAD_THREEWAY_FORCE_EAST:
-                    DrawTriangle(center+Vec2D(-4,-10),center+Vec2D(-4,10),center+Vec2D(6,0),Fade(RED,0.4));
-                    break;
-                
-                case ROAD_THREEWAY_FORCE_SOUTH:
-                    DrawTriangle(center+Vec2D(10, -4),center+Vec2D(-10,-4),center+Vec2D(0,6),Fade(RED,0.4));
-                    break;
-
-                case ROAD_THREEWAY_FORCE_WEST:
-                    DrawTriangle(center+Vec2D(4,10),center+Vec2D(4,-10),center+Vec2D(-6,0),Fade(RED,0.4));
-                    break;
-
-                default:
-                    break;
-                }
-            }
+            tile = tile-7;
         }
+        DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(tile),toRayLibRectangle(origin,Vec2D(48,48)),{0,0},0.0f,WHITE);
         if (type >= BORDER)
         {
             DrawRectangleLinesEx(toRayLibRectangle(origin,Vec2D(48,48)),1,BLACK);

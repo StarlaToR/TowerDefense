@@ -5,6 +5,12 @@ void DataHolder::unloadDatas()
 {
     UnloadTexture(logo);
     UnloadTexture(tileTexture);
+    UnloadTexture(background);
+    UnloadTexture(title);
+    UnloadTexture(credit);
+    UnloadTexture(button);
+    UnloadFont(fontButton);
+    UnloadFont(fontTitle);
 }
 
 void DataHolder::handleGameState()
@@ -46,6 +52,19 @@ void DataHolder::handleGameState()
     }
     else if (gameState == GAMEPLAY)
     {
+        std::forward_list<Enemy*>::iterator old = enemies.before_begin();
+        for (std::forward_list<Enemy*>::iterator i = enemies.begin(); i != enemies.end();)
+        {
+            if ((*i)->update(&map))
+            {
+                i = enemies.erase_after(old);
+            }
+            else
+            {
+                old = i;
+                i++;
+            }
+        }
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
         {
             if (buttonSelected == 1)

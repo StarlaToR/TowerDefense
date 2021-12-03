@@ -2,15 +2,15 @@
 
 void Enemy::setSlowed(int value)
 {
-    this->slowTimer = value;
+    slowTimer = value;
 }
 
-void Enemy::update(TileMap *t)
+bool Enemy::update(TileMap* t)
 {
-    Vec2D currentTilePosition((int)this->getPosition().x, (int)this->getPosition().y);
+    Vec2D currentTilePosition((int)getPosition().x, (int)getPosition().y);
     if ((currentTilePosition.x != currentTile.x || currentTilePosition.y != currentTile.y) && (position - targetPos).lengthSquared() < distanceToCenter)
     {
-
+        
         currentTile = currentTilePosition;
         char newTile = t->getTileAt(currentTilePosition);
 
@@ -38,6 +38,7 @@ void Enemy::update(TileMap *t)
     rotation = mod(rotation - dec, -PI, PI);
     this->position.x += this->speed / 60.0f * cosf(rotation);
     this->position.y += this->speed / 60.0f * sinf(rotation);
+    return (position.x < 0 || position.y < 0 || position.x >= t->getWidth() || position.y >= t->getHeight());
 }
 
 Enemy::~Enemy()

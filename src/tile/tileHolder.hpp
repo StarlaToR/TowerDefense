@@ -4,8 +4,9 @@ class TileHolder
 {
     public:
         TileID tile;
+        bool isDeco;
         TileHolder() : tile(GRASS) {}
         TileHolder(TileID id) : tile(id) {}
 
-        char getTexture() {return tile;}
+        char getTile() {return tile;}
 };

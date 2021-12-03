@@ -82,7 +82,10 @@ char getTileConnexions(char tile)
 }
 
 void Tiles::registerTiles()
-{
+{for (int i = 0; i < END_WEST; i++) {
+    tileCrops.push_back(Rectangle{ (float)(i%11*128), (float)(i/11*128), 128, 128});
+}
+/*
     tileCrops.push_back(Rectangle{ 384, 896, 128, 128});
     tileCrops.push_back(Rectangle{ 256, 128, 128, 128});
     tileCrops.push_back(Rectangle{ 0, 768, 128, 128});
@@ -106,4 +109,5 @@ void Tiles::registerTiles()
     tileCrops.push_back(Rectangle{ 0, 768, 128, 128});
     tileCrops.push_back(Rectangle{ 128, 896, 128, 128});
     tileCrops.push_back(Rectangle{ 0, 768, 128, 128});
+    */
 }

@@ -15,13 +15,11 @@ int main(void)
     InitAudioDevice();
     SetTargetFPS(60);
     holder.logo = LoadTexture("assets/textures/logo_group.png");
-    holder.tileTexture = LoadTexture("assets/textures/towerDefense_tilesheet.png");
     holder.background = LoadTexture("assets/textures/Marie-Antoine.png");
     holder.title = LoadTexture("assets/textures/title.png");
     holder.credit = LoadTexture("assets/textures/credit.png");
     holder.button = LoadTexture("assets/textures/button.png");
-    holder.logo = LoadTexture("assets/textures/logo_group.png");
-    holder.tileTexture = LoadTexture("assets/textures/towerDefense_tilesheet.png");
+    holder.tileTexture = LoadTexture("assets/textures/tileSheet.png");
     holder.fontButton = LoadFontEx("assets/font/ethnocentric.ttf", 100, 0, 0);
     holder.fontTitle = LoadFontEx("assets/font/GODOFWAR.TTF", 100, 0, 0);
     holder.map = TileMap();
@@ -42,8 +40,6 @@ int main(void)
         if (IsKeyPressed(KEY_TAB)) SetTargetFPS(600);
         if (IsKeyReleased(KEY_TAB)) SetTargetFPS(60);
         holder.handleGameState();
-        if (holder.gameState == 2)
-        for (std::forward_list<Enemy*>::iterator i = holder.enemies.begin(); i != holder.enemies.end(); i++) (*i)->update(&holder.map);
         renderMain(&holder);
     }
     holder.unloadDatas();
