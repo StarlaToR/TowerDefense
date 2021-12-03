@@ -7,13 +7,13 @@ class ClassicTower : public Tower
 public:
     ClassicTower()
     {
-        damage = 5;
+        damage = 1;
         range = 50;
         health = 100;
         maxHealth = 100;
-        attackSpeed = 25;
-        attackCooldown = 25;
-        cost = 10;
+        attackSpeed = 1;
+        attackCooldown = 1;
+        cost = 5;
     }
 
     void update();

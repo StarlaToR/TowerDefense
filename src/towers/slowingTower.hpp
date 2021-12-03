@@ -11,7 +11,7 @@ public:
         maxHealth = 100;
         attackSpeed = 10;
         attackCooldown = 10;
-        cost = 15;
+        cost = 10;
     }
 
     void update();

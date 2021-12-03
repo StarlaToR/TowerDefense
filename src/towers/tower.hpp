@@ -1,5 +1,6 @@
 #pragma once
 #include "../entities/entity.hpp"
+#include "../enemies/enemy.hpp"
 
 class Tower: public Entity
 {
@@ -14,4 +15,7 @@ public:
     {
         health -= damageDealt;
     }
+
+    void update(TileMap* t);
+    void attack(Enemy* e);
 };

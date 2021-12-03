@@ -6,13 +6,13 @@ class ExplosiveTower : public Tower
 public:
     ExplosiveTower()
     {
-        damage = 25;
-        range = 30;
+        damage = 15;
+        range = 70;
         health = 150;
         maxHealth = 150;
-        attackSpeed = 30;
-        attackCooldown = 30;
-        cost = 50;
+        attackSpeed = 20;
+        attackCooldown = 20;
+        cost = 20;
     }
 
     
