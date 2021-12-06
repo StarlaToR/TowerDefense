@@ -20,3 +20,8 @@ void SlowingTower::attack(Enemy* e)
     e->setSlowed(slowingTime);
     attackCooldown = attackSpeed;
 }
+
+int SlowingTower::getTexture()
+{
+    return 61;
+}

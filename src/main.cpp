@@ -6,6 +6,9 @@
 #include "enemies/classicEnemy.hpp"
 #include "enemies/bigEnemy.hpp"
 #include "enemies/healerEnemy.hpp"
+#include "towers/classicTower.hpp"
+
+#include "towers/slowingTower.hpp"
 
 int main(void)
 {
@@ -21,7 +24,7 @@ int main(void)
     holder.button = LoadTexture("assets/textures/button.png");
     holder.tileTexture = LoadTexture("assets/textures/tileSheet.png");
     holder.fontButton = LoadFontEx("assets/font/ethnocentric.ttf", 100, 0, 0);
-    holder.fontTitle = LoadFontEx("assets/font/GODOFWAR.TTF", 100, 0, 0);
+    holder.fontTitle = LoadFontEx("assets/font/godofwar.ttf", 100, 0, 0);
     holder.map = TileMap();
     FILE* sv = fopen("assets/maps/default.bin","rb");
     fread(&holder.map,1,sizeof(holder.map),sv);
@@ -34,6 +37,8 @@ int main(void)
         holder.enemies.push_front(new HealerEnemy(&holder.map));
     }
 
+    holder.towers.push_front(new ClassicTower(holder.map.startPos+Vec2D(8,1)));
+
     // Main game loop
     while (!WindowShouldClose() && !holder.closeWindow == true)
     {
@@ -43,7 +48,6 @@ int main(void)
         renderMain(&holder);
     }
     holder.unloadDatas();
-    for (std::forward_list<Enemy*>::iterator i = holder.enemies.begin(); i != holder.enemies.end(); i++) delete *i;
     CloseAudioDevice();
     CloseWindow();
 

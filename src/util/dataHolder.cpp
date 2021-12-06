@@ -3,6 +3,8 @@
 
 void DataHolder::unloadDatas()
 {
+    for (std::forward_list<Enemy*>::iterator i = enemies.begin(); i != enemies.end(); i++) delete *i;
+    for (std::forward_list<Tower*>::iterator i = towers.begin(); i != towers.end(); i++) delete *i;
     UnloadTexture(logo);
     UnloadTexture(tileTexture);
     UnloadTexture(background);
@@ -52,6 +54,10 @@ void DataHolder::handleGameState()
     }
     else if (gameState == GAMEPLAY)
     {
+        for (std::forward_list<Tower*>::iterator i = towers.begin(); i != towers.end(); i++)
+        {
+            (*i)->update(&enemies);
+        }
         std::forward_list<Enemy*>::iterator old = enemies.before_begin();
         for (std::forward_list<Enemy*>::iterator i = enemies.begin(); i != enemies.end();)
         {

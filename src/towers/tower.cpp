@@ -1,8 +1,8 @@
 #include "tower.hpp"
 
-void Tower::update(DataHolder *t)
+void Tower::update(std::forward_list<Enemy*>* enemyIn)
 {
-    Enemy *target = getNearestEnemy(t);
+    Enemy *target = getNearestEnemy(enemyIn);
     
     if(target != nullptr)
     {
@@ -32,11 +32,11 @@ void Tower::update(DataHolder *t)
     }
 }
 
-Enemy *Tower::getNearestEnemy(DataHolder *holder)
+Enemy *Tower::getNearestEnemy(std::forward_list<Enemy*>* enemyIn)
 {
     Enemy *nearestEnemy = nullptr;
     float shortestDistance = 0;
-    for (std::forward_list<Enemy *>::iterator i = holder->enemies.begin(); i != holder->enemies.end(); i++)
+    for (std::forward_list<Enemy*>::iterator i = enemyIn->begin(); i != enemyIn->end(); i++)
     {
         if (((*i)->getPosition() - position).getLength() <= range)
         {

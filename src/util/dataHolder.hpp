@@ -6,6 +6,7 @@
 #include "../tile/tileMap.hpp"
 #include "../tile/tiles.hpp"
 #include "../enemies/enemy.hpp"
+#include "../towers/tower.hpp"
 
 typedef enum GameState
 {
@@ -43,6 +44,7 @@ public:
     RenderType tileRenderType = EXTENDED;
     Vec2D dragPos = Vec2D(-1,-1);
     std::forward_list<Enemy*> enemies = std::forward_list<Enemy*>();
+    std::forward_list<Tower*> towers = std::forward_list<Tower*>();
 
     DataHolder() {}
     ~DataHolder() {}

@@ -1,7 +1,7 @@
 #pragma once
 #include "../entities/entity.hpp"
 #include "../enemies/enemy.hpp"
-#include "../util/dataHolder.hpp"
+#include <forward_list>
 
 class Tower: public Entity
 {
@@ -17,7 +17,7 @@ public:
         health -= damageDealt;
     }
 
-    void update(DataHolder* t);
-    virtual void attack(Enemy* e);
-    Enemy* getNearestEnemy(DataHolder* t);
+    void update(std::forward_list<Enemy*>* enemyIn);
+    virtual void attack(Enemy* e) = 0;
+    Enemy* getNearestEnemy(std::forward_list<Enemy*>* enemyIn);
 };
