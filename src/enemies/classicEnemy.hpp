@@ -8,5 +8,5 @@ public:
 
     ClassicEnemy() {};
 
-    int getTexture() override {return 0;}
+    int getTexture() override {return 149;}
 };

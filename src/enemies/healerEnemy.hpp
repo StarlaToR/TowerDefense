@@ -8,5 +8,5 @@ public:
     HealerEnemy() {};
 
     void heal();
-    int getTexture() override {return 2;}
+    int getTexture() override {return 150;}
 };

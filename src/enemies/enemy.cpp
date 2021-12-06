@@ -34,10 +34,22 @@ bool Enemy::update(TileMap* t)
             tmpDir += PI;
         }
     }
-    float dec = cut(mod(rotation - tmpDir, -PI, PI), -angularVelocity, angularVelocity);
+    float ang = mod(rotation - tmpDir, -PI, PI);
+    float dec = cut(ang, -angularVelocity, angularVelocity);
     rotation = mod(rotation - dec, -PI, PI);
-    this->position.x += this->speed / 60.0f * cosf(rotation);
-    this->position.y += this->speed / 60.0f * sinf(rotation);
+    if (ang > 1.6f/3.0f*PI || ang < -1.6f/3.0f*PI)
+    {
+        shouldStop = true;
+    }
+    if (!shouldStop)
+    {
+        this->position.x += this->speed / 60.0f * cosf(rotation);
+        this->position.y += this->speed / 60.0f * sinf(rotation);
+    }
+    else
+    {
+        shouldStop = !(ang < angularVelocity && ang > -angularVelocity);
+    }
     return (position.x < 0 || position.y < 0 || position.x >= t->getWidth() || position.y >= t->getHeight());
 }
 

@@ -30,6 +30,10 @@ Direction getNextDirection(char tilePos, Direction dir)
     {
         return Direction(tilePos-ROAD_THREEWAY_FORCE_NORTH);
     }
+    else if (tilePos >= ROAD_NORTH && tilePos <= ROAD_WEST)
+    {
+        return Direction(tilePos-ROAD_NORTH);
+    }
     else
     {
         return dir;
@@ -82,32 +86,9 @@ char getTileConnexions(char tile)
 }
 
 void Tiles::registerTiles()
-{for (int i = 0; i < END_WEST; i++) {
-    tileCrops.push_back(Rectangle{ (float)(i%11*128), (float)(i/11*128), 128, 128});
-}
-/*
-    tileCrops.push_back(Rectangle{ 384, 896, 128, 128});
-    tileCrops.push_back(Rectangle{ 256, 128, 128, 128});
-    tileCrops.push_back(Rectangle{ 0, 768, 128, 128});
-    tileCrops.push_back(Rectangle{ 128, 896, 128, 128});
-    tileCrops.push_back(Rectangle{ 128, 384, 128, 128});
-    tileCrops.push_back(Rectangle{ 0, 640, 128, 128});
-    tileCrops.push_back(Rectangle{ 0, 512, 128, 128});
-    tileCrops.push_back(Rectangle{ 128, 256, 128, 128});
-    tileCrops.push_back(Rectangle{ 384, 384, 128, 128});
-    tileCrops.push_back(Rectangle{ 128, 768, 128, 128});
-    tileCrops.push_back(Rectangle{ 384, 768, 128, 128});
-    tileCrops.push_back(Rectangle{ 512, 512, 128, 128});
-    tileCrops.push_back(Rectangle{ 128, 640, 128, 128});
-    tileCrops.push_back(Rectangle{ 384, 512, 128, 128});
-    tileCrops.push_back(Rectangle{ 384, 512, -128, 128});
-    tileCrops.push_back(Rectangle{ 384, 384, 128, 128});
-    tileCrops.push_back(Rectangle{ 128, 768, 128, 128});
-    tileCrops.push_back(Rectangle{ 384, 768, 128, 128});
-    tileCrops.push_back(Rectangle{ 512, 512, 128, 128});
-    tileCrops.push_back(Rectangle{ 128, 896, 128, 128});
-    tileCrops.push_back(Rectangle{ 0, 768, 128, 128});
-    tileCrops.push_back(Rectangle{ 128, 896, 128, 128});
-    tileCrops.push_back(Rectangle{ 0, 768, 128, 128});
-    */
+{
+    for (int i = 0; i < TOWER_BASE; i++)
+    {
+        tileCrops.push_back(Rectangle{ (float)(i%11*128), (float)(i/11*128), 128, 128});
+    }
 }

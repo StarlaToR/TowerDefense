@@ -4,7 +4,7 @@
 #include <raylib.h>
 #include <vector>
 
-enum TileID : char
+enum TileID : unsigned char
 {
     GRASS = 0,
     SAND,
@@ -39,6 +39,7 @@ enum TileID : char
     END_EAST,
     END_SOUTH,
     END_WEST,
+    TOWER_BASE = 153,
 };
 
 class Tiles {

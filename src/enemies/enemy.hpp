@@ -14,6 +14,7 @@ protected:
     Vec2D targetPos;
     float angularVelocity;
     float distanceToCenter;
+    bool shouldStop;
 public:
     void setSlowed(int value);
     bool update(TileMap* t);
