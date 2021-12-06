@@ -47,6 +47,7 @@ public:
     std::forward_list<Enemy*> enemies = std::forward_list<Enemy*>();
     std::forward_list<Tower*> towers = std::forward_list<Tower*>();
     std::forward_list<Missile*> missiles = std::forward_list<Missile*>();
+    int money;
 
     DataHolder() {}
     ~DataHolder() {}

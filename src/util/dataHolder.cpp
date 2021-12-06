@@ -75,8 +75,9 @@ void DataHolder::handleGameState()
         std::forward_list<Enemy*>::iterator oldE = enemies.before_begin();
         for (std::forward_list<Enemy*>::iterator i = enemies.begin(); i != enemies.end();)
         {
-            if ((*i)->update(&map))
+            if ((*i)->update(&map, &enemies))
             {
+                money += (*i)->getReward();
                 i = enemies.erase_after(oldE);
             }
             else

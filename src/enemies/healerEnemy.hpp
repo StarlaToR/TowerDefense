@@ -12,7 +12,7 @@ public:
     HealerEnemy(TileMap* t);
     HealerEnemy() {};
 
-    bool update(TileMap* t);
-    void heal(std::forward_list<Enemy*>* enemies);
+    bool update(TileMap* t, std::forward_list<Enemy*>* enemies);
+    void heal(std::forward_list<Enemy*>* enemies, Enemy* currentEnemy);
     int getTexture() override {return 150;}
 };

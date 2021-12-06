@@ -17,9 +17,9 @@ protected:
     bool shouldStop;
 public:
     void setSlowed(int value);
-    bool update(TileMap* t);
+    bool update(TileMap* t, std::forward_list<Enemy*>* enemies);
     void getDamage(int damageDealt) {health = cut(health-damageDealt,0,maxHealth);}
     void getHealed(int heal);
+    int getReward();
     virtual ~Enemy() = 0;
-
 };
