@@ -121,7 +121,7 @@ void renderEditor(DataHolder* in)
     } 
     DrawText(TextFormat("Particles : %d",counter),10,140,20,BLACK);
 
-    DrawText(TextFormat("Money : %d",in->money),10,140,20,BLACK);
+    DrawText(TextFormat("Money : %d",in->money),10,170,20,BLACK);
 
 }
 

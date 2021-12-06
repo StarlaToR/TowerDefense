@@ -34,8 +34,8 @@ int main(void)
     {
         holder.enemies.push_front(new ClassicEnemy(&holder.map));
         holder.enemies.push_front(new BigEnemy(&holder.map));
-        holder.enemies.push_front(new HealerEnemy(&holder.map));
     }
+    holder.enemies.push_front(new HealerEnemy(&holder.map));
 
     
     holder.towers.push_front(new ExplosiveTower(holder.map.startPos+Vec2D(7,1)));

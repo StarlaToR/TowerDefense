@@ -1,6 +1,7 @@
 #pragma once
 #include "../entities/entity.hpp"
 #include "../tile/tileMap.hpp"
+#include "../particles/particle.hpp"
 
 class Enemy : public Entity
 {
@@ -17,7 +18,7 @@ protected:
     bool shouldStop = false;
 public:
     void setSlowed(int value);
-    bool update(TileMap* t, std::forward_list<Enemy*>* enemies);
+    virtual bool update(TileMap* t, std::forward_list<Enemy*>* enemies, std::forward_list<Particle*>* particles);
     void getDamage(int damageDealt) {health = cut(health-damageDealt,0,maxHealth);}
     void getHealed(int heal);
     int getReward();

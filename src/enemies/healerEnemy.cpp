@@ -1,4 +1,5 @@
 #include "healerEnemy.hpp"
+#include "../particles/heal.hpp"
 
 HealerEnemy::HealerEnemy(TileMap* t)
 {
@@ -10,7 +11,7 @@ HealerEnemy::HealerEnemy(TileMap* t)
     rotation = 0;
     speed = 3;
     damage = 1;
-    range = 1.0f;
+    range = 3.0f;
     healing = 5;
     healingCooldown = 0;
 
@@ -22,7 +23,7 @@ HealerEnemy::HealerEnemy(TileMap* t)
     distanceToCenter = 0.1;
 }
 
-void HealerEnemy::heal(std::forward_list<Enemy*>* enemies, Enemy* currentEnemy)
+void HealerEnemy::heal(std::forward_list<Enemy*>* enemies, Enemy* currentEnemy, std::forward_list<Particle*>* particles)
 {
     bool healed = true;
     for (std::forward_list<Enemy*>::iterator i = enemies->begin(); i != enemies->end(); i++)
@@ -31,17 +32,19 @@ void HealerEnemy::heal(std::forward_list<Enemy*>* enemies, Enemy* currentEnemy)
         {
             (*i)->getHealed(healing);
             healed = false;
+            particles->push_front(new HealParticle((*i)->getPosition()));
         }
     }
     if (healed)
     {
         getHealed(healing);
+        particles->push_front(new HealParticle(position));
     }
     healingCooldown = 30;
 
 }
 
-bool HealerEnemy::update(TileMap* t, std::forward_list<Enemy*>* enemies)
+bool HealerEnemy::update(TileMap* t, std::forward_list<Enemy*>* enemies, std::forward_list<Particle*>* particles)
 {
     slowTimer = cut(slowTimer-1, 0, __INT_MAX__);
     healingCooldown = cut(healingCooldown-1, 0, __INT_MAX__);
@@ -90,7 +93,7 @@ bool HealerEnemy::update(TileMap* t, std::forward_list<Enemy*>* enemies)
         shouldStop = !(ang < vAng && ang > -vAng);
     }
 
-    heal(enemies, this);
+    if (healingCooldown <= 0) heal(enemies, this, particles);
 
     return (health <= 0 || position.x < 0 || position.y < 0 || position.x >= t->getWidth() || position.y >= t->getHeight());
 }

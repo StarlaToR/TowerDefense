@@ -5,7 +5,7 @@ void Enemy::setSlowed(int value)
     slowTimer = value;
 }
 
-bool Enemy::update(TileMap* t, std::forward_list<Enemy*>* enemies)
+bool Enemy::update(TileMap* t, std::forward_list<Enemy*>* enemies, std::forward_list<Particle*>* particles)
 {
     slowTimer = cut(slowTimer-1, 0, __INT_MAX__);
     Vec2D currentTilePosition((int)getPosition().x, (int)getPosition().y);
