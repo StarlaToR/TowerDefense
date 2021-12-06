@@ -50,7 +50,7 @@ bool Enemy::update(TileMap* t)
     {
         shouldStop = !(ang < angularVelocity && ang > -angularVelocity);
     }
-    return (position.x < 0 || position.y < 0 || position.x >= t->getWidth() || position.y >= t->getHeight());
+    return (health <= 0 || position.x < 0 || position.y < 0 || position.x >= t->getWidth() || position.y >= t->getHeight());
 }
 
 Enemy::~Enemy()
