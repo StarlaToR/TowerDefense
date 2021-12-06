@@ -22,8 +22,8 @@ class TileMap
         Vec2D startPos;
         Vec2D endPos;
 
-        char firstLayer[MAP_HEIGHT*MAP_WIDTH];
-        char secondLayer[MAP_HEIGHT*MAP_WIDTH];
+        unsigned char firstLayer[MAP_HEIGHT*MAP_WIDTH];
+        unsigned char secondLayer[MAP_HEIGHT*MAP_WIDTH];
 
         TileMap();
         TileMap(Vec2D start, Vec2D end);

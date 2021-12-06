@@ -40,12 +40,12 @@ char getTileRoadByConnexion(char connect)
         }
 }
 
-TileMap::TileMap() : startPos(Vec2D(0,0)), endPos(Vec2D(23,6))
+TileMap::TileMap() : startPos(Vec2D(0,6)), endPos(Vec2D(23,6))
 {
     for (int i = 0; i < MAP_WIDTH*MAP_HEIGHT; i++)
     {
-        firstLayer[i] = 0;
-        secondLayer[i] = -1;
+        firstLayer[i] = GRASS;
+        secondLayer[i] = UNDEFINED;
     }
 }
 

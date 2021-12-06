@@ -1,3 +1,5 @@
+#pragma once
+
 #include "tiles.hpp"
 
 class TileHolder
@@ -6,7 +8,16 @@ class TileHolder
         TileID tile;
         bool isDeco;
         TileHolder() : tile(GRASS) {}
-        TileHolder(TileID id) : tile(id) {}
+        TileHolder(TileID id, bool deco) : tile(id), isDeco(deco) {}
 
         char getTile() {return tile;}
 };
+
+class TileHolders {
+    public:
+        std::vector<TileHolder> holders = std::vector<TileHolder>();
+
+        TileHolders();
+};
+
+char getTileEquivalent(char tileIn);

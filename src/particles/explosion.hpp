@@ -1,3 +1,5 @@
+#pragma once
+
 #include "particle.hpp"
 
 class ExplosionParticle : public Particle
