@@ -7,13 +7,18 @@ ClassicTower::ClassicTower(Vec2D pos)
     range = 3;
     health = 100;
     maxHealth = 100;
-    attackSpeed = 15;
+    attackSpeed = 40;
     attackCooldown = 0;
     cost = 5;
+    angularVelocity = 0.1f;
 }
 
 int ClassicTower::getTexture()
 {
+    if (attackCooldown > 26)
+    {
+        return 121+(40-attackCooldown)/2;
+    }
     return 121;
 }
 

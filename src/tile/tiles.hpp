@@ -39,7 +39,18 @@ enum TileID : unsigned char
     END_EAST,
     END_SOUTH,
     END_WEST,
-    TOWER_BASE = 153,
+    DECO_TREE,
+    DECO_TREE_ALT,
+    DECO_BUSH,
+    DECO_BUSH_ALT,
+    DECO_OIL,
+    DECO_BARREL,
+    DECO_BARREL_ALT,
+    DECO_SPIKES,
+    DECO_SPIKES_ALT,
+    DECO_WOOD,
+    DECO_WOOD_ALT,
+    TOWER_BASE = 154,
 };
 
 class Tiles {

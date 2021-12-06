@@ -11,6 +11,7 @@ protected:
     int cost;
     int attackCooldown;
     int level;
+    float angularVelocity;
 
 public:
     void getDamage(int damageDealt)
