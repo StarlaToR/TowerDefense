@@ -15,5 +15,6 @@ ExplosiveTower::ExplosiveTower(Vec2D pos)
 
 void ExplosiveTower::attack(Enemy* e)
 {
-    
-}
+    Missile m(e, getPosition(), damage);
+    attackCooldown = attackSpeed;
+} 

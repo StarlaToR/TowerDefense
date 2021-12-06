@@ -1,3 +1,4 @@
+#pragma once
 #include "tower.hpp"
 
 class SlowingTower : public Tower

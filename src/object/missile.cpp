@@ -1,10 +1,10 @@
 #include "missile.hpp"
 
-Missile::Missile(Enemy* e, Vec2D pos, float rot, int dam)
+Missile::Missile(Enemy* e, Vec2D pos, int dam)
 {
     target = e;
     position = pos;
-    rotation = rot;
+    rotation = 0;
     damage = dam;
 }
 

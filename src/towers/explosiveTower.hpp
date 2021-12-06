@@ -1,5 +1,6 @@
 #pragma once
 #include "tower.hpp"
+#include "missile.hpp"
 
 class ExplosiveTower : public Tower
 {
