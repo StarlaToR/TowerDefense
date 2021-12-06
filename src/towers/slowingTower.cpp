@@ -3,7 +3,7 @@
 SlowingTower::SlowingTower(Vec2D pos)
 {
     damage = 1;
-    range = 50;
+    range = 2;
     health = 100;
     maxHealth = 100;
     attackSpeed = 60;
