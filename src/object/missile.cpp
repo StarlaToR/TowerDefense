@@ -8,13 +8,13 @@ Missile::Missile(Enemy* e, Vec2D pos, int dam)
     damage = dam;
 }
 
-bool Missile::update(DataHolder* holder)
+bool Missile::update(std::forward_list<Enemy*> enemies)
 {
     Vec2D dif = target->getPosition() - position;
     if(dif.getLength() <= 0.1f)
     {
         target->getDamage(damage);
-        for (std::forward_list<Enemy *>::iterator i = holder->enemies.begin(); i != holder->enemies.end(); i++)
+        for (std::forward_list<Enemy *>::iterator i = enemies.begin(); i != enemies.end(); i++)
         {
             if(((*i)->getPosition()-target->getPosition()).getLength() <= 0.5f)
             {

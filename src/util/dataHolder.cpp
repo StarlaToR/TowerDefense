@@ -56,7 +56,7 @@ void DataHolder::handleGameState()
     {
         for (std::forward_list<Tower*>::iterator i = towers.begin(); i != towers.end(); i++)
         {
-            (*i)->update(&enemies);
+            (*i)->update(&enemies, missiles);
         }
         std::forward_list<Enemy*>::iterator old = enemies.before_begin();
         for (std::forward_list<Enemy*>::iterator i = enemies.begin(); i != enemies.end();)

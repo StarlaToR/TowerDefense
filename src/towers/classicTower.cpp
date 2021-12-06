@@ -17,7 +17,7 @@ int ClassicTower::getTexture()
     return 60;
 }
 
-void ClassicTower::attack(Enemy* e)
+void ClassicTower::attack(Enemy* e,std::forward_list<Missile*> missiles)
 {
     e->getDamage(damage);
     attackCooldown = attackSpeed;

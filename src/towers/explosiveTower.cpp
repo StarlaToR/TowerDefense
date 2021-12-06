@@ -13,8 +13,8 @@ ExplosiveTower::ExplosiveTower(Vec2D pos)
     rotation = 0;
 }
 
-void ExplosiveTower::attack(Enemy* e)
+void ExplosiveTower::attack(Enemy* e, std::forward_list<Missile*> missiles)
 {
-    Missile m(e, getPosition(), damage);
+    missiles.push_front(new Missile(e, getPosition(), damage));
     attackCooldown = attackSpeed;
 } 

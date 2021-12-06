@@ -2,7 +2,7 @@
 
 #include "object.hpp"
 #include "../enemies/enemy.hpp"
-#include "../util/dataHolder.hpp"
+#include <forward_list>
 
 class Missile: public Object
 {
@@ -11,6 +11,6 @@ private:
 public:
     Missile(Enemy* e, Vec2D pos, int dam);
 
-    bool update(DataHolder* holder);
+    bool update(std::forward_list<Enemy*> enemies);
 
 };

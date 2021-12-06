@@ -1,6 +1,6 @@
 #include "tower.hpp"
 
-void Tower::update(std::forward_list<Enemy*>* enemyIn)
+void Tower::update(std::forward_list<Enemy*>* enemyIn,std::forward_list<Missile*> missiles)
 {
     Enemy *target = getNearestEnemy(enemyIn);
     
@@ -24,7 +24,7 @@ void Tower::update(std::forward_list<Enemy*>* enemyIn)
             }
         }
         rotation = tmpDir;
-        attack(target);
+        attack(target, missiles);
     }
     if (attackCooldown > 0)
     {
