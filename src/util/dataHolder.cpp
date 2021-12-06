@@ -14,6 +14,7 @@ void DataHolder::unloadDatas()
     UnloadTexture(button);
     UnloadFont(fontButton);
     UnloadFont(fontTitle);
+    UnloadMusicStream(music);
 }
 
 void DataHolder::handleGameState()
@@ -32,28 +33,80 @@ void DataHolder::handleGameState()
         {
             if (buttonSelected == 1) 
             {
-                gameState = GAMEPLAY;
+                gameState = MENUPLAY;
             }
             else if (buttonSelected == 2) 
             {
-                gameState = LOAD;
+                gameState = OPTION;
             }
             else if (buttonSelected == 3) 
             {
-                gameState = OPTION;
+                gameState = CREDIT;
             }
             else if (buttonSelected == 4) 
             {
-                gameState = CREDIT;
+                gameState = EXIT;
             }
             else if (buttonSelected == 5) 
             {
-                gameState = EXIT;
+                PlayMusicStream(music);
             }
             
         }
     }
-    else if (gameState == GAMEPLAY)
+    else if (gameState == MENUPLAY)
+    {
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+        {
+            if (buttonSelected == 1) 
+            {
+                gameState = GAMEPLAY;
+            }
+            else if (buttonSelected == 2) 
+            {
+                gameState = EDITOR;
+            }
+            else if (buttonSelected == 3) 
+            {
+                gameState = MENU;
+            }
+            
+        }
+    }
+    else if (gameState == OPTION)
+    {
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+        {
+            if (buttonSelected == 1) 
+            {
+                gameState = MENU;
+            }
+            
+        }
+    }
+    else if (gameState == CREDIT)
+    {
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+        {
+            if (buttonSelected == 1) 
+            {
+                gameState = MENU;
+            }
+            
+        }
+    }
+    else if (gameState == LOAD)
+    {
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+        {
+            if (buttonSelected == 1) 
+            {
+                gameState = GAMEPLAY;
+            }
+            
+        }
+    }
+    else if (gameState == EDITOR)
     {
         handleTowers(&towers, &enemies, &missiles);
         handleMissiles(&missiles, &enemies, &particles);

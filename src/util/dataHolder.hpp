@@ -17,7 +17,9 @@ typedef enum GameState
 {
     INTRO,
     MENU,
+    MENUPLAY,
     GAMEPLAY,
+    EDITOR,
     LOAD,
     OPTION,
     CREDIT,
@@ -39,6 +41,8 @@ public:
     Texture2D credit;
     Texture2D title;
     Texture2D logoIsart;
+    Sound buttonSound;
+    Music music;
     Font fontButton;
     Font fontTitle;
     TileMap map;

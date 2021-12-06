@@ -18,10 +18,12 @@ int main(void)
     InitAudioDevice();
     SetTargetFPS(60);
     holder.logo = LoadTexture("assets/textures/logo_group.png");
-    holder.background = LoadTexture("assets/textures/Marie-Antoine.png");
+    holder.background = LoadTexture("assets/textures/background.png");
     holder.title = LoadTexture("assets/textures/title.png");
     holder.credit = LoadTexture("assets/textures/credit.png");
     holder.button = LoadTexture("assets/textures/button.png");
+    holder.buttonSound = LoadSound("assets/song/button.mp3");
+    holder.music = LoadMusicStream("assets/song/ouioui.mp3");
     holder.tileTexture = LoadTexture("assets/textures/tileSheet.png");
     holder.fontButton = LoadFontEx("assets/font/ethnocentric.ttf", 100, 0, 0);
     holder.fontTitle = LoadFontEx("assets/font/godofwar.ttf", 100, 0, 0);
@@ -43,6 +45,8 @@ int main(void)
     // Main game loop
     while (!WindowShouldClose() && !holder.closeWindow == true)
     {
+        UpdateMusicStream(holder.music);
+        SetMusicVolume(holder.music, 20.0f);
         if (IsKeyPressed(KEY_TAB)) SetTargetFPS(600);
         if (IsKeyReleased(KEY_TAB)) SetTargetFPS(60);
         holder.handleGameState();
