@@ -11,6 +11,6 @@ private:
 public:
     Missile(Enemy* e, Vec2D pos, int dam);
 
-    bool update(std::forward_list<Enemy*> enemies);
+    bool update(std::forward_list<Enemy*>* enemies);
 
 };

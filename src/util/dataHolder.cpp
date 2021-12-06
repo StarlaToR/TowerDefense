@@ -5,6 +5,7 @@ void DataHolder::unloadDatas()
 {
     for (std::forward_list<Enemy*>::iterator i = enemies.begin(); i != enemies.end(); i++) delete *i;
     for (std::forward_list<Tower*>::iterator i = towers.begin(); i != towers.end(); i++) delete *i;
+    for (std::forward_list<Missile*>::iterator i = missiles.begin(); i != missiles.end(); i++) delete *i;
     UnloadTexture(logo);
     UnloadTexture(tileTexture);
     UnloadTexture(background);
@@ -56,18 +57,31 @@ void DataHolder::handleGameState()
     {
         for (std::forward_list<Tower*>::iterator i = towers.begin(); i != towers.end(); i++)
         {
-            (*i)->update(&enemies, missiles);
+            (*i)->update(&enemies, &missiles);
         }
-        std::forward_list<Enemy*>::iterator old = enemies.before_begin();
+        std::forward_list<Missile*>::iterator oldM = missiles.before_begin();
+        for (std::forward_list<Missile*>::iterator i = missiles.begin(); i != missiles.end();)
+        {
+            if ((*i)->update(&enemies))
+            {
+                i = missiles.erase_after(oldM);
+            }
+            else
+            {
+                oldM = i;
+                i++;
+            }
+        }
+        std::forward_list<Enemy*>::iterator oldE = enemies.before_begin();
         for (std::forward_list<Enemy*>::iterator i = enemies.begin(); i != enemies.end();)
         {
             if ((*i)->update(&map))
             {
-                i = enemies.erase_after(old);
+                i = enemies.erase_after(oldE);
             }
             else
             {
-                old = i;
+                oldE = i;
                 i++;
             }
         }

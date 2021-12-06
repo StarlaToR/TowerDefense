@@ -1,6 +1,6 @@
 #include "tower.hpp"
 
-void Tower::update(std::forward_list<Enemy*>* enemyIn,std::forward_list<Missile*> missiles)
+void Tower::update(std::forward_list<Enemy*>* enemyIn,std::forward_list<Missile*>* missiles)
 {
     Enemy *target = getNearestEnemy(enemyIn);
     

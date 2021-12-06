@@ -7,6 +7,7 @@ void Enemy::setSlowed(int value)
 
 bool Enemy::update(TileMap* t)
 {
+    slowTimer = cut(slowTimer-1, 0, __INT_MAX__);
     Vec2D currentTilePosition((int)getPosition().x, (int)getPosition().y);
     if ((currentTilePosition.x != currentTile.x || currentTilePosition.y != currentTile.y) && (position - targetPos).lengthSquared() < distanceToCenter)
     {
@@ -35,7 +36,8 @@ bool Enemy::update(TileMap* t)
         }
     }
     float ang = mod(rotation - tmpDir, -PI, PI);
-    float dec = cut(ang, -angularVelocity, angularVelocity);
+    float vAng = slowTimer > 0 ? angularVelocity/4 : angularVelocity;
+    float dec = cut(ang, -vAng, vAng);
     rotation = mod(rotation - dec, -PI, PI);
     if (ang > 1.6f/3.0f*PI || ang < -1.6f/3.0f*PI)
     {
@@ -43,12 +45,12 @@ bool Enemy::update(TileMap* t)
     }
     if (!shouldStop)
     {
-        this->position.x += this->speed / 60.0f * cosf(rotation);
-        this->position.y += this->speed / 60.0f * sinf(rotation);
+        this->position.x += this->speed / (slowTimer > 0 ? 240.0f : 60.0f) * cosf(rotation);
+        this->position.y += this->speed / (slowTimer > 0 ? 240.0f : 60.0f) * sinf(rotation);
     }
     else
     {
-        shouldStop = !(ang < angularVelocity && ang > -angularVelocity);
+        shouldStop = !(ang < vAng && ang > -vAng);
     }
     return (health <= 0 || position.x < 0 || position.y < 0 || position.x >= t->getWidth() || position.y >= t->getHeight());
 }

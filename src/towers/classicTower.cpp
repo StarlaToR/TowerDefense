@@ -10,6 +10,7 @@ ClassicTower::ClassicTower(Vec2D pos)
     attackSpeed = 40;
     attackCooldown = 0;
     cost = 5;
+    rotation = 0;
     angularVelocity = 0.1f;
 }
 
@@ -22,7 +23,7 @@ int ClassicTower::getTexture()
     return 121;
 }
 
-void ClassicTower::attack(Enemy* e,std::forward_list<Missile*> missiles)
+void ClassicTower::attack(Enemy* e,std::forward_list<Missile*>* missiles)
 {
     e->getDamage(damage);
     attackCooldown = attackSpeed;

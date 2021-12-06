@@ -9,12 +9,18 @@ ExplosiveTower::ExplosiveTower(Vec2D pos)
     attackSpeed = 90;
     attackCooldown = 0;
     cost = 20;
-    position = pos;
+    position = pos + Vec2D(0.5f,0.5f);
     rotation = 0;
+    angularVelocity = 0.07f;
 }
 
-void ExplosiveTower::attack(Enemy* e, std::forward_list<Missile*> missiles)
+void ExplosiveTower::attack(Enemy* e, std::forward_list<Missile*>* missiles)
 {
-    missiles.push_front(new Missile(e, getPosition(), damage));
+    missiles->push_front(new Missile(e, getPosition(), damage));
     attackCooldown = attackSpeed;
 } 
+
+int ExplosiveTower::getTexture()
+{
+    return 61;
+}

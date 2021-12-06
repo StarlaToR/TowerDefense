@@ -102,10 +102,17 @@ void renderEditor(DataHolder* in)
     for (std::forward_list<Tower*>::iterator i = in->towers.begin(); i != in->towers.end(); i++)
     {
         DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(153),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(24,24),0,LIGHTGRAY);
-        DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at((*i)->getTexture()),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(64,64)),Vec2D(32,32),(*i)->getRotation()*RAD2DEG+90.0f,GRAY);
+        DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at((*i)->getTexture()),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(80,80)),Vec2D(40,40),(*i)->getRotation()*RAD2DEG+90.0f,RED);
         counter++;
     } 
     DrawText(TextFormat("Towers : %d",counter),10,80,20,BLACK);
+    counter = 0;
+    for (std::forward_list<Missile*>::iterator i = in->missiles.begin(); i != in->missiles.end(); i++)
+    {
+        DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(54),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(80,80)),Vec2D(40,40),(*i)->getRotation()*RAD2DEG+90.0f,LIGHTGRAY);
+        counter++;
+    } 
+    DrawText(TextFormat("Missiles : %d",counter),10,110,20,BLACK);
 
 }
 
