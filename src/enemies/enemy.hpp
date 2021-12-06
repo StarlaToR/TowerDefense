@@ -19,6 +19,7 @@ public:
     void setSlowed(int value);
     bool update(TileMap* t);
     void getDamage(int damageDealt) {health = cut(health-damageDealt,0,maxHealth);}
+    void getHealed(int heal);
     virtual ~Enemy() = 0;
 
 };

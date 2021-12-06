@@ -10,6 +10,9 @@ HealerEnemy::HealerEnemy(TileMap* t)
     rotation = 0;
     speed = 3;
     damage = 1;
+    range = 1.0f;
+    healing = 1;;
+    healingCooldown = 30;
 
     currentDirection.dir = RIGHT;
     currentTile = Vec2D((int)t->startPos.x,(int)t->startPos.y);
@@ -17,4 +20,15 @@ HealerEnemy::HealerEnemy(TileMap* t)
     targetPos = currentTile + Vec2D(1.5f,0.5f);
     angularVelocity= 0.15;
     distanceToCenter = 0.1;
+}
+
+void HealerEnemy::heal(std::forward_list<Enemy*>* enemies)
+{
+    for (std::forward_list<Enemy*>::iterator i = enemies->begin(); i != enemies->end(); i++)
+    {
+        if((getPosition() - (*i)->getPosition()).getLength() <= range)
+        {
+            (*i)->getHealed(healing);
+        }
+    }
 }

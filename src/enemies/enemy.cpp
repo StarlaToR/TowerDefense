@@ -53,6 +53,15 @@ bool Enemy::update(TileMap* t)
     return (health <= 0 || position.x < 0 || position.y < 0 || position.x >= t->getWidth() || position.y >= t->getHeight());
 }
 
+void Enemy::getHealed(int heal)
+{
+    health += heal;
+    if (health > maxHealth)
+    {
+        health = maxHealth;
+    }
+}
+
 Enemy::~Enemy()
 {
 }
