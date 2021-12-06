@@ -1,49 +1,32 @@
 #include "missile.hpp"
 
-Missile::Missile(Enemy* e, Vec2D pos, int dam)
+Missile::Missile(Vec2D targetPos, Vec2D pos, float lRotation, int dam)
 {
-    target = e;
+    target = targetPos;
     position = pos;
-    rotation = 0;
+    rotation = lRotation;
     damage = dam;
+    motion = Vec2D(cosf(lRotation)*8.0f,sinf(lRotation)*8.0f);
 }
 
 bool Missile::update(std::forward_list<Enemy*>* enemies)
 {
-    Vec2D dif = target->getPosition() - position;
+    Vec2D dif = target - position;
     if(dif.getLength() <= 0.1f)
     {
-        target->getDamage(damage);
         for (std::forward_list<Enemy *>::iterator i = enemies->begin(); i != enemies->end(); i++)
         {
-            if(((*i)->getPosition()-target->getPosition()).getLength() <= 0.5f)
+            float dist = ((*i)->getPosition()-target).getLength();
+            if(dist <= 1.5f)
             {
-                (*i)->getDamage(damage);
+                (*i)->getDamage(damage*(dist/1.5f));
             }
         }
         return true;
     }
     else
     {
-        float tmpDir;
-        if (dif.x == 0)
-        {
-            if (dif.y > 0)
-                tmpDir = PI / 2.0f;
-            else
-                tmpDir = -PI / 2.0f;
-        }
-        else
-        {
-            tmpDir = (atanf(dif.y / dif.x));
-            if (dif.x < 0)
-            {
-                tmpDir += PI;
-            }
-        }
-        rotation = tmpDir;
-        position.x += 4.0f / 60.0f * cosf(rotation);
-        position.y += 4.0f / 60.0f * sinf(rotation);
+        position = position + motion / 60.0f;
     }
     return false;
 }

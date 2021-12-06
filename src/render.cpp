@@ -113,6 +113,13 @@ void renderEditor(DataHolder* in)
         counter++;
     } 
     DrawText(TextFormat("Missiles : %d",counter),10,110,20,BLACK);
+    counter = 0;
+    for (std::forward_list<Particle*>::iterator i = in->particles.begin(); i != in->particles.end(); i++)
+    {
+        (*i)->drawParticle();
+        counter++;
+    } 
+    DrawText(TextFormat("Particles : %d",counter),10,140,20,BLACK);
 
     DrawText(TextFormat("Money : %d",in->money),10,140,20,BLACK);
 

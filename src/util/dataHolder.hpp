@@ -8,6 +8,8 @@
 #include "../enemies/enemy.hpp"
 #include "../towers/tower.hpp"
 #include "../object/missile.hpp"
+#include "../particles/particle.hpp"
+#include "../particles/explosion.hpp"
 
 typedef enum GameState
 {
@@ -47,6 +49,7 @@ public:
     std::forward_list<Enemy*> enemies = std::forward_list<Enemy*>();
     std::forward_list<Tower*> towers = std::forward_list<Tower*>();
     std::forward_list<Missile*> missiles = std::forward_list<Missile*>();
+    std::forward_list<Particle*> particles = std::forward_list<Particle*>();
     int money = 0;
 
     DataHolder() {}

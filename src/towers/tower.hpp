@@ -22,4 +22,6 @@ public:
     void update(std::forward_list<Enemy*>* enemyIn, std::forward_list<Missile*>* missiles);
     virtual void attack(Enemy* e, std::forward_list<Missile*>* missiles) = 0;
     Enemy* getNearestEnemy(std::forward_list<Enemy*>* enemyIn);
+
+    virtual ~Tower() = 0;
 };

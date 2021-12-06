@@ -15,4 +15,6 @@ public:
     bool update(TileMap* t, std::forward_list<Enemy*>* enemies);
     void heal(std::forward_list<Enemy*>* enemies, Enemy* currentEnemy);
     int getTexture() override {return 150;}
+
+    ~HealerEnemy();
 };

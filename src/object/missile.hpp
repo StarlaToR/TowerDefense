@@ -7,9 +7,10 @@
 class Missile: public Object
 {
 private:
-    Enemy* target;
+    Vec2D target;
+    Vec2D motion;
 public:
-    Missile(Enemy* e, Vec2D pos, int dam);
+    Missile(Vec2D targetPos, Vec2D pos, float lRotation, int dam);
 
     bool update(std::forward_list<Enemy*>* enemies);
 

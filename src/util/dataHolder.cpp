@@ -64,6 +64,8 @@ void DataHolder::handleGameState()
         {
             if ((*i)->update(&enemies))
             {
+                particles.push_front(new ExplosionParticle((*i)->getPosition()));
+                delete *i;
                 i = missiles.erase_after(oldM);
             }
             else
@@ -78,11 +80,26 @@ void DataHolder::handleGameState()
             if ((*i)->update(&map, &enemies))
             {
                 money += (*i)->getReward();
+                delete *i;
                 i = enemies.erase_after(oldE);
             }
             else
             {
                 oldE = i;
+                i++;
+            }
+        }
+        std::forward_list<Particle*>::iterator oldP = particles.before_begin();
+        for (std::forward_list<Particle*>::iterator i = particles.begin(); i != particles.end();)
+        {
+            if ((*i)->shouldDelete())
+            {
+                delete *i;
+                i = particles.erase_after(oldP);
+            }
+            else
+            {
+                oldP = i;
                 i++;
             }
         }

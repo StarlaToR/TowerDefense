@@ -14,7 +14,7 @@ protected:
     Vec2D targetPos;
     float angularVelocity;
     float distanceToCenter;
-    bool shouldStop;
+    bool shouldStop = false;
 public:
     void setSlowed(int value);
     bool update(TileMap* t, std::forward_list<Enemy*>* enemies);

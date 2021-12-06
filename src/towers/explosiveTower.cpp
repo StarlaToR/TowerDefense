@@ -3,7 +3,7 @@
 ExplosiveTower::ExplosiveTower(Vec2D pos)
 {
     damage = 15;
-    range = 7;
+    range = 4;
     health = 150;
     maxHealth = 150;
     attackSpeed = 90;
@@ -16,9 +16,9 @@ ExplosiveTower::ExplosiveTower(Vec2D pos)
 
 void ExplosiveTower::attack(Enemy* e, std::forward_list<Missile*>* missiles)
 {
-    missiles->push_front(new Missile(e, getPosition(), damage));
+    missiles->push_front(new Missile(e->getPosition(), getPosition()+Vec2D(cosf(rotation)*0.5f,sinf(rotation)*0.5f), rotation, damage));
     attackCooldown = attackSpeed;
-} 
+}
 
 int ExplosiveTower::getTexture()
 {

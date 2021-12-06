@@ -18,3 +18,7 @@ BigEnemy::BigEnemy(TileMap* t)
     angularVelocity= 0.05;
     distanceToCenter = 0.1;
 }
+
+BigEnemy::~BigEnemy()
+{
+}
