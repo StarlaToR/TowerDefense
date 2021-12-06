@@ -114,6 +114,8 @@ void renderEditor(DataHolder* in)
     } 
     DrawText(TextFormat("Missiles : %d",counter),10,110,20,BLACK);
 
+    DrawText(TextFormat("Money : %d",in->money),10,140,20,BLACK);
+
 }
 
 void menuEditor(DataHolder* in)
