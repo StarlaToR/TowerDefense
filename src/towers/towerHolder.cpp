@@ -45,3 +45,19 @@ void TowerHolder::update(std::forward_list<Tower*>* towers, TileMap* map)
         isUsed = false;
     }
 }
+
+int TowerHolder::getTexture()
+{
+    if (towerType == 0)
+    {
+        return 121;
+    }
+    if (towerType == 1)
+    {
+        return 61;
+    }
+    if (towerType == 2)
+    {
+        return 99;
+    }
+}

@@ -22,5 +22,5 @@ void ExplosiveTower::attack(Enemy* e, std::forward_list<Missile*>* missiles)
 
 int ExplosiveTower::getTexture()
 {
-    return 61;
+    return 99;
 }

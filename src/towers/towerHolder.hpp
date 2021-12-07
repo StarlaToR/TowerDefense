@@ -15,6 +15,7 @@ public:
     TowerHolder(Vec2D pos,int type);
     TowerHolder();
     ~TowerHolder();
-
+    
+    int getTexture();
     void update(std::forward_list<Tower*>* towers, TileMap* map);
 };
