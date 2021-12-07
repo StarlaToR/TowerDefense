@@ -4,6 +4,8 @@
 
 class ExplosiveTower : public Tower
 {
+private:
+    int missilesUsed;
 public:
     ExplosiveTower(Vec2D pos);
 

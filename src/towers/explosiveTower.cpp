@@ -12,15 +12,21 @@ ExplosiveTower::ExplosiveTower(Vec2D pos)
     position = pos + Vec2D(0.5f,0.5f);
     rotation = 0;
     angularVelocity = 0.07f;
+    missilesUsed = 0;
 }
 
 void ExplosiveTower::attack(Enemy* e, std::forward_list<Missile*>* missiles)
 {
     missiles->push_front(new Missile(e->getPosition(), getPosition()+Vec2D(cosf(rotation)*0.5f,sinf(rotation)*0.5f), rotation, damage));
     attackCooldown = attackSpeed;
+    missilesUsed ++;
+    if (missilesUsed > 6)
+    {
+        missilesUsed = 0;
+    }
 }
 
 int ExplosiveTower::getTexture()
 {
-    return 99;
+    return 99 + missilesUsed;
 }
