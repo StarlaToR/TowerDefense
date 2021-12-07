@@ -20,7 +20,7 @@ void ExplosiveTower::attack(Enemy* e, std::forward_list<Missile*>* missiles)
     missiles->push_front(new Missile(e->getPosition(), getPosition()+Vec2D(cosf(rotation)*0.5f,sinf(rotation)*0.5f), rotation, damage));
     attackCooldown = attackSpeed;
     missilesUsed ++;
-    if (missilesUsed > 6)
+    if (missilesUsed > 4)
     {
         missilesUsed = 0;
     }
