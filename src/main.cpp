@@ -22,7 +22,7 @@ int main(void)
     holder.title = LoadTexture("assets/textures/title.png");
     holder.credit = LoadTexture("assets/textures/credit.png");
     holder.button = LoadTexture("assets/textures/button.png");
-    holder.buttonSound = LoadSound("assets/song/button.mp3");
+    holder.buttonSound = LoadSound("assets/song/button.wav");
     holder.music = LoadMusicStream("assets/song/ouioui.mp3");
     holder.tileTexture = LoadTexture("assets/textures/tileSheet.png");
     holder.fontButton = LoadFontEx("assets/font/ethnocentric.ttf", 100, 0, 0);
@@ -46,10 +46,13 @@ int main(void)
     while (!WindowShouldClose() && !holder.closeWindow == true)
     {
         UpdateMusicStream(holder.music);
-        SetMusicVolume(holder.music, 20.0f);
+        SetMusicVolume(holder.music, 0.2f);
         if (IsKeyPressed(KEY_TAB)) SetTargetFPS(600);
         if (IsKeyReleased(KEY_TAB)) SetTargetFPS(60);
+        if(holder.timePlayed >= 16.5f) StopMusicStream(holder.music);
+        holder.timePlayed = GetMusicTimePlayed(holder.music);
         holder.handleGameState();
+        
         renderMain(&holder);
     }
     holder.unloadDatas();

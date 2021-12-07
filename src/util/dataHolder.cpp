@@ -14,6 +14,7 @@ void DataHolder::unloadDatas()
     UnloadTexture(button);
     UnloadFont(fontButton);
     UnloadFont(fontTitle);
+    UnloadSound(buttonSound);
     UnloadMusicStream(music);
 }
 
@@ -33,24 +34,36 @@ void DataHolder::handleGameState()
         {
             if (buttonSelected == 1) 
             {
+                PlaySound(buttonSound);
                 gameState = MENUPLAY;
             }
             else if (buttonSelected == 2) 
             {
+                PlaySound(buttonSound);
                 gameState = OPTION;
             }
             else if (buttonSelected == 3) 
             {
+                PlaySound(buttonSound);
                 gameState = CREDIT;
             }
             else if (buttonSelected == 4) 
             {
+                PlaySound(buttonSound);
                 gameState = EXIT;
             }
             else if (buttonSelected == 5) 
             {
+                PlaySound(buttonSound);
                 PlayMusicStream(music);
             }
+            else if (buttonSelected == 6) 
+            {
+                framecounter = 0;
+                PlaySound(buttonSound);
+                gameState = INTRO;
+            }
+            
             
         }
     }
@@ -60,14 +73,17 @@ void DataHolder::handleGameState()
         {
             if (buttonSelected == 1) 
             {
+                PlaySound(buttonSound);
                 gameState = GAMEPLAY;
             }
             else if (buttonSelected == 2) 
             {
+                PlaySound(buttonSound);
                 gameState = EDITOR;
             }
             else if (buttonSelected == 3) 
             {
+                PlaySound(buttonSound);
                 gameState = MENU;
             }
             
@@ -79,6 +95,7 @@ void DataHolder::handleGameState()
         {
             if (buttonSelected == 1) 
             {
+                PlaySound(buttonSound);
                 gameState = MENU;
             }
             
@@ -90,6 +107,7 @@ void DataHolder::handleGameState()
         {
             if (buttonSelected == 1) 
             {
+                PlaySound(buttonSound);
                 gameState = MENU;
             }
             
@@ -101,6 +119,7 @@ void DataHolder::handleGameState()
         {
             if (buttonSelected == 1) 
             {
+                PlaySound(buttonSound);
                 gameState = GAMEPLAY;
             }
             

@@ -58,3 +58,9 @@ bool drawButtonMenu(DataHolder* in, const char* text, Vec2D textSize, Vec2D pos,
     DrawTextEx(in->fontButton, text, Vector2{textSize.x,textSize.y},50,2,isInside?Fade(BLACK,getFade(in->framecounter)):BLACK);
     return isInside;
 }
+
+bool drawButtonInvisible(DataHolder* in, Vec2D pos, Vec2D size, Vec2D mousePos) {
+    Vec2D tmp = pos+size;
+    bool isInside = (mousePos.x > pos.x && mousePos.y > pos.y && mousePos.x <= tmp.x && mousePos.y <= tmp.y);
+    return isInside;
+}

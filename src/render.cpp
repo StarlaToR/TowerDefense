@@ -22,7 +22,6 @@ void renderMain(DataHolder* in)
     else if (in->gameState == MENUPLAY)
     {
         renderPlay(in);
-        
     }
     else if (in->gameState == EDITOR)
     {
@@ -133,7 +132,6 @@ void menuEditor(DataHolder* in)
     
     if (drawButtonMenu(in, "Play", Vec2D(498, 345), Vec2D(455, 320),Vec2D(250,100), in->mousePos))
     {
-        
         in->buttonSelected = 1;
     }
     if (drawButtonMenu(in, "Option",Vec2D(873, 345), Vec2D(860, 320),Vec2D(250,100), in->mousePos))
@@ -148,10 +146,19 @@ void menuEditor(DataHolder* in)
     {
         in->buttonSelected = 4;
     }
-    if (drawButtonMenu(in,"",Vec2D(925, 570), Vec2D(-240, 870),Vec2D(250,100), in->mousePos))
+    if (drawButtonInvisible(in, Vec2D(1295, 140),Vec2D(50,50), in->mousePos))
     {
         in->buttonSelected = 5;
     }
+    if (drawButtonInvisible(in, Vec2D(1500, 800), Vec2D(100, 100), in->mousePos))
+    {
+        in->buttonSelected = 6;
+    }
+    if (IsKeyPressed(KEY_SPACE))
+    {
+        StopMusicStream(in->music);
+    }
+
 }
 
 void renderPlay(DataHolder* in)

@@ -50,6 +50,7 @@ public:
     Vec2D mousePos;
     bool closeWindow = false;
     int buttonSelected;
+    float timePlayed = 0.0f;
     RenderType tileRenderType = EXTENDED;
     Vec2D dragPos = Vec2D(-1,-1);
     std::forward_list<Enemy*> enemies = std::forward_list<Enemy*>();

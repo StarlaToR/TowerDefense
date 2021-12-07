@@ -17,3 +17,4 @@ Rectangle toRayLibRectangle(Vec2D origin, Vec2D rectSize);
 void DrawTileMap(DataHolder* in, RenderType type);
 bool drawButton(const char* text, Vec2D pos, Vec2D size, Vec2D mousePos);
 bool drawButtonMenu(DataHolder* in, const char* text, Vec2D textSize, Vec2D pos, Vec2D size, Vec2D mousePos);
+bool drawButtonInvisible(DataHolder* in, Vec2D pos, Vec2D size, Vec2D mousePos);
