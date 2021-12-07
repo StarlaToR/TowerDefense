@@ -14,5 +14,5 @@ public:
     HealerEnemy() {};
 
     bool update(TileMap* t, std::forward_list<Enemy*>* enemies, std::forward_list<Particle*>* particles) override;
-    int getTexture() override {return 150;}
+    int getTexture() override {return 52;}
 };

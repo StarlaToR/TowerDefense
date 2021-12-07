@@ -2,11 +2,17 @@
 
 TileHolders::TileHolders()
 {
-    holders.push_back(TileHolder(GRASS, false));
-    holders.push_back(TileHolder(SAND, false));
-    holders.push_back(TileHolder(ROAD_STRAIGHT_EASTWEST, false));
-    holders.push_back(TileHolder(START_EAST, true));
-    holders.push_back(TileHolder(END_EAST, true));
+    holders.push_back(TileHolder(GRASS, false, Vec2D(0,0)));
+    holders.push_back(TileHolder(SAND, false, Vec2D(1,0)));
+    holders.push_back(TileHolder(ROAD_STRAIGHT_EASTWEST, false, Vec2D(0,2)));
+    holders.push_back(TileHolder(START_EAST, true, Vec2D(1,2)));
+    holders.push_back(TileHolder(END_EAST, true, Vec2D(2,2)));
+    holders.push_back(TileHolder(DECO_TREE, true, Vec2D(0,4)));
+    holders.push_back(TileHolder(DECO_BUSH, true, Vec2D(1,4)));
+    holders.push_back(TileHolder(DECO_OIL, true, Vec2D(2,4)));
+    holders.push_back(TileHolder(DECO_BARREL, true, Vec2D(0,5)));
+    holders.push_back(TileHolder(DECO_SPIKES, true, Vec2D(1,5)));
+    holders.push_back(TileHolder(DECO_WOOD, true, Vec2D(2,5)));
 }
 
 char getTileEquivalent(char tileIn)

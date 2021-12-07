@@ -76,52 +76,37 @@ void renderMainMenu(DataHolder* in)
 
 void renderEditor(DataHolder* in)
 {
+    drawMapElements(in);
     in->buttonSelected = 0;
-    if (drawButton("Save Map", Vec2D(1300,70),Vec2D(200,50), in->mousePos))
+    in->holderHovered = -1;
+    if (drawButton("Save Map", Vec2D(1300,570),Vec2D(200,50), in->mousePos))
     {
         in->buttonSelected = 1;
     }
-    if (drawButton("Clear Map", Vec2D(1300,170),Vec2D(200,50), in->mousePos))
+    if (drawButton("Clear Map", Vec2D(1300,670),Vec2D(200,50), in->mousePos))
     {
         in->buttonSelected = 2;
     }
-    if (drawButton("Change view", Vec2D(1300,270),Vec2D(200,50), in->mousePos))
+    if (drawButton("Change view", Vec2D(1300,770),Vec2D(200,50), in->mousePos))
     {
         in->buttonSelected = 3;
     }
-    DrawTileMap(in,in->tileRenderType);
-
-    int counter = 0;
-    for (std::forward_list<Enemy*>::iterator i = in->enemies.begin(); i != in->enemies.end(); i++)
+    for (unsigned int i = 0; i < in->tHolders.holders.size(); i++)
     {
-        DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at((*i)->getTexture()),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(24,24),(*i)->getRotation()*RAD2DEG+90.0f,GRAY);
-        counter++;
+        TileHolder* tmp = &in->tHolders.holders.at(i);
+        Vec2D screenPos = tmp->position*Vec2D(64,64)+Vec2D(1300,100);
+        DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(tmp->getTile()),toRayLibRectangle(screenPos,Vec2D(48,48)),Vec2D(),0,WHITE);
+        if (in->mousePos.x > screenPos.x && in->mousePos.y > screenPos.y && in->mousePos.x < screenPos.x + 48 && in->mousePos.y < screenPos.y + 48)
+        {
+            in->holderHovered = i;
+            DrawRectangleLinesEx(toRayLibRectangle(screenPos,Vec2D(48,48)),2,BLUE);
+        }
+        else if (in->holderSelected == (int)(i))
+        {
+            DrawRectangleLinesEx(toRayLibRectangle(screenPos,Vec2D(48,48)),2,RED);
+        }
     }
-    DrawText(TextFormat("Enemies : %d",counter),10,50,20,BLACK);
-    counter = 0;
-    for (std::forward_list<Tower*>::iterator i = in->towers.begin(); i != in->towers.end(); i++)
-    {
-        DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(153),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(24,24),0,LIGHTGRAY);
-        DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at((*i)->getTexture()),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(80,80)),Vec2D(40,40),(*i)->getRotation()*RAD2DEG+90.0f,RED);
-        counter++;
-    } 
-    DrawText(TextFormat("Towers : %d",counter),10,80,20,BLACK);
-    counter = 0;
-    for (std::forward_list<Missile*>::iterator i = in->missiles.begin(); i != in->missiles.end(); i++)
-    {
-        DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(54),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(80,80)),Vec2D(40,40),(*i)->getRotation()*RAD2DEG+90.0f,LIGHTGRAY);
-        counter++;
-    } 
-    DrawText(TextFormat("Missiles : %d",counter),10,110,20,BLACK);
-    counter = 0;
-    for (std::forward_list<Particle*>::iterator i = in->particles.begin(); i != in->particles.end(); i++)
-    {
-        (*i)->drawParticle();
-        counter++;
-    } 
-    DrawText(TextFormat("Particles : %d",counter),10,140,20,BLACK);
-
-    DrawText(TextFormat("Money : %d",in->money),10,170,20,BLACK);
+    DrawText(TextFormat("Money : %d",in->money),10,30,20,BLACK);
 
 }
 

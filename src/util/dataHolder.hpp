@@ -49,7 +49,9 @@ public:
     Tiles tiles = Tiles();
     Vec2D mousePos;
     bool closeWindow = false;
-    int buttonSelected;
+    int buttonSelected = 0;
+    int holderHovered = 0;
+    int holderSelected = 0;
     float timePlayed = 0.0f;
     RenderType tileRenderType = EXTENDED;
     Vec2D dragPos = Vec2D(-1,-1);
@@ -57,7 +59,9 @@ public:
     std::forward_list<Tower*> towers = std::forward_list<Tower*>();
     std::forward_list<Missile*> missiles = std::forward_list<Missile*>();
     std::forward_list<Particle*> particles = std::forward_list<Particle*>();
-    TileHolders holders = TileHolders();
+    TileHolders tHolders = TileHolders();
+    Vec2D cameraPos = Vec2D();
+    char cameraScale = 1;
 
     int money = 0;
 

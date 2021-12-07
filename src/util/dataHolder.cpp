@@ -134,7 +134,11 @@ void DataHolder::handleGameState()
 
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
         {
-            if (buttonSelected == 1)
+            if (holderHovered >= 0)
+            {
+                holderSelected = holderHovered;
+            }
+            else if (buttonSelected == 1)
             {
                 FILE *sv = fopen("assets/maps/default.bin", "wb");
                 fwrite(&map, 1, sizeof(map), sv);
@@ -165,28 +169,34 @@ void DataHolder::handleGameState()
         }
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
         {
-            Vec2D tmpPos = mousePos - Vec2D(50, 50);
-            if (tmpPos.x > 0 && tmpPos.y > 0 && tmpPos.x <= 48 * map.getWidth() && tmpPos.y <= 48 * map.getHeight())
+            if (holderSelected >= 0)
             {
-                Vec2D tilePos = Vec2D((int)(tmpPos.x / 48), (int)(tmpPos.y / 48));
-                if (dragPos.x > -0.9f && (tilePos - dragPos).lengthSquared() < 1.1 && (tilePos - dragPos).lengthSquared() > 0.9)
-                {
-                    map.drawRoad(dragPos, Direction(tilePos - dragPos));
-                }
-                dragPos = tilePos;
+                Vec2D tilePos = (mousePos) / (48*cameraScale) - (Vec2D(50, 50)-cameraPos)/48.0f;
+                tilePos = Vec2D((int)(tilePos.x),(int)(tilePos.y));
+                placeTileAt(&map,tilePos,&dragPos,tHolders.holders.at(holderSelected).tile, tHolders.holders.at(holderSelected).isDeco);
             }
         }
-        if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
+        if (IsMouseButtonPressed(MOUSE_BUTTON_MIDDLE))
         {
-            Vec2D tmpPos = mousePos - Vec2D(50, 50);
-            if (tmpPos.x > 0 && tmpPos.y > 0 && tmpPos.x <= 48 * map.getWidth() && tmpPos.y <= 48 * map.getHeight())
+            Vec2D tilePos = (mousePos) / (48*cameraScale) - (Vec2D(50, 50)-cameraPos)/48.0f;
+            if (tilePos.x > 0 && tilePos.y > 0 && tilePos.x < map.getWidth() && tilePos.y < map.getHeight())
             {
-                Vec2D tilePos = Vec2D((int)(tmpPos.x / 48), (int)(tmpPos.y / 48));
                 map.setAltTile(tilePos);
             }
         }
         if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
+        {
             dragPos = Vec2D(-1, -1);
+        }
+        if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
+        {
+            cameraPos = cameraPos - Vec2D(GetMouseDelta().x, GetMouseDelta().y)/cameraScale;
+        }
+        cameraScale = cut(GetMouseWheelMove()+cameraScale,1,3);
+    }
+    else if (gameState == GAMEPLAY)
+    {
+
     }
     framecounter++;
 }

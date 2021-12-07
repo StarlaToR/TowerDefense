@@ -7,8 +7,9 @@ class TileHolder
     public:
         TileID tile;
         bool isDeco;
+        Vec2D position;
         TileHolder() : tile(GRASS) {}
-        TileHolder(TileID id, bool deco) : tile(id), isDeco(deco) {}
+        TileHolder(TileID id, bool deco, Vec2D pos) : tile(id), isDeco(deco), position(pos) {}
 
         char getTile() {return tile;}
 };

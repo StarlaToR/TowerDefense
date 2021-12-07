@@ -63,3 +63,27 @@ void handleParticles(std::forward_list<Particle*>* particles)
         }
     }
 }
+
+void placeTileAt(TileMap* map, Vec2D pos, Vec2D* drag, unsigned char tile, bool deco)
+{
+    if (pos.x >= 0 && pos.y >= 0 && pos.x < map->getWidth() && pos.y < map->getHeight())
+    {
+        if (deco)
+        {
+            if (!map->isRoad(map->getTileAt(pos))) map->setTileAt(pos,tile,true);
+        }
+        else if (tile == ROAD_STRAIGHT_EASTWEST)
+        {
+            if (drag->x > -0.9f && (pos - *drag).lengthSquared() < 1.1 && (pos - *drag).lengthSquared() > 0.9)
+            {
+                map->drawRoad(*drag, Direction(pos - *drag));
+            }
+        }
+        else
+        {
+            map->setTileAt(pos,tile,false);
+            map->setTileAt(pos,UNDEFINED,true);
+        }
+        *drag = pos;
+    }
+}

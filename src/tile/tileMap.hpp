@@ -27,15 +27,15 @@ class TileMap
 
         TileMap();
         TileMap(Vec2D start, Vec2D end);
-        TileMap(const char* in, const char* in2, Vec2D start, Vec2D end);
+        TileMap(const unsigned char* in, const unsigned char* in2, Vec2D start, Vec2D end);
         ~TileMap() {}
-        char getTileAt(Vec2D pos);
-        void setTileAt(Vec2D pos, char tile);
-        void setTileAndUpdate(Vec2D pos, char tile);
+        unsigned char getTileAt(Vec2D pos, bool layer = false);
+        void setTileAt(Vec2D pos, unsigned char tile, bool layer = false);
+        void setTileAndUpdate(Vec2D pos, unsigned char tile);
         void drawRoad(Vec2D pos, Direction direction);
         void setAltTile(Vec2D pos);
         void updateTileAt(Vec2D pos);
-        bool isRoad(char tile);
+        bool isRoad(unsigned char tile);
         bool isTileWithTower(Vec2D pos);
         void setTileWithTower(Vec2D pos);
         void removeTowerFromTile(Vec2D pos);

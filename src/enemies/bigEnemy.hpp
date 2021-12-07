@@ -8,6 +8,6 @@ public:
 
     BigEnemy() {};
 
-    int getTexture() override {return 148;}
+    int getTexture() override {return 129;}
     ~BigEnemy();
 };
