@@ -10,12 +10,13 @@ private:
     int towerType;
     Vec2D position;
     bool isUsed;
+    int cost;
 
 public:
-    TowerHolder(Vec2D pos,int type);
+    TowerHolder(Vec2D pos,int type, int cost);
     TowerHolder();
     ~TowerHolder();
     
     int getTexture();
-    void update(std::forward_list<Tower*>* towers, TileMap* map);
+    void update(std::forward_list<Tower*>* towers, TileMap* map, int& money);
 };

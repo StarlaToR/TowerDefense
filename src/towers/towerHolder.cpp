@@ -1,10 +1,11 @@
 #include "towerHolder.hpp"
 
-TowerHolder::TowerHolder(Vec2D pos, int type)
+TowerHolder::TowerHolder(Vec2D pos, int type, int cost)
 {
     position = pos;
     towerType = type;
     isUsed = false;
+    cost = cost;
 }
 
 TowerHolder::TowerHolder()
@@ -16,13 +17,14 @@ TowerHolder::~TowerHolder()
 
 }
 
-void TowerHolder::update(std::forward_list<Tower*>* towers, TileMap* map)
+void TowerHolder::update(std::forward_list<Tower*>* towers, TileMap* map, int& money)
 {
     if(IsMouseButtonPressed(1))
     {
         if (GetMouseX() >= position.x && GetMouseX() <= position.x + 128 && GetMouseY() >= position.y && GetMouseY() <= position.y + 128)
         {
-            isUsed = true;
+            if(money >= cost)
+                isUsed = true;
         }
     }
     if(IsMouseButtonReleased(1) && isUsed)
@@ -40,6 +42,8 @@ void TowerHolder::update(std::forward_list<Tower*>* towers, TileMap* map)
                     towers->push_front(new SlowingTower(pos));
                 if(towerType == 2)
                     towers->push_front(new ExplosiveTower(pos));
+
+                money -= cost;
             }
         }
         isUsed = false;
