@@ -46,6 +46,7 @@ TileMap::TileMap() : startPos(Vec2D(0,6)), endPos(Vec2D(23,6))
     {
         firstLayer[i] = GRASS;
         secondLayer[i] = UNDEFINED;
+        tilesWithTower[i] = false;
     }
 }
 
@@ -55,6 +56,7 @@ TileMap::TileMap(Vec2D start, Vec2D end) : startPos(start), endPos(end)
     {
         firstLayer[i] = 0;
         secondLayer[i] = -1;
+        tilesWithTower[i] = false;
     }
 }
 
@@ -64,6 +66,7 @@ TileMap::TileMap(const char* in, const char* in2, Vec2D start, Vec2D end) : star
     {
         firstLayer[i] = in[i];
         secondLayer[i] = in2[i];
+        tilesWithTower[i] = false;
     }
 }
 
@@ -137,4 +140,22 @@ void TileMap::updateTileAt(Vec2D pos)
 bool TileMap::isRoad(char tile)
 {
     return tile >= ROAD_STRAIGHT_EASTWEST && tile <= ROAD_THREEWAY_FORCE_WEST;
+}
+
+bool TileMap::isTileWithTower(Vec2D pos)
+{
+    int tileId = pos.y * MAP_WIDTH + pos.x;
+    return tilesWithTower[tileId];
+}
+
+void TileMap::setTileWithTower(Vec2D pos)
+{
+    int tileId = pos.y * MAP_WIDTH + pos.x;
+    tilesWithTower[tileId] = true;
+}
+
+void TileMap::removeTowerFromTile(Vec2D pos)
+{
+    int tileId = pos.y * MAP_WIDTH + pos.x;
+    tilesWithTower[tileId] = false;
 }

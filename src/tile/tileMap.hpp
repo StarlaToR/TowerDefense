@@ -1,7 +1,7 @@
 #pragma once
 
 #include <new>
-
+#include <forward_list>
 #include "../util/mathHelper.hpp"
 #include "tiles.hpp"
 
@@ -21,7 +21,7 @@ class TileMap
     public:
         Vec2D startPos;
         Vec2D endPos;
-
+        bool tilesWithTower[MAP_WIDTH* MAP_HEIGHT];
         unsigned char firstLayer[MAP_HEIGHT*MAP_WIDTH];
         unsigned char secondLayer[MAP_HEIGHT*MAP_WIDTH];
 
@@ -36,6 +36,9 @@ class TileMap
         void setAltTile(Vec2D pos);
         void updateTileAt(Vec2D pos);
         bool isRoad(char tile);
+        bool isTileWithTower(Vec2D pos);
+        void setTileWithTower(Vec2D pos);
+        void removeTowerFromTile(Vec2D pos);
 
         static int getWidth() {return MAP_WIDTH;}
         static int getHeight() {return MAP_HEIGHT;}
