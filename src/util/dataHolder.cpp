@@ -133,7 +133,11 @@ void DataHolder::handleGameState()
     {
         PlayMusicStream(gameplayMusic);
         handleEnemiesBuffer(&map, &enemies, &buffer, wave);
-        handleTowers(&towers, &enemies, &missiles);
+        selectedTower = handleTowers(&towers, &enemies, &missiles);
+        
+    }
+    else if (gameState == EDITOR)
+    {
         handleMissiles(&missiles, &enemies, &particles);
         handleEnemies(&map, &money, &enemies, &particles);
         handleParticles(&particles);

@@ -1,10 +1,19 @@
 #include "gameUtil.hpp"
 
-void handleTowers(std::forward_list<Tower *> *towers, std::forward_list<Enemy *> *enemies, std::forward_list<Missile *> *missiles)
+Tower* handleTowers(std::forward_list<Tower*>* towers, std::forward_list<Enemy*>* enemies, std::forward_list<Missile*>* missiles)
 {
-    for (std::forward_list<Tower *>::iterator i = towers->begin(); i != towers->end(); i++)
+    Vec2D mousePos((int)((GetMouseX() - 50) /48), (int)((GetMouseY() - 50) /48));
+    for (std::forward_list<Tower*>::iterator i = towers->begin(); i != towers->end(); i++)
     {
         (*i)->update(enemies, missiles);
+
+        if(mousePos.x >= (*i)->getPosition().x - 0.5 && mousePos.x <= (*i)->getPosition().x + 0.5 && mousePos.y >= (*i)->getPosition().y - 0.5 && mousePos.y <= (*i)->getPosition().y + 0.5)
+        {
+            if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+            {
+                return *i;
+            }
+        }
     }
 }
 

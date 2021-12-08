@@ -65,7 +65,11 @@ public:
     TileHolders tHolders = TileHolders();
     Vec2D cameraPos = Vec2D();
     char cameraScale = 1;
+<<<<<<< HEAD
     int wave = 1;
+=======
+    Tower* selectedTower =nullptr;
+>>>>>>> update upgrade tower
 
     int money = 0;
 
