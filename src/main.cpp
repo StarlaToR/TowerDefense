@@ -12,7 +12,7 @@
 
 int main(void)
 {
-    
+    int w = 1;
     DataHolder holder = DataHolder();
     InitWindow(holder.screenWidth, holder.screenHeight, "Tower Defense");
     InitAudioDevice();
@@ -33,12 +33,7 @@ int main(void)
     fread(&holder.map,1,sizeof(holder.map),sv);
     fclose(sv);
     holder.tiles.registerTiles();
-    /*for (int i = 0; i < 80; i++)
-    {
-        holder.enemies.push_front(new ClassicEnemy(&holder.map));
-        holder.enemies.push_front(new BigEnemy(&holder.map));
-    }
-    holder.enemies.push_front(new HealerEnemy(&holder.map));*/
+    handleEnemiesBuffer(&holder.map, &holder.enemies, w);
 
     
     holder.towers.push_front(new ExplosiveTower(holder.map.startPos+Vec2D(7,1)));
@@ -46,6 +41,7 @@ int main(void)
     // Main game loop
     while (!WindowShouldClose() && !holder.closeWindow == true)
     {
+        handleEnemiesBuffer(&holder.map, &holder.enemies, w);
         UpdateMusicStream(holder.musicTroll);
         UpdateMusicStream(holder.gameplayMusic);
         SetMusicVolume(holder.musicTroll, 0.2f);

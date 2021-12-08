@@ -1,17 +1,17 @@
 #include "gameUtil.hpp"
 
-void handleTowers(std::forward_list<Tower*>* towers, std::forward_list<Enemy*>* enemies, std::forward_list<Missile*>* missiles)
+void handleTowers(std::forward_list<Tower *> *towers, std::forward_list<Enemy *> *enemies, std::forward_list<Missile *> *missiles)
 {
-    for (std::forward_list<Tower*>::iterator i = towers->begin(); i != towers->end(); i++)
+    for (std::forward_list<Tower *>::iterator i = towers->begin(); i != towers->end(); i++)
     {
         (*i)->update(enemies, missiles);
     }
 }
 
-void handleMissiles(std::forward_list<Missile*>* missiles, std::forward_list<Enemy*>* enemies, std::forward_list<Particle*>* particles)
+void handleMissiles(std::forward_list<Missile *> *missiles, std::forward_list<Enemy *> *enemies, std::forward_list<Particle *> *particles)
 {
-    std::forward_list<Missile*>::iterator oldM = missiles->before_begin();
-    for (std::forward_list<Missile*>::iterator i = missiles->begin(); i != missiles->end();)
+    std::forward_list<Missile *>::iterator oldM = missiles->before_begin();
+    for (std::forward_list<Missile *>::iterator i = missiles->begin(); i != missiles->end();)
     {
         if ((*i)->update(enemies))
         {
@@ -27,10 +27,10 @@ void handleMissiles(std::forward_list<Missile*>* missiles, std::forward_list<Ene
     }
 }
 
-void handleEnemies(TileMap* map, int* money, std::forward_list<Enemy*>* enemies, std::forward_list<Particle*>* particles)
+void handleEnemies(TileMap *map, int *money, std::forward_list<Enemy *> *enemies, std::forward_list<Particle *> *particles)
 {
-    std::forward_list<Enemy*>::iterator oldE = enemies->before_begin();
-    for (std::forward_list<Enemy*>::iterator i = enemies->begin(); i != enemies->end();)
+    std::forward_list<Enemy *>::iterator oldE = enemies->before_begin();
+    for (std::forward_list<Enemy *>::iterator i = enemies->begin(); i != enemies->end();)
     {
         if ((*i)->update(map, enemies, particles))
         {
@@ -46,10 +46,10 @@ void handleEnemies(TileMap* map, int* money, std::forward_list<Enemy*>* enemies,
     }
 }
 
-void handleParticles(std::forward_list<Particle*>* particles)
+void handleParticles(std::forward_list<Particle *> *particles)
 {
-    std::forward_list<Particle*>::iterator oldP = particles->before_begin();
-    for (std::forward_list<Particle*>::iterator i = particles->begin(); i != particles->end();)
+    std::forward_list<Particle *>::iterator oldP = particles->before_begin();
+    for (std::forward_list<Particle *>::iterator i = particles->begin(); i != particles->end();)
     {
         if ((*i)->shouldDelete())
         {
@@ -64,7 +64,7 @@ void handleParticles(std::forward_list<Particle*>* particles)
     }
 }
 
-void placeTileAt(TileMap* map, Vec2D pos, Vec2D* drag, unsigned char tile, bool deco)
+void placeTileAt(TileMap *map, Vec2D pos, Vec2D *drag, unsigned char tile, bool deco)
 {
     if (pos.x >= 0 && pos.y >= 0 && pos.x < map->getWidth() && pos.y < map->getHeight())
     {
@@ -100,14 +100,58 @@ void placeTileAt(TileMap* map, Vec2D pos, Vec2D* drag, unsigned char tile, bool 
     }
 }
 
-void handleEnemiesBuffer(TileMap* map, std::forward_list<Enemy*>* enemies)
+void handleEnemiesBuffer(TileMap *map, std::forward_list<Enemy *> *enemies, int &waves)
 {
-    for (int i = 0; i < 80; i++)
+
+    if (enemies->empty() && waves == 1)
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            enemiesBuffer(map, enemies, 1, 1);
+        }
+
+        waves++;
+    }
+    if (enemies->empty() && waves == 2)
+    {
+        enemies->push_front(new ClassicEnemy(map));
+        enemies->push_front(new HealerEnemy(map));
+
+        waves++;
+    }
+    if (enemies->empty() && waves == 3)
     {
         enemies->push_front(new ClassicEnemy(map));
         enemies->push_front(new BigEnemy(map));
-
         enemies->push_front(new HealerEnemy(map));
+    }
+}
 
+void enemiesBuffer(TileMap *map, std::forward_list<Enemy *> *enemies, std::forward_list<EnemySpawner> buffer, int id, int time)
+{
+    for(int i = 0; i < buffer; i++)
+    if(time > 0)
+    {
+        time -= 1;
+        break;
+    }
+
+    switch (id)
+    {
+    case 1:
+        enemies->push_front(new ClassicEnemy(map));
+        break;
+        
+
+    case 2:
+        enemies->push_front(new BigEnemy(map));
+        break;
+
+    case 3:
+        enemies->push_front(new HealerEnemy(map));
+        break;
+
+    default:
+        break;
     }
 }
