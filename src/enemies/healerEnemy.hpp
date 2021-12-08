@@ -12,6 +12,6 @@ private:
 public:
     HealerEnemy(TileMap* t, int wave);
 
-    bool update(TileMap* t, std::forward_list<Enemy*>* enemies, std::forward_list<Particle*>* particles) override;
+    bool update(TileMap* t, std::forward_list<Enemy*>* enemies, std::forward_list<Particle*>* particles, int& playerLife) override;
     int getTexture() override {return 52;}
 };

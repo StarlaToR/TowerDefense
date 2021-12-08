@@ -1,8 +1,8 @@
 #include "gameUtil.hpp"
 
-Tower* handleTowers(std::forward_list<Tower*>* towers, std::forward_list<Enemy*>* enemies, std::forward_list<Missile*>* missiles, Tower* selectedTower)
+Tower* handleTowers(std::forward_list<Tower*>* towers, std::forward_list<Enemy*>* enemies, std::forward_list<Missile*>* missiles, Tower* selectedTower, Vec2D camPos, float camScale)
 {
-    Vec2D mousePos((int)((GetMouseX() - 50) /48), (int)((GetMouseY() - 50) /48));
+    Vec2D mousePos = (Vec2D(GetMouseX(),GetMouseY())) / (48*camScale) - (Vec2D(50, 50)-camPos)/48.0f;
     for (std::forward_list<Tower*>::iterator i = towers->begin(); i != towers->end(); i++)
     {
         (*i)->update(enemies, missiles);
@@ -37,12 +37,12 @@ void handleMissiles(std::forward_list<Missile *> *missiles, std::forward_list<En
     }
 }
 
-void handleEnemies(TileMap *map, int *money, std::forward_list<Enemy *> *enemies, std::forward_list<Particle *> *particles)
+void handleEnemies(TileMap *map, int *money, std::forward_list<Enemy *> *enemies, std::forward_list<Particle *> *particles, int &playerLife)
 {
     std::forward_list<Enemy *>::iterator oldE = enemies->before_begin();
     for (std::forward_list<Enemy *>::iterator i = enemies->begin(); i != enemies->end();)
     {
-        if ((*i)->update(map, enemies, particles))
+        if ((*i)->update(map, enemies, particles, playerLife))
         {
             *money += (*i)->getReward();
             delete *i;

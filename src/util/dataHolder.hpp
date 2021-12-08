@@ -70,6 +70,7 @@ public:
     Tower* selectedTower =nullptr;
 
     int money = 0;
+    int life = 100;
 
     DataHolder() {}
     ~DataHolder() {}

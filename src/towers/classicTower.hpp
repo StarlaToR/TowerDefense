@@ -11,4 +11,5 @@ public:
     void attack(Enemy* e,std::forward_list<Missile*>* missiles);
     void upgrade();
     int getTexture();
+    const char* getName() override {return "Gun Tower";}
 };

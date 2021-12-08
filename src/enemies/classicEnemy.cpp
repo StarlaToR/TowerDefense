@@ -1,6 +1,5 @@
 #include "classicEnemy.hpp"
 
-
 ClassicEnemy::ClassicEnemy(TileMap* t, int wave)
 {
     position = t->startPos + Vec2D(0.5f,0.5f);
@@ -9,14 +8,18 @@ ClassicEnemy::ClassicEnemy(TileMap* t, int wave)
     maxHealth = 20;
     health = 20;
     reward = 1;
-    rotation = 0;
     speed = 2;
     damage = 3;
 
-    currentDirection.dir = RIGHT;
     currentTile = Vec2D((int)t->startPos.x,(int)t->startPos.y);
-    targetDirection = 0;
-    targetPos = currentTile + Vec2D(1.5f,0.5f);
+    currentDirection = t->getTileAt(currentTile)-ROAD_START_NORTH;
+    targetDirection = dirToAngle(currentDirection.dir);
+    rotation = targetDirection;
+    targetPos = currentDirection.getFowardTile(currentTile) + Vec2D(0.5f, 0.5f);
     angularVelocity= 0.1;
     distanceToCenter = 0.1;
+}
+
+ClassicEnemy::~ClassicEnemy()
+{
 }

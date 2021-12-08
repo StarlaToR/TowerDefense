@@ -123,9 +123,13 @@ Tower* drawTowerUpgradeMenu(Tower* t, std::forward_list<Tower*>* towers)
 {
     if(t != nullptr)
     {
+        DrawRectangleRec(toRayLibRectangle(Vec2D(1250,70),Vec2D(320,500)),GRAY);
+        DrawText(t->getName(),1280,100,20,BLACK);
+        DrawText(TextFormat("Level: %d",t->getLevel()),1280,145,20,BLACK);
+        DrawText(TextFormat("Health: %d%%",(int)(t->getHealth()*100)),1280,175,20,t->getHealth() > 0.5 ? DARKGREEN : (t->getHealth() > 0.15 ? ORANGE : RED));
         if(t->getLevel() < 4)
         {
-            if(drawButton("Upgrade", Vec2D(1300, 200), Vec2D(150, 50), Vec2D(GetMouseX(), GetMouseY())))
+            if(drawButton("Upgrade", Vec2D(1330, 250), Vec2D(150, 50), Vec2D(GetMouseX(), GetMouseY())))
             {
                 if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
                 {
@@ -135,7 +139,7 @@ Tower* drawTowerUpgradeMenu(Tower* t, std::forward_list<Tower*>* towers)
             }
         }
 
-        if(drawButton("Delete", Vec2D(1300, 300), Vec2D(150, 50), Vec2D(GetMouseX(), GetMouseY())))
+        if(drawButton("Delete", Vec2D(1330, 330), Vec2D(150, 50), Vec2D(GetMouseX(), GetMouseY())))
         {
             if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
             {

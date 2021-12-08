@@ -14,4 +14,5 @@ public:
     void upgrade();
     void attack(Enemy* e, std::forward_list<Missile*>* missiles);
     int getTexture();
+    const char* getName() override {return "Rocket Launcher tower";}
 };

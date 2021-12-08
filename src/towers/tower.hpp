@@ -24,6 +24,7 @@ public:
     virtual void upgrade() = 0;
     Enemy* getNearestEnemy(std::forward_list<Enemy*>* enemyIn);
     int getLevel();
+    virtual const char* getName() = 0;
 
     virtual ~Tower() = 0;
 };

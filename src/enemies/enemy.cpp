@@ -5,16 +5,19 @@ void Enemy::setSlowed(int value)
     slowTimer = value;
 }
 
-bool Enemy::update(TileMap* t, std::forward_list<Enemy*>* enemies, std::forward_list<Particle*>* particles)
+bool Enemy::update(TileMap* t, std::forward_list<Enemy*>* enemies, std::forward_list<Particle*>* particles, int &playerLife)
 {
     slowTimer = cut(slowTimer-1, 0, __INT_MAX__);
     Vec2D currentTilePosition((int)getPosition().x, (int)getPosition().y);
     if ((currentTilePosition.x != currentTile.x || currentTilePosition.y != currentTile.y) && (position - targetPos).lengthSquared() < distanceToCenter)
     {
-        
         currentTile = currentTilePosition;
         char newTile = t->getTileAt(currentTilePosition);
-
+        if (newTile >= ROAD_END_NORTH && newTile <= ROAD_END_WEST)
+        {
+            playerLife -= health;
+            health = 0;
+        }
         currentDirection = getNextDirection(newTile, currentDirection);
         targetPos = currentDirection.getFowardTile(currentTilePosition) + Vec2D(0.5f, 0.5f);
     }

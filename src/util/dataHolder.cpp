@@ -134,9 +134,9 @@ void DataHolder::handleGameState()
     {
         PlayMusicStream(gameplayMusic);
         handleEnemiesBuffer(&map, &enemies, &buffer, wave);
-        selectedTower = handleTowers(&towers, &enemies, &missiles, selectedTower); 
+        selectedTower = handleTowers(&towers, &enemies, &missiles, selectedTower, cameraPos, cameraScale); 
         handleMissiles(&missiles, &enemies, &particles);
-        handleEnemies(&map, &money, &enemies, &particles);
+        handleEnemies(&map, &money, &enemies, &particles, life);
         handleParticles(&particles);
         if (IsMouseButtonDown(MOUSE_BUTTON_MIDDLE) || IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
         {

@@ -17,7 +17,7 @@ TowerHolder::~TowerHolder()
 
 }
 
-void TowerHolder::update(std::forward_list<Tower*>* towers, TileMap* map, int& money)
+void TowerHolder::update(std::forward_list<Tower*>* towers, TileMap* map, int& money, Vec2D camPos, char camScale)
 {
     if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
     {
@@ -29,7 +29,7 @@ void TowerHolder::update(std::forward_list<Tower*>* towers, TileMap* map, int& m
     }
     if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && isUsed)
     {
-        Vec2D pos((int)((GetMouseX() - 50) /48), (int)((GetMouseY() - 50) /48));
+        Vec2D pos = (Vec2D(GetMouseX(),GetMouseY())) / (48*camScale) - (Vec2D(50, 50)-camPos)/48.0f;
         if(pos.x >= 0 && pos.x <= MAP_WIDTH && pos.y >= 0 && pos.y <= MAP_HEIGHT)
         {
             if (map->isTileWithTower(pos))

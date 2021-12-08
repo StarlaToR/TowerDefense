@@ -9,17 +9,17 @@ HealerEnemy::HealerEnemy(TileMap* t, int wave)
     maxHealth = 20;
     health = 20;
     reward = 3;
-    rotation = 0;
     speed = 3;
     damage = 1;
     range = 3.0f;
     healing = 5;
     healingCooldown = 0;
 
-    currentDirection.dir = RIGHT;
     currentTile = Vec2D((int)t->startPos.x,(int)t->startPos.y);
-    targetDirection = 0;
-    targetPos = currentTile + Vec2D(1.5f,0.5f);
+    currentDirection = t->getTileAt(currentTile)-ROAD_START_NORTH;
+    targetDirection = dirToAngle(currentDirection.dir);
+    rotation = targetDirection;
+    targetPos = currentDirection.getFowardTile(currentTile) + Vec2D(0.5f, 0.5f);
     angularVelocity= 0.15;
     distanceToCenter = 0.1;
 }
@@ -45,7 +45,7 @@ void HealerEnemy::heal(std::forward_list<Enemy*>* enemies, Enemy* currentEnemy, 
 
 }
 
-bool HealerEnemy::update(TileMap* t, std::forward_list<Enemy*>* enemies, std::forward_list<Particle*>* particles)
+bool HealerEnemy::update(TileMap* t, std::forward_list<Enemy*>* enemies, std::forward_list<Particle*>* particles, int& playerLife)
 {
     slowTimer = cut(slowTimer-1, 0, __INT_MAX__);
     healingCooldown = cut(healingCooldown-1, 0, __INT_MAX__);
@@ -55,7 +55,11 @@ bool HealerEnemy::update(TileMap* t, std::forward_list<Enemy*>* enemies, std::fo
         
         currentTile = currentTilePosition;
         char newTile = t->getTileAt(currentTilePosition);
-
+        if (newTile >= ROAD_END_NORTH && newTile <= ROAD_END_WEST)
+        {
+            playerLife -= health;
+            health = 0;
+        }
         currentDirection = getNextDirection(newTile, currentDirection);
         targetPos = currentDirection.getFowardTile(currentTilePosition) + Vec2D(0.5f, 0.5f);
     }

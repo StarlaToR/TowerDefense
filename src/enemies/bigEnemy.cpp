@@ -8,14 +8,14 @@ BigEnemy::BigEnemy(TileMap* t, int wave)
     maxHealth = 40;
     health = 40;
     reward = 5;
-    rotation = 0;
     speed = 1;
     damage = 5;
 
-    currentDirection.dir = RIGHT;
     currentTile = Vec2D((int)t->startPos.x,(int)t->startPos.y);
-    targetDirection = 0;
-    targetPos = currentTile + Vec2D(1.5f,0.5f);
+    currentDirection = t->getTileAt(currentTile)-ROAD_START_NORTH;
+    targetDirection = dirToAngle(currentDirection.dir);
+    rotation = targetDirection;
+    targetPos = currentDirection.getFowardTile(currentTile) + Vec2D(0.5f, 0.5f);
     angularVelocity= 0.05;
     distanceToCenter = 0.1;
 }
