@@ -62,6 +62,11 @@ Enemy *Tower::getNearestEnemy(std::forward_list<Enemy*>* enemyIn)
     return nearestEnemy;
 }
 
+int Tower::getLevel()
+{
+    return level;
+}
+
 Tower::~Tower()
 {
 }

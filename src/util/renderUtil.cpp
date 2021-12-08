@@ -120,16 +120,19 @@ Tower* drawTowerUpgradeMenu(Tower* t, std::forward_list<Tower*>* towers)
 {
     if(t != nullptr)
     {
-        if(drawButton("Upgrade", Vec2D(1300, 200), Vec2D(200, 200), Vec2D(GetMouseX(), GetMouseY())))
+        if(t->getLevel() < 4)
         {
-            if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+            if(drawButton("Upgrade", Vec2D(1300, 200), Vec2D(150, 50), Vec2D(GetMouseX(), GetMouseY())))
             {
-                t->upgrade();
-                return t;
+                if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+                {
+                    t->upgrade();
+                    return t;
+                }
             }
         }
 
-        if(drawButton("Delete", Vec2D(1300, 600), Vec2D(200, 200), Vec2D(GetMouseX(), GetMouseY())))
+        if(drawButton("Delete", Vec2D(1300, 300), Vec2D(150, 50), Vec2D(GetMouseX(), GetMouseY())))
         {
             if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
             {
