@@ -19,7 +19,7 @@ TowerHolder::~TowerHolder()
 
 void TowerHolder::update(std::forward_list<Tower*>* towers, TileMap* map, int& money)
 {
-    if(IsMouseButtonPressed(1))
+    if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
     {
         if (GetMouseX() >= position.x && GetMouseX() <= position.x + 128 && GetMouseY() >= position.y && GetMouseY() <= position.y + 128)
         {
@@ -27,7 +27,7 @@ void TowerHolder::update(std::forward_list<Tower*>* towers, TileMap* map, int& m
                 isUsed = true;
         }
     }
-    if(IsMouseButtonReleased(1) && isUsed)
+    if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && isUsed)
     {
         Vec2D pos((int)((GetMouseX() - 50) /48), (int)((GetMouseY() - 50) /48));
         if(pos.x >= 0 && pos.x <= MAP_WIDTH && pos.y >= 0 && pos.y <= MAP_HEIGHT)

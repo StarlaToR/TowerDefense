@@ -28,6 +28,7 @@ void Tower::update(std::forward_list<Enemy*>* enemyIn,std::forward_list<Missile*
         rotation = mod(rotation - dec, -PI, PI);
         if (attackCooldown <= 0 && ang == dec) attack(target, missiles);
     }
+
     if (attackCooldown > 0)
     {
         attackCooldown --;
