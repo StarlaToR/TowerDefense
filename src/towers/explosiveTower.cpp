@@ -2,7 +2,7 @@
 
 ExplosiveTower::ExplosiveTower(Vec2D pos)
 {
-    damage = 15;
+    damage = 25;
     range = 4;
     health = 150;
     maxHealth = 150;

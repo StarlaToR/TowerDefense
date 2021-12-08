@@ -44,6 +44,7 @@ public:
     Sound buttonSound;
     Music musicTroll;
     Music gameplayMusic;
+    Music introSong;
     Font fontButton;
     Font fontTitle;
     TileMap map;
@@ -60,9 +61,11 @@ public:
     std::forward_list<Tower*> towers = std::forward_list<Tower*>();
     std::forward_list<Missile*> missiles = std::forward_list<Missile*>();
     std::forward_list<Particle*> particles = std::forward_list<Particle*>();
+    std::forward_list<EnemySpawner> buffer = std::forward_list<EnemySpawner>();
     TileHolders tHolders = TileHolders();
     Vec2D cameraPos = Vec2D();
     char cameraScale = 1;
+    int wave = 1;
 
     int money = 0;
 

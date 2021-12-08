@@ -12,10 +12,12 @@ void renderMain(DataHolder* in)
     ClearBackground(RAYWHITE);
     if (in->gameState == INTRO)
     {
+        PlayMusicStream(in->introSong);
         renderStartAnim(in);
     }
     else if (in->gameState == MENU)
     {
+        StopMusicStream(in->introSong);
         renderMainMenu(in);
         menuEditor(in);
     }

@@ -75,83 +75,83 @@ void placeTileAt(TileMap *map, Vec2D pos, Vec2D *drag, unsigned char tile, bool 
             {
                 if (map->isValidStartEnd(old))
                 {
-                    map->setTileAt((tile == START_EAST ? map->startPos : map->endPos),map->getDefaultTile(map->getTileAt((tile == START_EAST ? map->startPos : map->endPos))));
-                    map->setTileAt((tile == START_EAST ? map->startPos : map->endPos),UNDEFINED,true);
-                    map->setTileAt(pos,map->getTileAt(pos)+(tile == START_EAST ? 23 : 27),true);
-                    map->setTileAt(pos,map->getTileAt(pos)+(tile == START_EAST ? 4 : 8));
+                    map->setTileAt((tile == START_EAST ? map->startPos : map->endPos), map->getDefaultTile(map->getTileAt((tile == START_EAST ? map->startPos : map->endPos))));
+                    map->setTileAt((tile == START_EAST ? map->startPos : map->endPos), UNDEFINED, true);
+                    map->setTileAt(pos, map->getTileAt(pos) + (tile == START_EAST ? 23 : 27), true);
+                    map->setTileAt(pos, map->getTileAt(pos) + (tile == START_EAST ? 4 : 8));
                     (tile == START_EAST ? map->startPos : map->endPos) = pos;
                 }
             }
-            else if (!map->isRoad(old)) map->setTileAt(pos,tile,true);
+            else if (!map->isRoad(old))
+                map->setTileAt(pos, tile, true);
         }
         else if (tile == ROAD_STRAIGHT_EASTWEST)
         {
             if (drag->x > -0.9f && (pos - *drag).lengthSquared() < 1.1 && (pos - *drag).lengthSquared() > 0.9)
             {
                 map->drawRoad(*drag, Direction(pos - *drag));
-            }
+            }  
         }
         else
         {
-            map->setTileAt(pos,tile);
-            map->setTileAt(pos,UNDEFINED,true);
+            map->setTileAt(pos, tile);
+            map->setTileAt(pos, UNDEFINED, true);
         }
         *drag = pos;
     }
 }
 
-void handleEnemiesBuffer(TileMap *map, std::forward_list<Enemy *> *enemies, int &waves)
+void handleEnemiesBuffer(TileMap *map, std::forward_list<Enemy *> *enemies, std::forward_list<EnemySpawner> *buffer, int &waves)
 {
-
+    enemiesBuffer(map, enemies, buffer);
     if (enemies->empty() && waves == 1)
     {
+        
         for (int i = 0; i < 10; i++)
         {
-            enemiesBuffer(map, enemies, 1, 1);
+            buffer->push_front((EnemySpawner){1, 50});
+
         }
+        buffer->push_front((EnemySpawner){1, 0});
 
         waves++;
     }
-    if (enemies->empty() && waves == 2)
+    else if (enemies->empty() && waves == 2)
     {
         enemies->push_front(new ClassicEnemy(map));
         enemies->push_front(new HealerEnemy(map));
 
         waves++;
-    }
-    if (enemies->empty() && waves == 3)
-    {
-        enemies->push_front(new ClassicEnemy(map));
-        enemies->push_front(new BigEnemy(map));
-        enemies->push_front(new HealerEnemy(map));
     }
 }
 
-void enemiesBuffer(TileMap *map, std::forward_list<Enemy *> *enemies, std::forward_list<EnemySpawner> buffer, int id, int time)
+void enemiesBuffer(TileMap *map, std::forward_list<Enemy *> *enemies, std::forward_list<EnemySpawner> *buffer)
 {
-    for(int i = 0; i < buffer; i++)
-    if(time > 0)
+    for (std::forward_list<EnemySpawner>::iterator i = buffer->begin(); i != buffer->end();)
     {
-        time -= 1;
-        break;
-    }
+        if ((i)->time > 0)
+        {
+            (i)->time -= 1;
+            break;
+        }
 
-    switch (id)
-    {
-    case 1:
-        enemies->push_front(new ClassicEnemy(map));
-        break;
-        
+        switch ((i)->id)
+        {
+        case 1:
+            enemies->push_front(new ClassicEnemy(map));
+            break;
 
-    case 2:
-        enemies->push_front(new BigEnemy(map));
-        break;
+        case 2:
+            enemies->push_front(new BigEnemy(map));
+            break;
 
-    case 3:
-        enemies->push_front(new HealerEnemy(map));
-        break;
+        case 3:
+            enemies->push_front(new HealerEnemy(map));
+            break;
 
-    default:
-        break;
+        default:
+            break;
+        }
+        i = buffer->erase_after(buffer->before_begin());
     }
 }
