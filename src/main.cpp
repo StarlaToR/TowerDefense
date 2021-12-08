@@ -29,6 +29,7 @@ int main(void)
     holder.fontButton = LoadFontEx("assets/font/ethnocentric.ttf", 100, 0, 0);
     holder.fontTitle = LoadFontEx("assets/font/godofwar.ttf", 100, 0, 0);
     holder.map = TileMap();
+    holder.selectedTower = nullptr;
     FILE* sv = fopen("assets/maps/default.bin","rb");
     fread(&holder.map,1,sizeof(holder.map),sv);
     fclose(sv);

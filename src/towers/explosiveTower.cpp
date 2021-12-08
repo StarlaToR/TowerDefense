@@ -41,9 +41,12 @@ int ExplosiveTower::getTexture()
 
 void ExplosiveTower::upgrade()
 {
-    level += 1;
-    damage += 5;
-    textureID += 5;
-    attackSpeed -= 10;
-    missilesUsed = 0;
+    if(level < 4)
+    {
+        level += 1;
+        damage += 5;
+        textureID += 5;
+        attackSpeed -= 10;
+        missilesUsed = 0;
+    }
 }

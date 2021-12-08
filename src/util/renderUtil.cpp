@@ -115,3 +115,36 @@ void drawMapElements(DataHolder* in, bool editor)
     DrawRectangle(1202,0,in->screenWidth,in->screenHeight,LIGHTGRAY);
     DrawRectangle(0,626,in->screenWidth,in->screenHeight,LIGHTGRAY);
 }
+
+Tower* drawTowerUpgradeMenu(Tower* t, std::forward_list<Tower*>* towers)
+{
+    if(t != nullptr)
+    {
+        if(drawButton("Upgrade", Vec2D(1300, 200), Vec2D(200, 200), Vec2D(GetMouseX(), GetMouseY())))
+        {
+            if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+            {
+                t->upgrade();
+                return t;
+            }
+        }
+
+        if(drawButton("Delete", Vec2D(1300, 600), Vec2D(200, 200), Vec2D(GetMouseX(), GetMouseY())))
+        {
+            if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+            {
+                std::forward_list<Tower*>::iterator oldT = towers->before_begin();
+                for (std::forward_list<Tower*>::iterator i = towers->begin(); i != towers->end(); i++)
+                {
+                    if((*i) == t)
+                    {
+                        delete(*i);
+                        i = towers->erase_after(oldT);
+                        return nullptr;
+                    }
+                }
+            }
+        }
+    }
+    return t;
+}

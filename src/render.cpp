@@ -118,6 +118,7 @@ void renderEditor(DataHolder* in)
 void renderGameplay(DataHolder* in)
 {
     drawMapElements(in, false);
+    in->selectedTower = drawTowerUpgradeMenu(in->selectedTower, &in->towers);
     DrawText(TextFormat("Money : %d",in->money),10,30,20,BLACK);
 }
 

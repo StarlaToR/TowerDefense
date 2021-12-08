@@ -33,8 +33,11 @@ void ClassicTower::attack(Enemy* e,std::forward_list<Missile*>* missiles)
 
 void ClassicTower::upgrade()
 {
-    level += 1;
-    damage += 2;
-    attackSpeed -= 5;
-    textureID += 8;
+    if(level < 4)
+    {
+        level += 1;
+        damage += 2;
+        attackSpeed -= 5;
+        textureID += 8;
+    }
 }

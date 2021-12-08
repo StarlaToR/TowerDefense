@@ -32,8 +32,11 @@ int SlowingTower::getTexture()
 
 void SlowingTower::upgrade()
 {
-    level += 1;
-    slowingTime += 30;
-    attackSpeed -= 10;
-    textureID += 11;
+    if(level < 4)
+    {
+        level += 1;
+        slowingTime += 30;
+        attackSpeed -= 10;
+        textureID += 11;
+    }
 }
