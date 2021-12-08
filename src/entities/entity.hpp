@@ -8,9 +8,11 @@ protected:
     int maxHealth;
     int damage;
     int attackSpeed;
+    int level;
 public:
     
     virtual void getDamage(int damageDealt) = 0;
     virtual int getTexture() = 0;
     float getHealth();
+    unsigned int getColor();
 };

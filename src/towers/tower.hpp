@@ -10,7 +10,6 @@ protected:
     int range;
     int cost;
     int attackCooldown;
-    int level;
     float angularVelocity;
     int textureID;
 

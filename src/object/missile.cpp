@@ -1,11 +1,12 @@
 #include "missile.hpp"
 
-Missile::Missile(Vec2D targetPos, Vec2D pos, float lRotation, int dam)
+Missile::Missile(Vec2D targetPos, Vec2D pos, float lRotation, int dam, unsigned int col)
 {
     target = targetPos;
     position = pos;
     rotation = lRotation;
     damage = dam;
+    color = col;
     motion = Vec2D(cosf(lRotation)*8.0f,sinf(lRotation)*8.0f);
 }
 

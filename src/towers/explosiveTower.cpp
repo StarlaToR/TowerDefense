@@ -19,7 +19,7 @@ ExplosiveTower::ExplosiveTower(Vec2D pos)
 
 void ExplosiveTower::attack(Enemy* e, std::forward_list<Missile*>* missiles)
 {
-    missiles->push_front(new Missile(e->getPosition(), getPosition()+Vec2D(cosf(rotation)*0.5f,sinf(rotation)*0.5f), rotation, damage));
+    missiles->push_front(new Missile(e->getPosition(), getPosition()+Vec2D(cosf(rotation)*0.5f,sinf(rotation)*0.5f), rotation, damage, getColor()));
     attackCooldown = attackSpeed;
     missilesUsed ++;
     if (level < 4)

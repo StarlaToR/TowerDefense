@@ -9,7 +9,6 @@ protected:
     int speed;
     int reward;
     int slowTimer;
-    int level;
     Direction currentDirection;
     float targetDirection;
     Vec2D currentTile;
