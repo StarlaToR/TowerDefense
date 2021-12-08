@@ -12,19 +12,29 @@ ClassicTower::ClassicTower(Vec2D pos)
     cost = 5;
     rotation = 0;
     angularVelocity = 0.1f;
+    level = 1;
+    textureID = 121;
 }
 
 int ClassicTower::getTexture()
 {
-    if (attackCooldown > 26)
+    if (attackCooldown > (attackSpeed - 14))
     {
-        return 121+(40-attackCooldown)/2;
+        return textureID+(attackSpeed-attackCooldown)/2;
     }
-    return 121;
+    return textureID;
 }
 
 void ClassicTower::attack(Enemy* e,std::forward_list<Missile*>* missiles)
 {
     e->getDamage(damage);
     attackCooldown = attackSpeed;
+}
+
+void ClassicTower::upgrade()
+{
+    level += 1;
+    damage += 2;
+    attackSpeed -= 5;
+    textureID += 8;
 }

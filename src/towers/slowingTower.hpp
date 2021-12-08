@@ -4,7 +4,7 @@
 class SlowingTower : public Tower
 {
 private:
-    int slowingTime = 120;
+    int slowingTime;
 public:
     SlowingTower(Vec2D pos);
 
@@ -12,5 +12,6 @@ public:
 
     void attack(Enemy* e,std::forward_list<Missile*>* missiles);
     int getTexture();
+    void upgrade();
     
 };
