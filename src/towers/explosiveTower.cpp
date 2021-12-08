@@ -44,7 +44,7 @@ void ExplosiveTower::upgrade()
     if(level < 4)
     {
         level += 1;
-        damage += 5;
+        damage += 15;
         textureID += 5;
         attackSpeed -= 10;
         missilesUsed = 0;

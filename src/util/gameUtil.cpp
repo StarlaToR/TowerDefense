@@ -113,7 +113,7 @@ void placeTileAt(TileMap *map, Vec2D pos, Vec2D *drag, unsigned char tile, bool 
 
 void handleEnemiesBuffer(TileMap *map, std::forward_list<Enemy *> *enemies, std::forward_list<EnemySpawner> *buffer, int &waves)
 {
-    enemiesBuffer(map, enemies, buffer);
+    enemiesBuffer(map, enemies, buffer, waves);
     if (enemies->empty() && waves == 1)
     {
         
@@ -128,14 +128,14 @@ void handleEnemiesBuffer(TileMap *map, std::forward_list<Enemy *> *enemies, std:
     }
     else if (enemies->empty() && waves == 2)
     {
-        enemies->push_front(new ClassicEnemy(map));
-        enemies->push_front(new HealerEnemy(map));
+        enemies->push_front(new ClassicEnemy(map,waves));
+        enemies->push_front(new HealerEnemy(map,waves));
 
         waves++;
     }
 }
 
-void enemiesBuffer(TileMap *map, std::forward_list<Enemy *> *enemies, std::forward_list<EnemySpawner> *buffer)
+void enemiesBuffer(TileMap *map, std::forward_list<Enemy *> *enemies, std::forward_list<EnemySpawner> *buffer, int waves)
 {
     for (std::forward_list<EnemySpawner>::iterator i = buffer->begin(); i != buffer->end();)
     {
@@ -148,15 +148,15 @@ void enemiesBuffer(TileMap *map, std::forward_list<Enemy *> *enemies, std::forwa
         switch ((i)->id)
         {
         case 1:
-            enemies->push_front(new ClassicEnemy(map));
+            enemies->push_front(new ClassicEnemy(map,waves));
             break;
 
         case 2:
-            enemies->push_front(new BigEnemy(map));
+            enemies->push_front(new BigEnemy(map,waves));
             break;
 
         case 3:
-            enemies->push_front(new HealerEnemy(map));
+            enemies->push_front(new HealerEnemy(map,waves));
             break;
 
         default:

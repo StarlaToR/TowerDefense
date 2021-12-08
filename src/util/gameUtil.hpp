@@ -23,4 +23,4 @@ void handleEnemies(TileMap* map, int* money, std::forward_list<Enemy*>* enemies,
 void handleParticles(std::forward_list<Particle*>* particles);
 void placeTileAt(TileMap* map, Vec2D pos, Vec2D* drag, unsigned char tile, bool deco);
 void handleEnemiesBuffer(TileMap *map, std::forward_list<Enemy *> *enemies, std::forward_list<EnemySpawner> *buffer, int &waves);
-void enemiesBuffer(TileMap *map, std::forward_list<Enemy *> *enemies, std::forward_list<EnemySpawner> *buffer);
+void enemiesBuffer(TileMap *map, std::forward_list<Enemy *> *enemies, std::forward_list<EnemySpawner> *buffer, int waves);
