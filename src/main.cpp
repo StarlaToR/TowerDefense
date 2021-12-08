@@ -3,6 +3,7 @@
 #include "util/dataHolder.hpp"
 #include "render.hpp"
 #include <cstdio>
+#include <time.h>
 #include "enemies/classicEnemy.hpp"
 #include "enemies/bigEnemy.hpp"
 #include "enemies/healerEnemy.hpp"
@@ -13,10 +14,12 @@
 int main(void)
 {
     DataHolder holder = DataHolder();
+    SetRandomSeed(time(NULL));
     InitWindow(holder.screenWidth, holder.screenHeight, "Tower Defense");
     InitAudioDevice();
     SetTargetFPS(60);
     holder.logo = LoadTexture("assets/textures/logo_group.png");
+    holder.marie_antoine = LoadTexture("assets/textures/Marie-Antoine.png");
     holder.background = LoadTexture("assets/textures/background.png");
     holder.title = LoadTexture("assets/textures/title.png");
     holder.credit = LoadTexture("assets/textures/credit.png");
@@ -35,7 +38,6 @@ int main(void)
     fclose(sv);
     holder.tiles.registerTiles();
 
-    
     holder.towers.push_front(new ExplosiveTower(holder.map.startPos+Vec2D(7,1)));
 
     // Main game loop

@@ -26,6 +26,7 @@ void DataHolder::handleGameState()
     {
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) || framecounter > 360)
         {
+            StopMusicStream(in->introSong);
             gameState = MENU;
         }
     }

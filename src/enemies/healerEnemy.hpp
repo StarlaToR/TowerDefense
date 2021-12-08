@@ -10,8 +10,7 @@ private:
     int healingCooldown;
     void heal(std::forward_list<Enemy*>* enemies, Enemy* currentEnemy, std::forward_list<Particle*>* particles);
 public:
-    HealerEnemy(TileMap* t);
-    HealerEnemy() {};
+    HealerEnemy(TileMap* t, int wave);
 
     bool update(TileMap* t, std::forward_list<Enemy*>* enemies, std::forward_list<Particle*>* particles) override;
     int getTexture() override {return 52;}

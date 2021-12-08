@@ -67,7 +67,7 @@ bool drawButtonMenu(DataHolder* in, const char* text, Vec2D textSize, Vec2D pos,
 bool drawButtonInvisible(DataHolder* in, Vec2D pos, Vec2D size, Vec2D mousePos) {
     Vec2D tmp = pos+size;
     bool isInside = (mousePos.x > pos.x && mousePos.y > pos.y && mousePos.x <= tmp.x && mousePos.y <= tmp.y);
-    DrawRectangleRec(toRayLibRectangle(pos,size),Fade(BLACK,0.5));
+    //DrawRectangleRec(toRayLibRectangle(pos,size),Fade(BLACK,0.5));
     return isInside;
 }
 void drawMapElements(DataHolder* in, bool editor)
@@ -92,6 +92,9 @@ void drawMapElements(DataHolder* in, bool editor)
             {
                 DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(tx),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(24,24),(*i)->getRotation()*RAD2DEG+90.0f,LIGHTGRAY);
             }
+            DrawRectangleRec(toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(26,20),Vec2D(48,8)),BLACK);
+            DrawRectangleRec(toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(27,21),Vec2D(46,6)),RED);
+            DrawRectangleRec(toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(27,21),Vec2D(46.0f*((*i)->getHealth()),6)),GREEN);
         }
         for (std::forward_list<Tower*>::iterator i = in->towers.begin(); i != in->towers.end(); i++)
         {

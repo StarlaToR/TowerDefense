@@ -10,40 +10,36 @@ void renderMain(DataHolder* in)
 {
     BeginDrawing();
     ClearBackground(RAYWHITE);
-    if (in->gameState == INTRO)
+    switch (in->gameState)
     {
+    case INTRO:
         PlayMusicStream(in->introSong);
         renderStartAnim(in);
-    }
-    else if (in->gameState == MENU)
-    {
-        StopMusicStream(in->introSong);
+        break;
+    case MENU:
         renderMainMenu(in);
         menuEditor(in);
-    }
-    else if (in->gameState == MENUPLAY)
-    {
+        break;
+    case MENUPLAY:
         renderPlay(in);
-    }
-    else if (in->gameState == EDITOR)
-    {
+        break;
+    case EDITOR:
         renderEditor(in);
-    }
-    else if (in->gameState == GAMEPLAY)
-    {
+        break;
+    case GAMEPLAY:
         renderGameplay(in);
-    }
-    else if (in->gameState == OPTION)
-    {
+        break;
+    case OPTION:
         renderOption(in);
-    }
-    else if (in->gameState == CREDIT)
-    {
+        break;
+    case CREDIT:
         renderCredit(in);
-    }
-    else if (in->gameState == EXIT)
-    {
+        break;
+    case EXIT:
         in->closeWindow = true;
+        break;
+    default:
+        break;
     }
     
     DrawFPS(10, 10);

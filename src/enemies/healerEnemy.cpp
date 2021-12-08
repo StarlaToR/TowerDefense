@@ -1,10 +1,10 @@
 #include "healerEnemy.hpp"
 #include "../particles/heal.hpp"
 
-HealerEnemy::HealerEnemy(TileMap* t)
+HealerEnemy::HealerEnemy(TileMap* t, int wave)
 {
     position = t->startPos + Vec2D(0.5f,0.5f);
-    level = 1;
+    level = wave/4;
     slowTimer = 0;
     maxHealth = 20;
     health = 20;
@@ -41,7 +41,7 @@ void HealerEnemy::heal(std::forward_list<Enemy*>* enemies, Enemy* currentEnemy, 
         getHealed(healing);
         particles->push_front(new HealParticle(position));
     }
-    healingCooldown = 30;
+    healingCooldown = 60;
 
 }
 

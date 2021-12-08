@@ -4,7 +4,7 @@
 class BigEnemy: public Enemy
 {
 public:
-    BigEnemy(TileMap* t);
+    BigEnemy(TileMap* t, int wave);
 
     BigEnemy() {};
 

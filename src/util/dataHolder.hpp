@@ -35,6 +35,7 @@ public:
     GameState gameState = INTRO;
     size_t framecounter = 0;
     Texture2D logo;
+    Texture2D marie_antoine;
     Texture2D tileTexture;
     Texture2D background;
     Texture2D button;

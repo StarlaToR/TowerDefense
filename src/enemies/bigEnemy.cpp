@@ -1,9 +1,9 @@
 #include "bigEnemy.hpp"
 
-BigEnemy::BigEnemy(TileMap* t)
+BigEnemy::BigEnemy(TileMap* t, int wave)
 {
     position = t->startPos + Vec2D(0.5f,0.5f);
-    level = 1;
+    level = wave/4;
     slowTimer = 0;
     maxHealth = 40;
     health = 40;
