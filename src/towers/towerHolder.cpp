@@ -64,4 +64,5 @@ int TowerHolder::getTexture()
     {
         return 99;
     }
+    return 121;
 }
