@@ -23,7 +23,8 @@ int main(void)
     holder.credit = LoadTexture("assets/textures/credit.png");
     holder.button = LoadTexture("assets/textures/button.png");
     holder.buttonSound = LoadSound("assets/song/button.wav");
-    holder.music = LoadMusicStream("assets/song/ouioui.mp3");
+    holder.musicTroll = LoadMusicStream("assets/song/ouioui.mp3");
+    holder.gameplayMusic = LoadMusicStream("assets/song/gameplayMusic.mp3");
     holder.tileTexture = LoadTexture("assets/textures/tileSheet.png");
     holder.fontButton = LoadFontEx("assets/font/ethnocentric.ttf", 100, 0, 0);
     holder.fontTitle = LoadFontEx("assets/font/godofwar.ttf", 100, 0, 0);
@@ -32,12 +33,12 @@ int main(void)
     fread(&holder.map,1,sizeof(holder.map),sv);
     fclose(sv);
     holder.tiles.registerTiles();
-    for (int i = 0; i < 80; i++)
+    /*for (int i = 0; i < 80; i++)
     {
         holder.enemies.push_front(new ClassicEnemy(&holder.map));
         holder.enemies.push_front(new BigEnemy(&holder.map));
     }
-    holder.enemies.push_front(new HealerEnemy(&holder.map));
+    holder.enemies.push_front(new HealerEnemy(&holder.map));*/
 
     
     holder.towers.push_front(new ExplosiveTower(holder.map.startPos+Vec2D(7,1)));
@@ -45,12 +46,13 @@ int main(void)
     // Main game loop
     while (!WindowShouldClose() && !holder.closeWindow == true)
     {
-        UpdateMusicStream(holder.music);
-        SetMusicVolume(holder.music, 0.2f);
+        UpdateMusicStream(holder.musicTroll);
+        UpdateMusicStream(holder.gameplayMusic);
+        SetMusicVolume(holder.musicTroll, 0.2f);
         if (IsKeyPressed(KEY_TAB)) SetTargetFPS(600);
         if (IsKeyReleased(KEY_TAB)) SetTargetFPS(60);
-        if(holder.timePlayed >= 16.5f) StopMusicStream(holder.music);
-        holder.timePlayed = GetMusicTimePlayed(holder.music);
+        if(holder.timePlayed >= 16.5f) StopMusicStream(holder.musicTroll);
+        holder.timePlayed = GetMusicTimePlayed(holder.musicTroll);
         holder.handleGameState();
         
         renderMain(&holder);

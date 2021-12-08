@@ -42,7 +42,8 @@ public:
     Texture2D title;
     Texture2D logoIsart;
     Sound buttonSound;
-    Music music;
+    Music musicTroll;
+    Music gameplayMusic;
     Font fontButton;
     Font fontTitle;
     TileMap map;

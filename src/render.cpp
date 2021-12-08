@@ -141,7 +141,7 @@ void menuEditor(DataHolder* in)
     }
     if (IsKeyPressed(KEY_SPACE))
     {
-        StopMusicStream(in->music);
+        StopMusicStream(in->musicTroll);
     }
 
 }

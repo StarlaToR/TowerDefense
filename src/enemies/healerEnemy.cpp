@@ -4,6 +4,7 @@
 HealerEnemy::HealerEnemy(TileMap* t)
 {
     position = t->startPos + Vec2D(0.5f,0.5f);
+    level = 1;
     slowTimer = 0;
     maxHealth = 20;
     health = 20;

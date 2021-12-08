@@ -15,7 +15,8 @@ void DataHolder::unloadDatas()
     UnloadFont(fontButton);
     UnloadFont(fontTitle);
     UnloadSound(buttonSound);
-    UnloadMusicStream(music);
+    UnloadMusicStream(musicTroll);
+    UnloadMusicStream(gameplayMusic);
 }
 
 void DataHolder::handleGameState()
@@ -55,7 +56,7 @@ void DataHolder::handleGameState()
             else if (buttonSelected == 5) 
             {
                 PlaySound(buttonSound);
-                PlayMusicStream(music);
+                PlayMusicStream(musicTroll);
             }
             else if (buttonSelected == 6) 
             {
@@ -124,6 +125,11 @@ void DataHolder::handleGameState()
             }
             
         }
+    }
+    else if (gameState == GAMEPLAY)
+    {
+        PlayMusicStream(gameplayMusic);
+        
     }
     else if (gameState == EDITOR)
     {

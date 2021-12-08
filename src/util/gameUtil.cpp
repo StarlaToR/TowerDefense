@@ -87,3 +87,15 @@ void placeTileAt(TileMap* map, Vec2D pos, Vec2D* drag, unsigned char tile, bool 
         *drag = pos;
     }
 }
+
+void handleEnemiesBuffer(TileMap* map, std::forward_list<Enemy*>* enemies)
+{
+    for (int i = 0; i < 80; i++)
+    {
+        enemies->push_front(new ClassicEnemy(map));
+        enemies->push_front(new BigEnemy(map));
+
+        enemies->push_front(new HealerEnemy(map));
+
+    }
+}
