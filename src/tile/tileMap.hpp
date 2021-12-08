@@ -36,6 +36,8 @@ class TileMap
         void setAltTile(Vec2D pos);
         void updateTileAt(Vec2D pos);
         bool isRoad(unsigned char tile);
+        unsigned char getDefaultTile(unsigned char tile);
+        bool isValidStartEnd(unsigned char tile);
         bool isTileWithTower(Vec2D pos);
         void setTileWithTower(Vec2D pos);
         void removeTowerFromTile(Vec2D pos);

@@ -27,6 +27,10 @@ void renderMain(DataHolder* in)
     {
         renderEditor(in);
     }
+    else if (in->gameState == GAMEPLAY)
+    {
+        renderGameplay(in);
+    }
     else if (in->gameState == OPTION)
     {
         renderOption(in);
@@ -67,7 +71,7 @@ void renderMainMenu(DataHolder* in)
 {
     float width = in->screenWidth;
     float heigth = in->screenHeight;
-    DrawTexturePro(in->background, Rectangle{0,0,1600,1000},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
+    DrawTexturePro(in->background, Rectangle{(float)(in->framecounter/3.0f),0,1600,1000},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
     DrawTexturePro(in->title, Rectangle{0,0,500,500},Rectangle{450, 0,1000,450},Vector2{150,150}, 0, WHITE);
     DrawTexturePro(in->logo, Rectangle{0,0,300,300},Rectangle{width, heigth,100,100},Vector2{100,100}, 0, WHITE);
     DrawTextEx(in->fontTitle, "Tower Defense", Vector2{480,27},70,4,BLACK);
@@ -76,7 +80,7 @@ void renderMainMenu(DataHolder* in)
 
 void renderEditor(DataHolder* in)
 {
-    drawMapElements(in);
+    drawMapElements(in, true);
     in->buttonSelected = 0;
     in->holderHovered = -1;
     if (drawButton("Save Map", Vec2D(1300,570),Vec2D(200,50), in->mousePos))
@@ -107,7 +111,12 @@ void renderEditor(DataHolder* in)
         }
     }
     DrawText(TextFormat("Money : %d",in->money),10,30,20,BLACK);
+}
 
+void renderGameplay(DataHolder* in)
+{
+    drawMapElements(in, false);
+    DrawText(TextFormat("Money : %d",in->money),10,30,20,BLACK);
 }
 
 void menuEditor(DataHolder* in)
@@ -131,7 +140,7 @@ void menuEditor(DataHolder* in)
     {
         in->buttonSelected = 4;
     }
-    if (drawButtonInvisible(in, Vec2D(1295, 140),Vec2D(50,50), in->mousePos))
+    if (drawButtonInvisible(in, Vec2D(mod(1295-in->framecounter/3.0f,0,1920), 140),Vec2D(50,50), in->mousePos))
     {
         in->buttonSelected = 5;
     }
@@ -151,7 +160,7 @@ void renderPlay(DataHolder* in)
     in->buttonSelected = 0;
     float width = in->screenWidth;
     float heigth = in->screenHeight;
-    DrawTexturePro(in->background, Rectangle{0,0,1600,1000},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
+    DrawTexturePro(in->background, Rectangle{in->framecounter/3.0f,0,1600,1000},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
     DrawTexturePro(in->title, Rectangle{0,0,500,500},Rectangle{450, 0,1000,450},Vector2{150,150}, 0, WHITE);
     DrawTextEx(in->fontTitle, "Play", Vector2{660,0},100,4,BLACK);
     if (drawButtonMenu(in, "Play", Vec2D(695,350), Vec2D(650, 300),Vec2D(250,140), in->mousePos))
@@ -173,7 +182,7 @@ void renderCredit(DataHolder* in)
     in->buttonSelected = 0;
     float width = in->screenWidth;
     float heigth = in->screenHeight;
-    DrawTexturePro(in->background, Rectangle{0,0,1600,1000},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
+    DrawTexturePro(in->background, Rectangle{in->framecounter/3.0f,0,1600,1000},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
     DrawTexturePro(in->title, Rectangle{0,0,500,500},Rectangle{450, 0,1000,450},Vector2{150,150}, 0, WHITE);
     DrawTextEx(in->fontTitle, "Credit", Vector2{600,0},100,4,BLACK);
     DrawTextEx(in->fontTitle, "Quentin Lepine", Vector2{450,300},70,4,WHITE);
@@ -183,7 +192,6 @@ void renderCredit(DataHolder* in)
     {
         in->buttonSelected = 1;
     }
-    
 }
 
 void renderOption(DataHolder* in)
@@ -191,7 +199,7 @@ void renderOption(DataHolder* in)
     in->buttonSelected = 0;
     float width = in->screenWidth;
     float heigth = in->screenHeight;
-    DrawTexturePro(in->background, Rectangle{0,0,1600,1000},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
+    DrawTexturePro(in->background, Rectangle{in->framecounter/3.0f,0,1600,1000},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
     DrawTexturePro(in->title, Rectangle{0,0,500,500},Rectangle{450, 0,1000,450},Vector2{150,150}, 0, WHITE);
     DrawTextEx(in->fontTitle, "Option", Vector2{600,0},100,4,BLACK);
     if (drawButtonMenu(in, "Return", Vec2D(652, 780), Vec2D(650, 750),Vec2D(250,100), in->mousePos))
@@ -205,7 +213,7 @@ void renderLoad(DataHolder* in)
     in->buttonSelected = 0;
     float width = in->screenWidth;
     float heigth = in->screenHeight;
-    DrawTexturePro(in->background, Rectangle{0,0,2,2},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
+    DrawTexturePro(in->background, Rectangle{in->framecounter/3.0f,0,2,2},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
     DrawTexturePro(in->title, Rectangle{0,0,500,500},Rectangle{450, 0,1000,450},Vector2{150,150}, 0, WHITE);
     DrawTextEx(in->fontTitle, "Load", Vector2{660,0},100,4,BLACK);
     if (drawButtonMenu(in, "Return", Vec2D(652, 780), Vec2D(650, 750),Vec2D(250,100), in->mousePos))

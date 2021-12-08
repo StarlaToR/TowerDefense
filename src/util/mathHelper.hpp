@@ -70,6 +70,9 @@ class Vec2D {
         // Return the normal vector of 'in'
         Vec2D getNormal();
 
+        // return true if 'a' converted to int is equivalent to 'in' converted to int
+        bool isIntEquivalent(Vec2D a);
+
         Vec2D applyRotation(RotationMatrix matrix);
 
         #ifdef VEC2_TO_RAYLIB_VECTOR2

@@ -31,8 +31,10 @@ void DrawTileMap(DataHolder* in, RenderType type)
         {
             tile = tile-7;
         }
-        DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(tile),toRayLibRectangle(origin,Vec2D(48,48)),{0,0},0.0f,WHITE);
-        if (tile2 != UNDEFINED) DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(tile2),toRayLibRectangle(origin,Vec2D(48,48)),{0,0},0.0f,WHITE);
+        bool gry = (in->holderSelected == 3 || in->holderSelected == 4);
+        bool sPos = (tile >= ROAD_NORTH && tile <= ROAD_WEST);
+        DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(tile),toRayLibRectangle(origin,Vec2D(48,48)),{0,0},0.0f, (gry && !sPos) ? GetColor(0xccccccff) : WHITE);
+        if (tile2 != UNDEFINED) DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(tile2),toRayLibRectangle(origin,Vec2D(48,48)),{0,0},0.0f,(gry) ? GetColor(0xccccccff) : WHITE);
         if (type >= BORDER)
         {
             DrawRectangleLinesEx(toRayLibRectangle(origin,Vec2D(48,48)),1,BLACK);
@@ -65,9 +67,10 @@ bool drawButtonMenu(DataHolder* in, const char* text, Vec2D textSize, Vec2D pos,
 bool drawButtonInvisible(DataHolder* in, Vec2D pos, Vec2D size, Vec2D mousePos) {
     Vec2D tmp = pos+size;
     bool isInside = (mousePos.x > pos.x && mousePos.y > pos.y && mousePos.x <= tmp.x && mousePos.y <= tmp.y);
+    DrawRectangleRec(toRayLibRectangle(pos,size),Fade(BLACK,0.5));
     return isInside;
 }
-void drawMapElements(DataHolder* in)
+void drawMapElements(DataHolder* in, bool editor)
 {
     DrawRectangle(0,0,in->screenWidth,in->screenHeight,DARKGREEN);
     Camera2D cam = Camera2D();
@@ -75,31 +78,36 @@ void drawMapElements(DataHolder* in)
     cam.zoom = in->cameraScale;
     BeginMode2D(cam);
     DrawTileMap(in,in->tileRenderType);
-    for (std::forward_list<Enemy*>::iterator i = in->enemies.begin(); i != in->enemies.end(); i++)
+    if (!editor)
     {
-        int tx = (*i)->getTexture();
-        if (tx != 52)
+        for (std::forward_list<Enemy*>::iterator i = in->enemies.begin(); i != in->enemies.end(); i++)
         {
-            DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(53),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(24,24),(*i)->getRotation()*RAD2DEG+90.0f,LIGHTGRAY);
-            DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(tx),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(64,64)),Vec2D(32,32),(*i)->getRotation()*RAD2DEG+90.0f,LIGHTGRAY);
+            int tx = (*i)->getTexture();
+            if (tx != 52)
+            {
+                DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(53),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(24,24),(*i)->getRotation()*RAD2DEG+90.0f,LIGHTGRAY);
+                DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(tx),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(64,64)),Vec2D(32,32),(*i)->getRotation()*RAD2DEG+90.0f,LIGHTGRAY);
+            }
+            else
+            {
+                DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(tx),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(24,24),(*i)->getRotation()*RAD2DEG+90.0f,LIGHTGRAY);
+            }
         }
-        else
+        for (std::forward_list<Tower*>::iterator i = in->towers.begin(); i != in->towers.end(); i++)
         {
-            DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(tx),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(24,24),(*i)->getRotation()*RAD2DEG+90.0f,LIGHTGRAY);
+            DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(153),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(24,24),0,LIGHTGRAY);
+            DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at((*i)->getTexture()),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(80,80)),Vec2D(40,40),(*i)->getRotation()*RAD2DEG+90.0f,RED);
+        } 
+        for (std::forward_list<Missile*>::iterator i = in->missiles.begin(); i != in->missiles.end(); i++)
+        {
+            DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(54),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(80,80)),Vec2D(40,40),(*i)->getRotation()*RAD2DEG+90.0f,LIGHTGRAY);
+        } 
+        for (std::forward_list<Particle*>::iterator i = in->particles.begin(); i != in->particles.end(); i++)
+        {
+            (*i)->drawParticle();
         }
-    }
-    for (std::forward_list<Tower*>::iterator i = in->towers.begin(); i != in->towers.end(); i++)
-    {
-        DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(153),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(24,24),0,LIGHTGRAY);
-        DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at((*i)->getTexture()),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(80,80)),Vec2D(40,40),(*i)->getRotation()*RAD2DEG+90.0f,RED);
-    } 
-    for (std::forward_list<Missile*>::iterator i = in->missiles.begin(); i != in->missiles.end(); i++)
-    {
-        DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(54),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(80,80)),Vec2D(40,40),(*i)->getRotation()*RAD2DEG+90.0f,LIGHTGRAY);
-    } 
-    for (std::forward_list<Particle*>::iterator i = in->particles.begin(); i != in->particles.end(); i++)
-    {
-        (*i)->drawParticle();
+        DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(in->map.getTileAt(in->map.startPos,true)),toRayLibRectangle(in->map.startPos*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(),0.0f,WHITE);
+        DrawTexturePro(in->tileTexture,in->tiles.tileCrops.at(in->map.getTileAt(in->map.endPos,true)),toRayLibRectangle(in->map.endPos*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(),0.0f,WHITE);
     }
     EndMode2D();
     DrawRectangle(0,0,50,in->screenHeight,LIGHTGRAY);

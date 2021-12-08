@@ -156,7 +156,8 @@ void TileMap::setAltTile(Vec2D pos)
 void TileMap::updateTileAt(Vec2D pos)
 {
     char tile = getTileAt(pos);
-    if (isRoad(tile)) {
+    if (isRoad(tile))
+    {
         char result = 0;
         for (char i = LEFT; i >= UP; i--)
         {
@@ -170,6 +171,21 @@ void TileMap::updateTileAt(Vec2D pos)
 bool TileMap::isRoad(unsigned char tile)
 {
     return tile >= ROAD_STRAIGHT_EASTWEST && tile <= END_WEST;
+}
+
+bool TileMap::isValidStartEnd(unsigned char tile)
+{
+    return (tile >= ROAD_NORTH && tile <= ROAD_WEST);
+}
+
+unsigned char TileMap::getDefaultTile(unsigned char tile)
+{
+    if (!isRoad(tile)) return GRASS;
+    if (tile >= ROAD_NORTH && tile <= ROAD_WEST) return tile;
+    if (tile >= ROAD_START_NORTH && tile <= ROAD_START_WEST) return tile-4;
+    if (tile >= ROAD_END_NORTH && tile <= ROAD_END_WEST) return tile-8;
+
+    return ROAD_EAST;
 }
 
 bool TileMap::isTileWithTower(Vec2D pos)

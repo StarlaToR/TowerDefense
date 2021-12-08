@@ -70,7 +70,19 @@ void placeTileAt(TileMap* map, Vec2D pos, Vec2D* drag, unsigned char tile, bool 
     {
         if (deco)
         {
-            if (!map->isRoad(map->getTileAt(pos))) map->setTileAt(pos,tile,true);
+            unsigned char old = map->getTileAt(pos);
+            if (tile == START_EAST || tile == END_EAST)
+            {
+                if (map->isValidStartEnd(old))
+                {
+                    map->setTileAt((tile == START_EAST ? map->startPos : map->endPos),map->getDefaultTile(map->getTileAt((tile == START_EAST ? map->startPos : map->endPos))));
+                    map->setTileAt((tile == START_EAST ? map->startPos : map->endPos),UNDEFINED,true);
+                    map->setTileAt(pos,map->getTileAt(pos)+(tile == START_EAST ? 23 : 27),true);
+                    map->setTileAt(pos,map->getTileAt(pos)+(tile == START_EAST ? 4 : 8));
+                    (tile == START_EAST ? map->startPos : map->endPos) = pos;
+                }
+            }
+            else if (!map->isRoad(old)) map->setTileAt(pos,tile,true);
         }
         else if (tile == ROAD_STRAIGHT_EASTWEST)
         {
@@ -81,7 +93,7 @@ void placeTileAt(TileMap* map, Vec2D pos, Vec2D* drag, unsigned char tile, bool 
         }
         else
         {
-            map->setTileAt(pos,tile,false);
+            map->setTileAt(pos,tile);
             map->setTileAt(pos,UNDEFINED,true);
         }
         *drag = pos;

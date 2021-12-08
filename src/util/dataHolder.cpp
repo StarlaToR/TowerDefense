@@ -75,11 +75,13 @@ void DataHolder::handleGameState()
             if (buttonSelected == 1) 
             {
                 PlaySound(buttonSound);
+                tileRenderType = NORMAL;
                 gameState = GAMEPLAY;
             }
             else if (buttonSelected == 2) 
             {
                 PlaySound(buttonSound);
+                tileRenderType = EXTENDED;
                 gameState = EDITOR;
             }
             else if (buttonSelected == 3) 
@@ -121,6 +123,7 @@ void DataHolder::handleGameState()
             if (buttonSelected == 1) 
             {
                 PlaySound(buttonSound);
+                tileRenderType = NORMAL;
                 gameState = GAMEPLAY;
             }
             
@@ -129,15 +132,18 @@ void DataHolder::handleGameState()
     else if (gameState == GAMEPLAY)
     {
         PlayMusicStream(gameplayMusic);
-        
-    }
-    else if (gameState == EDITOR)
-    {
         handleTowers(&towers, &enemies, &missiles);
         handleMissiles(&missiles, &enemies, &particles);
         handleEnemies(&map, &money, &enemies, &particles);
         handleParticles(&particles);
-
+        if (IsMouseButtonDown(MOUSE_BUTTON_MIDDLE) || IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
+        {
+            cameraPos = cameraPos - Vec2D(GetMouseDelta().x, GetMouseDelta().y)/cameraScale;
+        }
+        cameraScale = cut(GetMouseWheelMove()+cameraScale,1,3);
+    }
+    else if (gameState == EDITOR)
+    {
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
         {
             if (holderHovered >= 0)
@@ -182,7 +188,7 @@ void DataHolder::handleGameState()
                 placeTileAt(&map,tilePos,&dragPos,tHolders.holders.at(holderSelected).tile, tHolders.holders.at(holderSelected).isDeco);
             }
         }
-        if (IsMouseButtonPressed(MOUSE_BUTTON_MIDDLE))
+        if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
         {
             Vec2D tilePos = (mousePos) / (48*cameraScale) - (Vec2D(50, 50)-cameraPos)/48.0f;
             if (tilePos.x > 0 && tilePos.y > 0 && tilePos.x < map.getWidth() && tilePos.y < map.getHeight())
@@ -194,15 +200,11 @@ void DataHolder::handleGameState()
         {
             dragPos = Vec2D(-1, -1);
         }
-        if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
+        if (IsMouseButtonDown(MOUSE_BUTTON_MIDDLE))
         {
             cameraPos = cameraPos - Vec2D(GetMouseDelta().x, GetMouseDelta().y)/cameraScale;
         }
         cameraScale = cut(GetMouseWheelMove()+cameraScale,1,3);
-    }
-    else if (gameState == GAMEPLAY)
-    {
-
     }
     framecounter++;
 }
