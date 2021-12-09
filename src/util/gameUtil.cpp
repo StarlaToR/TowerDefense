@@ -3,11 +3,13 @@
 Tower* handleTowers(std::forward_list<Tower*>* towers, std::list<Enemy*>* enemies, std::forward_list<Missile*>* missiles, Tower* selectedTower, Vec2D camPos, float camScale)
 {
     Vec2D mousePos = (Vec2D(GetMouseX(),GetMouseY())) / (48*camScale) - (Vec2D(50, 50)-camPos)/48.0f;
+    Vec2D mousePosR = (Vec2D(GetMouseX(),GetMouseY()));
+    bool insideMap = (mousePosR.x > 50 && mousePosR.y > 50 && mousePosR.x < 1202 && mousePosR.y < 626);
     for (std::forward_list<Tower*>::iterator i = towers->begin(); i != towers->end(); i++)
     {
         (*i)->update(enemies, missiles);
 
-        if(mousePos.x >= (*i)->getPosition().x - 0.5 && mousePos.x <= (*i)->getPosition().x + 0.5 && mousePos.y >= (*i)->getPosition().y - 0.5 && mousePos.y <= (*i)->getPosition().y + 0.5)
+        if(insideMap && mousePos.x >= (*i)->getPosition().x - 0.5 && mousePos.x <= (*i)->getPosition().x + 0.5 && mousePos.y >= (*i)->getPosition().y - 0.5 && mousePos.y <= (*i)->getPosition().y + 0.5)
         {
             if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
             {
@@ -15,7 +17,7 @@ Tower* handleTowers(std::forward_list<Tower*>* towers, std::list<Enemy*>* enemie
             }
         }
     }
-    return selectedTower;
+    return (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && insideMap) ? nullptr : selectedTower;
 }
 
 void handleMissiles(std::forward_list<Missile *> *missiles, std::list<Enemy *> *enemies, std::forward_list<Particle *> *particles)
@@ -43,7 +45,7 @@ void handleEnemies(TileMap *map, int *money, std::list<Enemy *> *enemies, std::f
     {
         if ((*i)->update(map, enemies, particles, playerLife))
         {
-            for (int j = 0; j < 15; j++) particles->push_front(new EnemyExplosionParticle((*i)->getPosition()));
+            for (int j = 0; j < 7; j++) particles->push_front(new EnemyExplosionParticle((*i)->getPosition()));
             *money += (*i)->getReward();
             delete *i;
             i = enemies->erase(i);
@@ -114,25 +116,25 @@ void placeTileAt(TileMap *map, Vec2D pos, Vec2D *drag, unsigned char tile, bool 
 void handleEnemiesBuffer(TileMap *map, std::list<Enemy *> *enemies, std::forward_list<EnemySpawner> *buffer, int &waves)
 {
     enemiesBuffer(map, enemies, buffer, waves);
-    if (enemies->empty() && waves == 1)
+    if (enemies->empty() && buffer->empty())
     {
-        
-        for (int i = 0; i < 10; i++)
+        if (waves%5 == 0)
         {
-            buffer->push_front((EnemySpawner){1, 50});
+            for (int i = 0; i < waves/5+1; i++)
+            {
+                buffer->push_front((EnemySpawner){3, 7});
+            }
+        }
+        for (int i = 0; i < (waves%2==0?waves:2*waves); i++)
+            {
+                buffer->push_front((EnemySpawner){2, 50-(waves<20?2*waves:40)});
+            }
+        for (int i = 0; i < 10+waves; i++)
+        {
+            buffer->push_front((EnemySpawner){1, 50-(waves<20?2*waves:40)});
         }
         buffer->push_front((EnemySpawner){1, 0});
 
-        waves++;
-    }
-    else if (enemies->empty() && waves == 2)
-    {
-        buffer->push_front((EnemySpawner){2, 60});
-        buffer->push_front((EnemySpawner){3, 10});
-        for (int i = 0; i < 20; i++)
-        {
-            buffer->push_front((EnemySpawner){1, 25});
-        }
         waves++;
     }
 }

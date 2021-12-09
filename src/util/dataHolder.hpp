@@ -95,7 +95,7 @@ public:
     Vec2D dragPos = Vec2D(-1,-1);
     Vec2D cameraPos = Vec2D();
     char cameraScale = 1;
-    int wave = 1;
+    int wave = 0;
     Tower* selectedTower =nullptr;
     int gameSpeed = 1;
 

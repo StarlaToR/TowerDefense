@@ -111,6 +111,10 @@ void drawMapElements(DataHolder* in, bool editor)
         }
         DrawTexturePro(in->textures.tileTexture,in->lists.tiles.tileCrops.at(in->lists.map.getTileAt(in->lists.map.startPos,true)),toRayLibRectangle(in->lists.map.startPos*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(),0.0f,WHITE);
         DrawTexturePro(in->textures.tileTexture,in->lists.tiles.tileCrops.at(in->lists.map.getTileAt(in->lists.map.endPos,true)),toRayLibRectangle(in->lists.map.endPos*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(),0.0f,WHITE);
+        if (in->selectedTower != nullptr)
+        {
+            DrawCircleV(in->selectedTower->getPosition()*Vec2D(48,48)+Vec2D(50,50),in->selectedTower->getRange()*48.0f,Fade(RED,0.2f));
+        }
     }
     EndMode2D();
     DrawRectangle(0,0,50,in->screenHeight,LIGHTGRAY);
@@ -127,18 +131,6 @@ Tower* drawTowerUpgradeMenu(Tower* t, std::forward_list<Tower*>* towers)
         DrawText(t->getName(),1280,100,20,BLACK);
         DrawText(TextFormat("Level: %d",t->getLevel()),1280,145,20,BLACK);
         DrawText(TextFormat("Health: %d%%",(int)(t->getHealth()*100)),1280,175,20,t->getHealth() > 0.5 ? DARKGREEN : (t->getHealth() > 0.15 ? ORANGE : RED));
-        if(t->getLevel() < 4)
-        {
-            if(drawButton("Upgrade", Vec2D(1330, 250), Vec2D(150, 50), Vec2D(GetMouseX(), GetMouseY())))
-            {
-                if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-                {
-                    t->upgrade();
-                    return t;
-                }
-            }
-        }
-
         if(drawButton("Delete", Vec2D(1330, 330), Vec2D(150, 50), Vec2D(GetMouseX(), GetMouseY())))
         {
             if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
@@ -152,6 +144,17 @@ Tower* drawTowerUpgradeMenu(Tower* t, std::forward_list<Tower*>* towers)
                         i = towers->erase_after(oldT);
                         return nullptr;
                     }
+                }
+            }
+        }
+        if(t->getLevel() < 4)
+        {
+            if(drawButton("Upgrade", Vec2D(1330, 250), Vec2D(150, 50), Vec2D(GetMouseX(), GetMouseY())))
+            {
+                if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+                {
+                    t->upgrade();
+                    return t;
                 }
             }
         }

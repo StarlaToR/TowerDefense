@@ -1,4 +1,5 @@
 #include "dataHolder.hpp"
+#include "../towers/classicTower.hpp"
 
 void InputHelper::handleInputs()
 {
@@ -225,7 +226,29 @@ void DataHolder::handleGameState()
         {
             cameraPos = cameraPos - Vec2D(GetMouseDelta().x, GetMouseDelta().y)/cameraScale;
         }
-        cameraScale = cut(GetMouseWheelMove()+cameraScale,1,3);
+        if (GetMouseWheelMove() > 0.1 && cameraScale < 3)
+        {
+            cameraScale++;
+            cameraPos = cameraPos + Vec2D(300,160) / (cameraScale == 2 ? 1 : 3);
+        }
+        if (GetMouseWheelMove() < -0.1 && cameraScale > 1)
+        {
+            cameraScale--;
+            cameraPos = cameraPos - Vec2D(300,160) / (cameraScale == 1 ? 1 : 3);
+        }
+        if (inputs.isLeftPressed())
+        {
+            Vec2D tilePos = (mousePos) / (48*cameraScale) - (Vec2D(50, 50)-cameraPos)/48.0f;
+            tilePos = Vec2D((int)(tilePos.x),(int)(tilePos.y));
+            if (mousePos.x > 50 && mousePos.y > 50 && mousePos.x < 1202 && mousePos.y < 626 && tilePos.x > 0 && tilePos.y > 0 && tilePos.x < lists.map.getWidth() && tilePos.y < lists.map.getHeight())
+            {
+                if (selectedTower == nullptr && !lists.map.isRoad(lists.map.getTileAt(tilePos)) && lists.map.getTileAt(tilePos,true) == UNDEFINED && !lists.map.isTileWithTower(tilePos))
+                {
+                    lists.towers.push_front(new ClassicTower(tilePos));
+                    lists.map.setTileWithTower(tilePos);
+                }
+            }
+        }
     }
     else if (gameState == EDITOR)
     {

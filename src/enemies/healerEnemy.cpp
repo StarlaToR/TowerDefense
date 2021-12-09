@@ -4,15 +4,15 @@
 HealerEnemy::HealerEnemy(TileMap* t, int wave)
 {
     position = t->startPos + Vec2D(0.5f,0.5f);
-    level = wave/4;
+    level = wave/4+1;
     slowTimer = 0;
-    maxHealth = 20;
-    health = 20;
-    reward = 3;
-    speed = 3;
-    damage = 1;
-    range = 3.0f;
-    healing = 5;
+    maxHealth = 20+20*level;
+    health = maxHealth;
+    reward = 2+level*2;
+    speed = 2+level;
+    damage = level;
+    range = 2.0f+level;
+    healing = 5+level*2;
     healingCooldown = 0;
 
     currentTile = Vec2D((int)t->startPos.x,(int)t->startPos.y);
@@ -20,7 +20,7 @@ HealerEnemy::HealerEnemy(TileMap* t, int wave)
     targetDirection = dirToAngle(currentDirection.dir);
     rotation = targetDirection;
     targetPos = currentDirection.getFowardTile(currentTile) + Vec2D(0.5f, 0.5f);
-    angularVelocity= 0.15;
+    angularVelocity= 0.05*speed;
     distanceToCenter = 0.1;
 }
 
@@ -41,7 +41,7 @@ void HealerEnemy::heal(std::list<Enemy*>* enemies, Enemy* currentEnemy, std::for
         getHealed(healing);
         particles->push_front(new HealParticle(position));
     }
-    healingCooldown = 60;
+    healingCooldown = 60-(level <= 5 ? 6*level : 30);
 
 }
 

@@ -108,14 +108,14 @@ void renderEditor(DataHolder* in)
             DrawRectangleLinesEx(toRayLibRectangle(screenPos,Vec2D(48,48)),2,RED);
         }
     }
-    DrawText(TextFormat("Money : %d",in->money),10,30,20,BLACK);
 }
 
 void renderGameplay(DataHolder* in)
 {
     drawMapElements(in, false);
     in->selectedTower = drawTowerUpgradeMenu(in->selectedTower, &in->lists.towers);
-    DrawText(TextFormat("Money : %d",in->money),10,30,20,BLACK);
+    DrawText(TextFormat("Money : %d",in->money),50,680,30,BLACK);
+    DrawText(TextFormat("Wave : %d",in->wave),1080,680,30,BLACK);
     DrawRectangleRec(toRayLibRectangle(Vec2D(50,750),Vec2D(1156,74)),BLACK);
     DrawRectangleRec(toRayLibRectangle(Vec2D(52,752),Vec2D(1152,70)),RED);
     DrawRectangleRec(toRayLibRectangle(Vec2D(52,752),Vec2D(11.52*in->life,70)),GREEN);

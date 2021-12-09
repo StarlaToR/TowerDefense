@@ -20,9 +20,6 @@ int main(void)
     SetTargetFPS(60);
     holder.initDatas();
 
-    holder.lists.towers.push_front(new ExplosiveTower(holder.lists.map.startPos+Vec2D(7,1)));
-    holder.lists.towers.push_front(new ClassicTower(holder.lists.map.startPos+Vec2D(7,-3)));
-
     // Main game loop
     while (!WindowShouldClose() && !holder.closeWindow == true)
     {

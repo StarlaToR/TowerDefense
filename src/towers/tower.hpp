@@ -25,6 +25,7 @@ public:
     virtual void upgrade() = 0;
     Enemy* getNearestEnemy(std::list<Enemy*>* enemyIn);
     int getLevel();
+    float getRange();
     virtual const char* getName() = 0;
 
     virtual ~Tower() = 0;

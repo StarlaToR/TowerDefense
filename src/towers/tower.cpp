@@ -67,6 +67,11 @@ int Tower::getLevel()
     return level;
 }
 
+float Tower::getRange()
+{
+    return range;
+}
+
 Tower::~Tower()
 {
 }
