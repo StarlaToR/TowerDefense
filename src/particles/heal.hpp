@@ -11,4 +11,5 @@ public:
 
     void drawParticle() override;
     bool shouldDelete() override;
+    void updateParticle() override;
 };

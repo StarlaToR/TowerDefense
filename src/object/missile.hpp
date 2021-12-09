@@ -3,6 +3,7 @@
 #include "object.hpp"
 #include "../enemies/enemy.hpp"
 #include <forward_list>
+#include <list>
 
 class Missile: public Object
 {
@@ -13,7 +14,7 @@ private:
 public:
     Missile(Vec2D targetPos, Vec2D pos, float lRotation, int dam, unsigned int col);
 
-    bool update(std::forward_list<Enemy*>* enemies);
+    bool update(std::list<Enemy*>* enemies);
 
     unsigned int getColor() {return color;}
 

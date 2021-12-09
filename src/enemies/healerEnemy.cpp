@@ -24,10 +24,10 @@ HealerEnemy::HealerEnemy(TileMap* t, int wave)
     distanceToCenter = 0.1;
 }
 
-void HealerEnemy::heal(std::forward_list<Enemy*>* enemies, Enemy* currentEnemy, std::forward_list<Particle*>* particles)
+void HealerEnemy::heal(std::list<Enemy*>* enemies, Enemy* currentEnemy, std::forward_list<Particle*>* particles)
 {
     bool healed = true;
-    for (std::forward_list<Enemy*>::iterator i = enemies->begin(); i != enemies->end(); i++)
+    for (std::list<Enemy*>::iterator i = enemies->begin(); i != enemies->end(); i++)
     {
         if((getPosition() - (*i)->getPosition()).getLength() <= range && (*i) != (currentEnemy))
         {
@@ -45,7 +45,7 @@ void HealerEnemy::heal(std::forward_list<Enemy*>* enemies, Enemy* currentEnemy, 
 
 }
 
-bool HealerEnemy::update(TileMap* t, std::forward_list<Enemy*>* enemies, std::forward_list<Particle*>* particles, int& playerLife)
+bool HealerEnemy::update(TileMap* t, std::list<Enemy*>* enemies, std::forward_list<Particle*>* particles, int& playerLife)
 {
     slowTimer = cut(slowTimer-1, 0, __INT_MAX__);
     healingCooldown = cut(healingCooldown-1, 0, __INT_MAX__);

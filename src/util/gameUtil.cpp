@@ -1,6 +1,6 @@
 #include "gameUtil.hpp"
 
-Tower* handleTowers(std::forward_list<Tower*>* towers, std::forward_list<Enemy*>* enemies, std::forward_list<Missile*>* missiles, Tower* selectedTower, Vec2D camPos, float camScale)
+Tower* handleTowers(std::forward_list<Tower*>* towers, std::list<Enemy*>* enemies, std::forward_list<Missile*>* missiles, Tower* selectedTower, Vec2D camPos, float camScale)
 {
     Vec2D mousePos = (Vec2D(GetMouseX(),GetMouseY())) / (48*camScale) - (Vec2D(50, 50)-camPos)/48.0f;
     for (std::forward_list<Tower*>::iterator i = towers->begin(); i != towers->end(); i++)
@@ -18,7 +18,7 @@ Tower* handleTowers(std::forward_list<Tower*>* towers, std::forward_list<Enemy*>
     return selectedTower;
 }
 
-void handleMissiles(std::forward_list<Missile *> *missiles, std::forward_list<Enemy *> *enemies, std::forward_list<Particle *> *particles)
+void handleMissiles(std::forward_list<Missile *> *missiles, std::list<Enemy *> *enemies, std::forward_list<Particle *> *particles)
 {
     std::forward_list<Missile *>::iterator oldM = missiles->before_begin();
     for (std::forward_list<Missile *>::iterator i = missiles->begin(); i != missiles->end();)
@@ -37,20 +37,19 @@ void handleMissiles(std::forward_list<Missile *> *missiles, std::forward_list<En
     }
 }
 
-void handleEnemies(TileMap *map, int *money, std::forward_list<Enemy *> *enemies, std::forward_list<Particle *> *particles, int &playerLife)
+void handleEnemies(TileMap *map, int *money, std::list<Enemy *> *enemies, std::forward_list<Particle *> *particles, int &playerLife)
 {
-    std::forward_list<Enemy *>::iterator oldE = enemies->before_begin();
-    for (std::forward_list<Enemy *>::iterator i = enemies->begin(); i != enemies->end();)
+    for (std::list<Enemy *>::iterator i = enemies->begin(); i != enemies->end();)
     {
         if ((*i)->update(map, enemies, particles, playerLife))
         {
+            for (int j = 0; j < 15; j++) particles->push_front(new EnemyExplosionParticle((*i)->getPosition()));
             *money += (*i)->getReward();
             delete *i;
-            i = enemies->erase_after(oldE);
+            i = enemies->erase(i);
         }
         else
         {
-            oldE = i;
             i++;
         }
     }
@@ -61,6 +60,7 @@ void handleParticles(std::forward_list<Particle *> *particles)
     std::forward_list<Particle *>::iterator oldP = particles->before_begin();
     for (std::forward_list<Particle *>::iterator i = particles->begin(); i != particles->end();)
     {
+        (*i)->updateParticle();
         if ((*i)->shouldDelete())
         {
             delete *i;
@@ -111,7 +111,7 @@ void placeTileAt(TileMap *map, Vec2D pos, Vec2D *drag, unsigned char tile, bool 
     }
 }
 
-void handleEnemiesBuffer(TileMap *map, std::forward_list<Enemy *> *enemies, std::forward_list<EnemySpawner> *buffer, int &waves)
+void handleEnemiesBuffer(TileMap *map, std::list<Enemy *> *enemies, std::forward_list<EnemySpawner> *buffer, int &waves)
 {
     enemiesBuffer(map, enemies, buffer, waves);
     if (enemies->empty() && waves == 1)
@@ -120,7 +120,6 @@ void handleEnemiesBuffer(TileMap *map, std::forward_list<Enemy *> *enemies, std:
         for (int i = 0; i < 10; i++)
         {
             buffer->push_front((EnemySpawner){1, 50});
-
         }
         buffer->push_front((EnemySpawner){1, 0});
 
@@ -128,14 +127,17 @@ void handleEnemiesBuffer(TileMap *map, std::forward_list<Enemy *> *enemies, std:
     }
     else if (enemies->empty() && waves == 2)
     {
-        enemies->push_front(new ClassicEnemy(map,waves));
-        enemies->push_front(new HealerEnemy(map,waves));
-
+        buffer->push_front((EnemySpawner){2, 60});
+        buffer->push_front((EnemySpawner){3, 10});
+        for (int i = 0; i < 20; i++)
+        {
+            buffer->push_front((EnemySpawner){1, 25});
+        }
         waves++;
     }
 }
 
-void enemiesBuffer(TileMap *map, std::forward_list<Enemy *> *enemies, std::forward_list<EnemySpawner> *buffer, int waves)
+void enemiesBuffer(TileMap *map, std::list<Enemy *> *enemies, std::forward_list<EnemySpawner> *buffer, int waves)
 {
     for (std::forward_list<EnemySpawner>::iterator i = buffer->begin(); i != buffer->end();)
     {
@@ -148,15 +150,15 @@ void enemiesBuffer(TileMap *map, std::forward_list<Enemy *> *enemies, std::forwa
         switch ((i)->id)
         {
         case 1:
-            enemies->push_front(new ClassicEnemy(map,waves));
+            enemies->push_back(new ClassicEnemy(map,waves));
             break;
 
         case 2:
-            enemies->push_front(new BigEnemy(map,waves));
+            enemies->push_back(new BigEnemy(map,waves));
             break;
 
         case 3:
-            enemies->push_front(new HealerEnemy(map,waves));
+            enemies->push_back(new HealerEnemy(map,waves));
             break;
 
         default:

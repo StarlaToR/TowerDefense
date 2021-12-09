@@ -1,4 +1,6 @@
 #include "tileMap.hpp"
+#include <fstream>
+#include <iostream>
 
 char getTileRoadByConnexion(char connect)
 {
@@ -204,4 +206,40 @@ void TileMap::removeTowerFromTile(Vec2D pos)
 {
     int tileId = pos.y * MAP_WIDTH + pos.x;
     tilesWithTower[tileId] = false;
+}
+
+int TileMap::saveToFile(const char* path)
+{
+    MapData data;
+    data.start = startPos;
+    data.end = endPos;
+    for (int i = 0; i < MAP_HEIGHT*MAP_WIDTH; i++)
+    {
+        data.firstLayer[i] = firstLayer[i];
+        data.secondLayer[i] = secondLayer[i];
+    }
+    std::ofstream save;
+    save.open(path, std::ios::out | std::ios::binary | std::ios::trunc);
+    if (!save.is_open()) return -1;
+    save.write((char*)(&data),sizeof(data));
+    save.close();
+    return 0;
+}
+
+int TileMap::loadFromFile(const char* path)
+{
+    MapData data;
+    std::ifstream save;
+    save.open(path, std::ios::in | std::ios::binary);
+    if (!save.is_open()) return -1;
+    save.read((char*)(&data),sizeof(data));
+    save.close();
+    startPos = data.start;
+    endPos = data.end;
+    for (int i = 0; i < MAP_HEIGHT*MAP_WIDTH; i++)
+    {
+        firstLayer[i] = data.firstLayer[i];
+        secondLayer[i] = data.secondLayer[i];
+    }
+    return 0;
 }

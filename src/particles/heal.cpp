@@ -9,10 +9,14 @@ HealParticle::HealParticle(Vec2D pos)
 void HealParticle::drawParticle()
 {
     DrawCircle(position.x*48+50,position.y*48+50-counter,6,Fade(LIME,0.5));
-    counter++;
 }
 
 bool HealParticle::shouldDelete()
 {
     return counter>15;
+}
+
+void HealParticle::updateParticle()
+{
+    counter++;;
 }

@@ -2,6 +2,8 @@
 #include "../entities/entity.hpp"
 #include "../tile/tileMap.hpp"
 #include "../particles/particle.hpp"
+#include <forward_list>
+#include <list>
 
 class Enemy : public Entity
 {
@@ -18,7 +20,7 @@ protected:
     bool shouldStop = false;
 public:
     void setSlowed(int value);
-    virtual bool update(TileMap* t, std::forward_list<Enemy*>* enemies, std::forward_list<Particle*>* particles, int &playerLife);
+    virtual bool update(TileMap* t, std::list<Enemy*>* enemies, std::forward_list<Particle*>* particles, int &playerLife);
     void getDamage(int damageDealt) {health = cut(health-damageDealt,0,maxHealth);}
     void getHealed(int heal);
     int getReward();

@@ -16,6 +16,14 @@ enum RenderType : char
     DEBUG,
 };
 
+struct MapData
+{
+    Vec2D start;
+    Vec2D end;
+    unsigned char firstLayer[MAP_HEIGHT*MAP_WIDTH];
+    unsigned char secondLayer[MAP_HEIGHT*MAP_WIDTH];
+};
+
 class TileMap
 {
     public:
@@ -41,6 +49,9 @@ class TileMap
         bool isTileWithTower(Vec2D pos);
         void setTileWithTower(Vec2D pos);
         void removeTowerFromTile(Vec2D pos);
+
+        int saveToFile(const char* path);
+        int loadFromFile(const char* path);
 
         static int getWidth() {return MAP_WIDTH;}
         static int getHeight() {return MAP_HEIGHT;}

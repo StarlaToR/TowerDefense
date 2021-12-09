@@ -6,7 +6,7 @@ ExplosiveTower::ExplosiveTower(Vec2D pos)
     range = 4;
     health = 150;
     maxHealth = 150;
-    attackSpeed = 90;
+    attackSpeed = 75;
     attackCooldown = 0;
     cost = 20;
     position = pos + Vec2D(0.5f,0.5f);
@@ -19,18 +19,22 @@ ExplosiveTower::ExplosiveTower(Vec2D pos)
 
 void ExplosiveTower::attack(Enemy* e, std::forward_list<Missile*>* missiles)
 {
-    missiles->push_front(new Missile(e->getPosition(), getPosition()+Vec2D(cosf(rotation)*0.5f,sinf(rotation)*0.5f), rotation, damage, getColor()));
+    
     attackCooldown = attackSpeed;
     missilesUsed ++;
     if (level < 4)
     {
         if (missilesUsed > 4)
             missilesUsed = 0;
+        else
+            missiles->push_front(new Missile(e->getPosition(), getPosition()+Vec2D(cosf(rotation)*0.5f,sinf(rotation)*0.5f), rotation, damage, getColor()));
     }
     else
     {
         if (missilesUsed > 6)
             missilesUsed = 0;
+        else
+            missiles->push_front(new Missile(e->getPosition(), getPosition()+Vec2D(cosf(rotation)*0.5f,sinf(rotation)*0.5f), rotation, damage, getColor()));
     }
 }
 

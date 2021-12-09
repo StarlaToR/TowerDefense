@@ -1,143 +1,226 @@
 #include "dataHolder.hpp"
-#include <cstdio>
+
+void InputHelper::handleInputs()
+{
+    right = IsMouseButtonPressed(MOUSE_BUTTON_RIGHT);
+    left = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
+}
+
+bool InputHelper::isLeftPressed()
+{
+    if (left)
+    {
+        left = false;
+        return true;
+    }
+    return false;
+}
+
+bool InputHelper::isRightPressed()
+{
+    if (right)
+    {
+        right = false;
+        return true;
+    }
+    return false;
+}
 
 void DataHolder::unloadDatas()
 {
-    for (std::forward_list<Enemy*>::iterator i = enemies.begin(); i != enemies.end(); i++) delete *i;
-    for (std::forward_list<Tower*>::iterator i = towers.begin(); i != towers.end(); i++) delete *i;
-    for (std::forward_list<Missile*>::iterator i = missiles.begin(); i != missiles.end(); i++) delete *i;
-    UnloadTexture(logo);
-    UnloadTexture(tileTexture);
-    UnloadTexture(background);
-    UnloadTexture(title);
-    UnloadTexture(credit);
-    UnloadTexture(button);
+    for (std::list<Enemy*>::iterator i = lists.enemies.begin(); i != lists.enemies.end(); i++) delete *i;
+    for (std::forward_list<Tower*>::iterator i = lists.towers.begin(); i != lists.towers.end(); i++) delete *i;
+    for (std::forward_list<Missile*>::iterator i = lists.missiles.begin(); i != lists.missiles.end(); i++) delete *i;
+    UnloadTexture(textures.logo);
+    UnloadTexture(textures.tileTexture);
+    UnloadTexture(textures.background);
+    UnloadTexture(textures.title);
+    UnloadTexture(textures.credit);
+    UnloadTexture(textures.button);
+    UnloadTexture(textures.marie_antoine);
     UnloadFont(fontButton);
     UnloadFont(fontTitle);
-    UnloadSound(buttonSound);
-    UnloadMusicStream(musicTroll);
-    UnloadMusicStream(gameplayMusic);
+    UnloadSound(sounds.buttonSound);
+    UnloadMusicStream(sounds.musicTroll);
+    UnloadMusicStream(sounds.gameplayMusic);
+}
+
+void DataHolder::initDatas()
+{
+    textures.logo = LoadTexture("assets/textures/logo.png");
+    textures.logoIsart = LoadTexture("assets/textures/logo_isart.png");
+    textures.marie_antoine = LoadTexture("assets/textures/Marie-Antoine.png");
+    textures.background = LoadTexture("assets/textures/background.png");
+    textures.title = LoadTexture("assets/textures/title.png");
+    textures.credit = LoadTexture("assets/textures/credit.png");
+    textures.tileTexture = LoadTexture("assets/textures/tileSheet.png");
+    textures.button = LoadTexture("assets/textures/button.png");
+    sounds.buttonSound = LoadSound("assets/sounds/button.ogg");
+    sounds.musicTroll = LoadMusicStream("assets/sounds/ouioui.ogg");
+    sounds.gameplayMusic = LoadMusicStream("assets/sounds/gameplayMusic.ogg");
+    sounds.introSong = LoadMusicStream("assets/sounds/introSong.ogg");
+    fontButton = LoadFontEx("assets/font/ethnocentric.ttf", 100, 0, 0);
+    fontTitle = LoadFontEx("assets/font/godofwar.ttf", 100, 0, 0);
+    lists.map = TileMap();
+    SetMusicVolume(sounds.musicTroll, 0.15f);
+    selectedTower = nullptr;
+    lists.map.loadFromFile("saves/maps/default.bin");
+    lists.tiles.registerTiles();
+    SetMasterVolume(masterVolume);
 }
 
 void DataHolder::handleGameState()
 {
+
+    if (IsKeyPressed(KEY_RIGHT))
+    {
+        gameSpeed *= 2;
+        if (gameSpeed == 0) gameSpeed = 1;
+    }
+    if (IsKeyPressed(KEY_LEFT)) gameSpeed /= 2;
+    if (gameSpeed > 16) gameSpeed = 16;
+    //if (gameSpeed < 1) gameSpeed = 1;
+    inputs.handleInputs();
+    UpdateMusicStream(sounds.musicTroll);
+    UpdateMusicStream(sounds.gameplayMusic);
+    UpdateMusicStream(sounds.introSong);
+    if(timePlayed >= 16.0f) StopMusicStream(sounds.musicTroll);
+    timePlayed = GetMusicTimePlayed(sounds.musicTroll);
     mousePos = Vec2D(GetMousePosition().x, GetMousePosition().y);
+
     if (gameState == INTRO)
     {
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) || framecounter > 360)
+        if (inputs.isLeftPressed() || framecounter > 360)
         {
-            StopMusicStream(introSong);
+            StopMusicStream(sounds.introSong);
             gameState = MENU;
         }
     }
     else if (gameState == MENU)
     {
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+        if (inputs.isLeftPressed())
         {
             if (buttonSelected == 1) 
             {
-                PlaySound(buttonSound);
+                PlaySound(sounds.buttonSound);
                 gameState = MENUPLAY;
             }
             else if (buttonSelected == 2) 
             {
-                PlaySound(buttonSound);
+                PlaySound(sounds.buttonSound);
                 gameState = OPTION;
             }
             else if (buttonSelected == 3) 
             {
-                PlaySound(buttonSound);
+                PlaySound(sounds.buttonSound);
                 gameState = CREDIT;
             }
             else if (buttonSelected == 4) 
             {
-                PlaySound(buttonSound);
+                PlaySound(sounds.buttonSound);
                 gameState = EXIT;
             }
             else if (buttonSelected == 5) 
             {
-                PlaySound(buttonSound);
-                PlayMusicStream(musicTroll);
+                PlaySound(sounds.buttonSound);
+                PlayMusicStream(sounds.musicTroll);
             }
             else if (buttonSelected == 6) 
             {
                 framecounter = 0;
-                PlaySound(buttonSound);
+                PlaySound(sounds.buttonSound);
                 gameState = INTRO;
             }
-            
-            
         }
     }
     else if (gameState == MENUPLAY)
     {
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+        if (inputs.isLeftPressed())
         {
             if (buttonSelected == 1) 
             {
-                PlaySound(buttonSound);
+                PlaySound(sounds.buttonSound);
                 tileRenderType = NORMAL;
                 gameState = GAMEPLAY;
             }
-            else if (buttonSelected == 2) 
+            if (buttonSelected == 2)
             {
-                PlaySound(buttonSound);
-                tileRenderType = EXTENDED;
-                gameState = EDITOR;
+                PlaySound(sounds.buttonSound);
+                gameState = LOAD;
             }
             else if (buttonSelected == 3) 
             {
-                PlaySound(buttonSound);
+                PlaySound(sounds.buttonSound);
+                tileRenderType = EXTENDED;
+                gameState = EDITOR;
+            }
+            else if (buttonSelected == 4) 
+            {
+                PlaySound(sounds.buttonSound);
                 gameState = MENU;
             }
-            
         }
     }
     else if (gameState == OPTION)
     {
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+        if (inputs.isLeftPressed())
         {
             if (buttonSelected == 1) 
             {
-                PlaySound(buttonSound);
+                PlaySound(sounds.buttonSound);
                 gameState = MENU;
             }
-            
+            if (buttonSelected == 2) 
+            {
+                PlaySound(sounds.buttonSound);
+                masterVolume = cut(masterVolume+0.05f,0.0f,1.0f);
+                SetMasterVolume(masterVolume);
+            }
+            if (buttonSelected == 3) 
+            {
+                PlaySound(sounds.buttonSound);
+                masterVolume = cut(masterVolume-0.05f,0.0f,1.0f);
+                SetMasterVolume(masterVolume);
+            }
         }
     }
     else if (gameState == CREDIT)
     {
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+        if (inputs.isLeftPressed())
         {
             if (buttonSelected == 1) 
             {
-                PlaySound(buttonSound);
+                PlaySound(sounds.buttonSound);
                 gameState = MENU;
             }
-            
         }
     }
     else if (gameState == LOAD)
     {
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+        if (inputs.isLeftPressed())
         {
             if (buttonSelected == 1) 
             {
-                PlaySound(buttonSound);
+                PlaySound(sounds.buttonSound);
                 tileRenderType = NORMAL;
                 gameState = GAMEPLAY;
             }
-            
         }
     }
     else if (gameState == GAMEPLAY)
     {
-        PlayMusicStream(gameplayMusic);
-        handleEnemiesBuffer(&map, &enemies, &buffer, wave);
-        selectedTower = handleTowers(&towers, &enemies, &missiles, selectedTower, cameraPos, cameraScale); 
-        handleMissiles(&missiles, &enemies, &particles);
-        handleEnemies(&map, &money, &enemies, &particles, life);
-        handleParticles(&particles);
+        PlayMusicStream(sounds.gameplayMusic);
+        int tmp = 0;
+        if (gameSpeed == 0 && IsKeyPressed(KEY_UP)) tmp = -1;
+        while (tmp < gameSpeed)
+        {
+            handleEnemiesBuffer(&lists.map, &lists.enemies, &lists.buffer, wave);
+            selectedTower = handleTowers(&lists.towers, &lists.enemies, &lists.missiles, selectedTower, cameraPos, cameraScale); 
+            handleMissiles(&lists.missiles, &lists.enemies, &lists.particles);
+            handleEnemies(&lists.map, &money, &lists.enemies, &lists.particles, life);
+            handleParticles(&lists.particles);
+            tmp++;
+        }
         if (IsMouseButtonDown(MOUSE_BUTTON_MIDDLE) || IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
         {
             cameraPos = cameraPos - Vec2D(GetMouseDelta().x, GetMouseDelta().y)/cameraScale;
@@ -146,7 +229,7 @@ void DataHolder::handleGameState()
     }
     else if (gameState == EDITOR)
     {
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+        if (inputs.isLeftPressed())
         {
             if (holderHovered >= 0)
             {
@@ -154,13 +237,11 @@ void DataHolder::handleGameState()
             }
             else if (buttonSelected == 1)
             {
-                FILE *sv = fopen("assets/maps/default.bin", "wb");
-                fwrite(&map, 1, sizeof(map), sv);
-                fclose(sv);
+                lists.map.saveToFile("saves/maps/default.bin");
             }
             else if (buttonSelected == 2)
             {
-                map = TileMap();
+                lists.map = TileMap();
             }
             else if (buttonSelected == 3)
             {
@@ -187,15 +268,15 @@ void DataHolder::handleGameState()
             {
                 Vec2D tilePos = (mousePos) / (48*cameraScale) - (Vec2D(50, 50)-cameraPos)/48.0f;
                 tilePos = Vec2D((int)(tilePos.x),(int)(tilePos.y));
-                placeTileAt(&map,tilePos,&dragPos,tHolders.holders.at(holderSelected).tile, tHolders.holders.at(holderSelected).isDeco);
+                placeTileAt(&lists.map,tilePos,&dragPos,lists.tHolders.holders.at(holderSelected).tile, lists.tHolders.holders.at(holderSelected).isDeco);
             }
         }
-        if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
+        if (inputs.isRightPressed())
         {
             Vec2D tilePos = (mousePos) / (48*cameraScale) - (Vec2D(50, 50)-cameraPos)/48.0f;
-            if (tilePos.x > 0 && tilePos.y > 0 && tilePos.x < map.getWidth() && tilePos.y < map.getHeight())
+            if (tilePos.x > 0 && tilePos.y > 0 && tilePos.x < lists.map.getWidth() && tilePos.y < lists.map.getHeight())
             {
-                map.setAltTile(tilePos);
+                lists.map.setAltTile(tilePos);
             }
         }
         if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
