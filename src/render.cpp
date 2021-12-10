@@ -93,6 +93,10 @@ void renderEditor(DataHolder& in)
     {
         in.buttonSelected = 3;
     }
+    if (drawButtonMenu(in, "Return", Vec2D(652, 780), Vec2D(650, 750),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 4;
+    }
     for (unsigned int i = 0; i < in.lists.tHolders.holders.size(); i++)
     {
         TileHolder* tmp = &in.lists.tHolders.holders.at(i);

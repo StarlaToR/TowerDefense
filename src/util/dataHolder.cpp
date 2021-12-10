@@ -289,7 +289,7 @@ void DataHolder::handleGameState()
             }
             else if (buttonSelected == 1)
             {
-                lists.map.saveToFile("saves/maps/default.bin");
+                lists.map.saveToFile("saves/maps/map2.bin");
             }
             else if (buttonSelected == 2)
             {
@@ -313,6 +313,12 @@ void DataHolder::handleGameState()
                     break;
                 }
             }
+            if (buttonSelected == 4) 
+            {
+                PlaySound(sounds.buttonSound);
+                gameState = MENU;
+            }
+            
         }
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
         {
