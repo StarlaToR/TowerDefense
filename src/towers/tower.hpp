@@ -15,11 +15,6 @@ protected:
     int textureID;
 
 public:
-    void getDamage(int damageDealt)
-    {
-        health -= damageDealt;
-    }
-
     void update(std::list<Enemy*>& enemyIn, std::forward_list<Missile*>& missiles);
     virtual void attack(Enemy* e, std::forward_list<Missile*>& missiles) = 0;
     virtual void upgrade() = 0;
@@ -28,6 +23,6 @@ public:
     float getRange();
     int getCost();
     virtual const char* getName() = 0;
-
+    void getDamage(int damageDealt);
     virtual ~Tower() = 0;
 };

@@ -77,6 +77,12 @@ int Tower::getCost()
     return cost;
 }
 
+void Tower::getDamage(int damageDealt)
+{
+    health -= damageDealt;
+}
+
+
 Tower::~Tower()
 {
 }
