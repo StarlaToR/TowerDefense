@@ -14,7 +14,7 @@ SlowingTower::SlowingTower(Vec2D pos)
     angularVelocity = 0.07f;
     level = 1;
     slowingTime = 120;
-    textureID = 61;
+    textureID = 55;
 }
 
 
@@ -27,6 +27,10 @@ void SlowingTower::attack(Enemy* e,std::forward_list<Missile*>& missiles)
 
 int SlowingTower::getTexture()
 {
+    if (attackCooldown > (attackSpeed - 22))
+    {
+        return textureID+(attackSpeed-attackCooldown)/2;
+    }
     return textureID;
 }
 
