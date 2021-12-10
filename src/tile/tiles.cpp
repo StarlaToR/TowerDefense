@@ -36,7 +36,7 @@ Direction getNextDirection(char tilePos, Direction dir)
     }
     else
     {
-        return dir;
+        return dir.getOpposite();
     }
 }
 

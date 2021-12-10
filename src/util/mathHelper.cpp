@@ -87,8 +87,8 @@
 
     bool Vec2D::isIntEquivalent(Vec2D a)
     {
-        int x1 = (int)x;
-        int y1 = (int)y;
+        int x1 = (int)(x>=0?x:x-1);
+        int y1 = (int)(y>=0?y:y-1);
         int x2 = (int)a.x;
         int y2 = (int)a.y;
         return (x1 == x2 && y1 == y2);

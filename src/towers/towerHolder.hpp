@@ -9,10 +9,10 @@ class TowerHolder
 private:
     int towerType;
     Vec2D position;
-    bool isUsed;
     int cost;
 
 public:
+    bool isUsed;
     TowerHolder(Vec2D pos,int type, int cos);
     TowerHolder();
     ~TowerHolder();

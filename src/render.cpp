@@ -112,14 +112,26 @@ void renderEditor(DataHolder& in)
 
 void renderGameplay(DataHolder& in)
 {
+    Vec2D mTilePos = (in.mousePos) / (48*in.cameraScale) - (Vec2D(50, 50)-in.cameraPos)/48.0f;
+    mTilePos = Vec2D((int)(mTilePos.x),(int)(mTilePos.y));
     drawMapElements(in, false);
     in.buttonSelected = 0;
-    in.selectedTower = drawTowerUpgradeMenu(in.selectedTower, in, in.buttonSelected);
+    drawTowerUpgradeMenu(in, in.buttonSelected);
     DrawText(TextFormat("Money : %d",in.money),50,680,30,BLACK);
     DrawText(TextFormat("Wave : %d",in.wave),1080,680,30,BLACK);
     DrawRectangleRec(toRayLibRectangle(Vec2D(50,750),Vec2D(1156,74)),BLACK);
     DrawRectangleRec(toRayLibRectangle(Vec2D(52,752),Vec2D(1152,70)),RED);
     DrawRectangleRec(toRayLibRectangle(Vec2D(52,752),Vec2D(11.52*in.life,70)),GREEN);
+    for (int i = 0; i < 3; i++)
+    {
+        TowerHolder* tmpHolder = &in.lists.towerHolders.holders[i];
+        if (tmpHolder->isUsed)
+        {
+            bool valid = (in.mousePos.x > 50 && in.mousePos.y > 50 && in.mousePos.x < 1202 && in.mousePos.y < 626 && !in.lists.map.isRoad(in.lists.map.getTileAt(mTilePos))
+             && in.lists.map.getTileAt(mTilePos,true) == UNDEFINED && !in.lists.map.isTileWithTower(mTilePos));
+            DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(tmpHolder->getTexture()),toRayLibRectangle(in.mousePos,Vec2D(80,80)),Vec2D(40,40),0,Fade(valid ? GREEN : RED,0.6f));
+        }
+    }
 
 }
 

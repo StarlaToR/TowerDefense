@@ -69,7 +69,7 @@ void DataHolder::initDatas()
     lists.map = TileMap();
     SetMusicVolume(sounds.musicTroll, 0.15f);
     selectedTower = nullptr;
-    lists.map.loadFromFile("saves/maps/default.bin");
+    lists.map.loadFromFile("saves/maps/game/game0.bin");
     lists.tiles.registerTiles();
     SetMasterVolume(masterVolume);
 }
@@ -244,14 +244,6 @@ void DataHolder::handleGameState()
         {
             Vec2D tilePos = (mousePos) / (48*cameraScale) - (Vec2D(50, 50)-cameraPos)/48.0f;
             tilePos = Vec2D((int)(tilePos.x),(int)(tilePos.y));
-            if (mousePos.x > 50 && mousePos.y > 50 && mousePos.x < 1202 && mousePos.y < 626 && tilePos.x >= 0 && tilePos.y >= 0 && tilePos.x < lists.map.getWidth() && tilePos.y < lists.map.getHeight())
-            {
-                if (selectedTower == nullptr && !lists.map.isRoad(lists.map.getTileAt(tilePos)) && lists.map.getTileAt(tilePos,true) == UNDEFINED && !lists.map.isTileWithTower(tilePos))
-                {
-                    lists.towers.push_front(new ClassicTower(tilePos));
-                    lists.map.setTileWithTower(tilePos);
-                }
-            }
             if (buttonSelected == 2)
             {
                 if(money >= selectedTower->getCost())

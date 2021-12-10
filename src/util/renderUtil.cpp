@@ -21,6 +21,7 @@ Rectangle toRayLibRectangle(Vec2D origin, Vec2D rectSize)
 
 void DrawTileMap(DataHolder& in, RenderType type)
 {
+    Vec2D mTilePos = (in.mousePos) / (48*in.cameraScale) - (Vec2D(50, 50)-in.cameraPos)/48.0f;
     for (int i = 0; i < in.lists.map.getWidth()*in.lists.map.getHeight(); i++)
     {
         Vec2D tilePos = Vec2D(i%in.lists.map.getWidth(),i/in.lists.map.getWidth());
@@ -35,7 +36,7 @@ void DrawTileMap(DataHolder& in, RenderType type)
         bool sPos = (tile >= ROAD_NORTH && tile <= ROAD_WEST);
         DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(tile),toRayLibRectangle(origin,Vec2D(48,48)),{0,0},0.0f, (gry && !sPos) ? GetColor(0xccccccff) : WHITE);
         if (tile2 != UNDEFINED) DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(tile2),toRayLibRectangle(origin,Vec2D(48,48)),{0,0},0.0f,(gry) ? GetColor(0xccccccff) : WHITE);
-        if (type >= BORDER)
+        if (type >= BORDER || mTilePos.isIntEquivalent(tilePos))
         {
             DrawRectangleLinesEx(toRayLibRectangle(origin,Vec2D(48,48)),1,BLACK);
         }
@@ -103,6 +104,8 @@ void drawMapElements(DataHolder& in, bool editor)
             DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(153),toRayLibRectangle(tower->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(24,24),0,LIGHTGRAY);
             DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(tower->getTexture()),toRayLibRectangle(tower->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(80,80)),Vec2D(40,40),tower->getRotation()*RAD2DEG+90.0f,GetColor(tower->getColor()));
         }
+        DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(in.lists.map.getTileAt(in.lists.map.startPos,true)),toRayLibRectangle(in.lists.map.startPos*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(),0.0f,WHITE);
+        DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(in.lists.map.getTileAt(in.lists.map.endPos,true)),toRayLibRectangle(in.lists.map.endPos*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(),0.0f,WHITE);
         for (std::forward_list<Missile*>::iterator i = in.lists.missiles.begin(); i != in.lists.missiles.end(); i++)
         {
             DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(54),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(80,80)),Vec2D(40,40),(*i)->getRotation()*RAD2DEG+90.0f,GetColor((*i)->getColor()));
@@ -111,8 +114,6 @@ void drawMapElements(DataHolder& in, bool editor)
         {
             (*i)->drawParticle();
         }
-        DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(in.lists.map.getTileAt(in.lists.map.startPos,true)),toRayLibRectangle(in.lists.map.startPos*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(),0.0f,WHITE);
-        DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(in.lists.map.getTileAt(in.lists.map.endPos,true)),toRayLibRectangle(in.lists.map.endPos*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(),0.0f,WHITE);
         if (in.selectedTower != nullptr)
         {
             DrawCircleV(in.selectedTower->getPosition()*Vec2D(48,48)+Vec2D(50,50),in.selectedTower->getRange()*48.0f,Fade(RED,0.2f));
@@ -122,19 +123,19 @@ void drawMapElements(DataHolder& in, bool editor)
     DrawTexture(in.textures.gameUI,0,0,WHITE);
 }
 
-Tower* drawTowerUpgradeMenu(Tower* t, DataHolder& in, int& button)
+void drawTowerUpgradeMenu(DataHolder& in, int& button)
 {
-    if(t != nullptr)
+    if(in.selectedTower != nullptr)
     {
         DrawRectangleRec(toRayLibRectangle(Vec2D(1265,70),Vec2D(320,500)),GRAY);
-        DrawText(t->getName(),1300,100,20,BLACK);
-        DrawText(TextFormat("Level: %d",t->getLevel()),1300,145,20,BLACK);
-        DrawText(TextFormat("Health: %d%%",(int)(t->getHealth()*100)),1300,175,20,t->getHealth() > 0.5 ? DARKGREEN : (t->getHealth() > 0.15 ? ORANGE : RED));
+        DrawText(in.selectedTower->getName(),1300,100,20,BLACK);
+        DrawText(TextFormat("Level: %d",in.selectedTower->getLevel()),1300,145,20,BLACK);
+        DrawText(TextFormat("Health: %d%%",(int)(in.selectedTower->getHealth()*100)),1300,175,20,t->getHealth() > 0.5 ? DARKGREEN : (in.selectedTower->getHealth() > 0.15 ? ORANGE : RED));
         if(drawButton("Delete", Vec2D(1350, 330), Vec2D(150, 50), Vec2D(GetMouseX(), GetMouseY())))
         {
             button = 1;
         }
-        if(t->getLevel() < 4 && drawButton("Upgrade", Vec2D(1350, 250), Vec2D(150, 50), Vec2D(GetMouseX(), GetMouseY())))
+        if(in.selectedTower->getLevel() < 4 && drawButton("Upgrade", Vec2D(1350, 250), Vec2D(150, 50), Vec2D(GetMouseX(), GetMouseY())))
         {
             button = 2;
         }
@@ -146,7 +147,6 @@ Tower* drawTowerUpgradeMenu(Tower* t, DataHolder& in, int& button)
             DrawText(TextFormat("Cost: %d",in.lists.towerHolders.holders[i].getCost()), in.lists.towerHolders.holders[i].getPosition().x + 150, in.lists.towerHolders.holders[i].getPosition().y + 50, 20, BLACK);
         }
     }
-    return t;
 }
 
 void drawTileAt(Texture& tx, Rectangle tile, Vec2D position, Vec2D size, float rotation, Color& color, bool center)
