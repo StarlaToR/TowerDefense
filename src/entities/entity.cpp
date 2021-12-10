@@ -12,5 +12,6 @@ unsigned int Entity::getColor()
     if (level == 3) return 0xff9000ff;
     if (level == 4) return 0xf03030ff;
     if (level == 5) return 0x909090ff;
-    else return 0xffa0a0ff;
+    if (level == 6) return 0xffa0a0ff;
+    return 0;
 }

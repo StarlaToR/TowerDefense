@@ -91,4 +91,5 @@ void Tiles::registerTiles()
     {
         tileCrops.push_back(Rectangle{ (float)(i%11*128), (float)(i/11*128), 128, 128});
     }
+    tileCrops.push_back(Rectangle{ 0.0f, 0.0f, 729.0f, 718.0f});
 }

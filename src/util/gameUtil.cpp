@@ -128,13 +128,17 @@ void handleEnemiesBuffer(TileMap& map, std::list<Enemy *>& enemies, std::forward
         }
         for (int i = 0; i < (waves%2==0?waves:2*waves); i++)
             {
-                buffer.push_front((EnemySpawner){3, 50-(waves<20?2*waves:40)});
+                buffer.push_front((EnemySpawner){2, 50-(waves<20?2*waves:40)});
             }
         for (int i = 0; i < 10+waves; i++)
         {
-            buffer.push_front((EnemySpawner){3, 50-(waves<20?2*waves:40)});
+            buffer.push_front((EnemySpawner){1, 50-(waves<20?2*waves:40)});
         }
         buffer.push_front((EnemySpawner){1, waves==0?300:0});
+        if (waves == 24)
+        {
+            buffer.push_front((EnemySpawner){4, 120});
+        }
 
         waves++;
     }
@@ -162,6 +166,9 @@ void enemiesBuffer(TileMap& map, std::list<Enemy *>& enemies, std::forward_list<
 
         case 3:
             enemies.push_back(new HealerEnemy(map,waves));
+            break;
+        case 4:
+            enemies.push_back(new BossEnemy(map,waves));
             break;
 
         default:

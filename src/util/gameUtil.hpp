@@ -9,6 +9,7 @@
 #include "../enemies/classicEnemy.hpp"
 #include "../enemies/bigEnemy.hpp"
 #include "../enemies/healerEnemy.hpp"
+#include "../enemies/bossEnemy.hpp"
 #include <forward_list>
 #include <list>
 #include "../tile/tileMap.hpp"

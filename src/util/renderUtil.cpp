@@ -85,18 +85,28 @@ void drawMapElements(DataHolder& in, bool editor)
         for (std::list<Enemy*>::iterator i = in.lists.enemies.begin(); i != in.lists.enemies.end(); i++)
         {
             int tx = (*i)->getTexture();
-            if (tx != 52)
-            {
-                DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(53),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(24,24),(*i)->getRotation()*RAD2DEG+90.0f,LIGHTGRAY);
-                DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(tx),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(64,64)),Vec2D(32,32),(*i)->getRotation()*RAD2DEG+90.0f,GetColor((*i)->getColor()));
+            int color = (*i)->getColor();
+            if (tx != 154) {
+                if (tx != 52)
+                {
+                    DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(53),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(24,24),(*i)->getRotation()*RAD2DEG+90.0f,LIGHTGRAY);
+                    DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(tx),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(64,64)),Vec2D(32,32),(*i)->getRotation()*RAD2DEG+90.0f,(color==0 ? getRGB(in.framecounter) : GetColor(color)));
+                }
+                else
+                {
+                    DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(tx),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(24,24),(*i)->getRotation()*RAD2DEG+90.0f,(color==0 ? getRGB(in.framecounter) : GetColor(color)));
+                }
+                DrawRectangleRec(toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(26,20),Vec2D(48,8)),BLACK);
+                DrawRectangleRec(toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(27,21),Vec2D(46,6)),RED);
+                DrawRectangleRec(toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(27,21),Vec2D(46.0f*((*i)->getHealth()),6)),GREEN);
             }
             else
             {
-                DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(tx),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(24,24),(*i)->getRotation()*RAD2DEG+90.0f,GetColor((*i)->getColor()));
+                DrawTexturePro(in.textures.marie_antoine,in.lists.tiles.tileCrops.at(tx),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(96,96)),Vec2D(48,48),0,WHITE);
+                DrawRectangleRec(toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(6,-8),Vec2D(88,18)),BLACK);
+                DrawRectangleRec(toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(7,-7),Vec2D(86,16)),RED);
+                DrawRectangleRec(toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(7,-7),Vec2D(86.0f*((*i)->getHealth()),16)),GREEN);
             }
-            DrawRectangleRec(toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(26,20),Vec2D(48,8)),BLACK);
-            DrawRectangleRec(toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(27,21),Vec2D(46,6)),RED);
-            DrawRectangleRec(toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(27,21),Vec2D(46.0f*((*i)->getHealth()),6)),GREEN);
         }
         //for (std::forward_list<Tower*>::iterator i = in.lists.towers.begin(); i != in.lists.towers.end(); i++)
         for (Tower* tower : in.lists.towers)

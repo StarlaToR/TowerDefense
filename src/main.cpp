@@ -4,12 +4,6 @@
 #include "render.hpp"
 #include <cstdio>
 #include <time.h>
-#include "enemies/classicEnemy.hpp"
-#include "enemies/bigEnemy.hpp"
-#include "enemies/healerEnemy.hpp"
-#include "towers/classicTower.hpp"
-#include "towers/slowingTower.hpp"
-#include "towers/explosiveTower.hpp"
 
 int main(void)
 {
