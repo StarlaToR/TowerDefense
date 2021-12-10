@@ -48,7 +48,7 @@ void DrawTileMap(DataHolder& in, RenderType type)
 }
 
 bool drawButton(const char* text, Vec2D pos, Vec2D size, Vec2D mousePos) {
-    Vec2D tmp = pos+size;
+    Vec2D tmp = pos+size; 
     bool isInside = (mousePos.x > pos.x && mousePos.y > pos.y && mousePos.x <= tmp.x && mousePos.y <= tmp.y);
     DrawRectangleRounded(toRayLibRectangle(pos,size),0.2f,10,isInside?SKYBLUE:LIGHTGRAY);
     DrawRectangleRoundedLines(toRayLibRectangle(pos,size),0.2f,10,2.0f,BLACK);
@@ -71,6 +71,7 @@ bool drawButtonInvisible(Vec2D pos, Vec2D size, Vec2D mousePos) {
     return isInside;
 }
 void drawMapElements(DataHolder& in, bool editor)
+
 {
     DrawRectangle(0,0,in.screenWidth,in.screenHeight,DARKGREEN);
     Camera2D cam = Camera2D();
@@ -139,8 +140,10 @@ Tower* drawTowerUpgradeMenu(Tower* t, DataHolder& in, int& button)
         }
     }
     else{
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++){
             DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(in.lists.towerHolders.holders[i].getTexture()),toRayLibRectangle(in.lists.towerHolders.holders[i].getPosition(),Vec2D(128,128)),Vec2D(),0,GRAY);
+            DrawRectangleRec(toRayLibRectangle(in.lists.towerHolders.holders[i].getPosition(),Vec2D(128,128)), Fade(BLACK,0.5));
+        }
     }
     return t;
 }

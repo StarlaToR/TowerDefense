@@ -102,7 +102,7 @@ public:
     Tower* selectedTower =nullptr;
     int gameSpeed = 1;
 
-    int money = 0;
+    int money = 20;
     int life = 100;
 
     DataHolder() {}

@@ -1,11 +1,11 @@
 #include "towerHolder.hpp"
 
-TowerHolder::TowerHolder(Vec2D pos, int type, int cost)
+TowerHolder::TowerHolder(Vec2D pos, int type, int cos)
 {
     position = pos;
     towerType = type;
     isUsed = false;
-    cost = cost;
+    cost = cos;
 }
 
 TowerHolder::TowerHolder(){};
@@ -74,6 +74,6 @@ Vec2D TowerHolder::getPosition()
 TowerHolders::TowerHolders()
 {
     holders[0] = TowerHolder(Vec2D(1250, 100), 0, 5);
-    holders[1] = TowerHolder(Vec2D(1250, 200), 1, 10);
-    holders[2] = TowerHolder(Vec2D(1250, 300), 2, 20);
+    holders[1] = TowerHolder(Vec2D(1250, 250), 1, 10);
+    holders[2] = TowerHolder(Vec2D(1250, 400), 2, 20);
 }

@@ -13,7 +13,7 @@ private:
     int cost;
 
 public:
-    TowerHolder(Vec2D pos,int type, int cost);
+    TowerHolder(Vec2D pos,int type, int cos);
     TowerHolder();
     ~TowerHolder();
 
