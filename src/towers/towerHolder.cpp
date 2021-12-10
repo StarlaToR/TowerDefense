@@ -71,9 +71,14 @@ Vec2D TowerHolder::getPosition()
     return position;
 }
 
+int TowerHolder::getCost()
+{
+    return cost;
+}
+
 TowerHolders::TowerHolders()
 {
-    holders[0] = TowerHolder(Vec2D(1250, 100), 0, 5);
-    holders[1] = TowerHolder(Vec2D(1250, 250), 1, 10);
-    holders[2] = TowerHolder(Vec2D(1250, 400), 2, 20);
+    holders[0] = TowerHolder(Vec2D(1300, 100), 0, 5);
+    holders[1] = TowerHolder(Vec2D(1300, 250), 1, 10);
+    holders[2] = TowerHolder(Vec2D(1300, 400), 2, 20);
 }

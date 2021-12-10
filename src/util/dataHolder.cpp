@@ -254,7 +254,11 @@ void DataHolder::handleGameState()
             }
             if (buttonSelected == 2)
             {
-                selectedTower->upgrade();
+                if(money >= selectedTower->getCost())
+                {
+                    selectedTower->upgrade();
+                    money -= selectedTower->getCost();
+                }
             }
             else if (buttonSelected == 1)
             {
@@ -264,6 +268,7 @@ void DataHolder::handleGameState()
                     if((*i) == selectedTower)
                     {
                         Vec2D tmpPos = (*i)->getPosition();
+                        money += (*i)->getCost() * (*i)->getLevel() / 2;
                         lists.map.removeTowerFromTile(Vec2D((int)(tmpPos.x),(int)(tmpPos.y)));
                         delete(*i);
                         i = lists.towers.erase_after(oldT);

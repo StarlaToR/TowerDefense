@@ -19,6 +19,7 @@ public:
 
     Vec2D getPosition();
     int getTexture();
+    int getCost();
     void update(std::forward_list<Tower*>& towers, TileMap& map, int& money, Vec2D camPos, char camScale);
 };
 

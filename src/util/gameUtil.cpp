@@ -134,7 +134,7 @@ void handleEnemiesBuffer(TileMap& map, std::list<Enemy *>& enemies, std::forward
         {
             buffer.push_front((EnemySpawner){1, 50-(waves<20?2*waves:40)});
         }
-        buffer.push_front((EnemySpawner){1, 0});
+        buffer.push_front((EnemySpawner){1, waves==0?300:0});
 
         waves++;
     }

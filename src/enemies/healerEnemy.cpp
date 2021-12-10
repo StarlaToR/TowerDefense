@@ -58,6 +58,7 @@ bool HealerEnemy::update(TileMap& t, std::list<Enemy*>& enemies, std::forward_li
         if (newTile >= ROAD_END_NORTH && newTile <= ROAD_END_WEST)
         {
             playerLife -= health;
+            reward = 0;
             health = 0;
         }
         currentDirection = getNextDirection(newTile, currentDirection);

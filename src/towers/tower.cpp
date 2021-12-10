@@ -72,6 +72,11 @@ float Tower::getRange()
     return range;
 }
 
+int Tower::getCost()
+{
+    return cost;
+}
+
 Tower::~Tower()
 {
 }

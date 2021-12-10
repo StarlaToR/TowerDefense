@@ -126,15 +126,15 @@ Tower* drawTowerUpgradeMenu(Tower* t, DataHolder& in, int& button)
 {
     if(t != nullptr)
     {
-        DrawRectangleRec(toRayLibRectangle(Vec2D(1250,70),Vec2D(320,500)),GRAY);
-        DrawText(t->getName(),1280,100,20,BLACK);
-        DrawText(TextFormat("Level: %d",t->getLevel()),1280,145,20,BLACK);
-        DrawText(TextFormat("Health: %d%%",(int)(t->getHealth()*100)),1280,175,20,t->getHealth() > 0.5 ? DARKGREEN : (t->getHealth() > 0.15 ? ORANGE : RED));
-        if(drawButton("Delete", Vec2D(1330, 330), Vec2D(150, 50), Vec2D(GetMouseX(), GetMouseY())))
+        DrawRectangleRec(toRayLibRectangle(Vec2D(1265,70),Vec2D(320,500)),GRAY);
+        DrawText(t->getName(),1300,100,20,BLACK);
+        DrawText(TextFormat("Level: %d",t->getLevel()),1300,145,20,BLACK);
+        DrawText(TextFormat("Health: %d%%",(int)(t->getHealth()*100)),1300,175,20,t->getHealth() > 0.5 ? DARKGREEN : (t->getHealth() > 0.15 ? ORANGE : RED));
+        if(drawButton("Delete", Vec2D(1350, 330), Vec2D(150, 50), Vec2D(GetMouseX(), GetMouseY())))
         {
             button = 1;
         }
-        if(t->getLevel() < 4 && drawButton("Upgrade", Vec2D(1330, 250), Vec2D(150, 50), Vec2D(GetMouseX(), GetMouseY())))
+        if(t->getLevel() < 4 && drawButton("Upgrade", Vec2D(1350, 250), Vec2D(150, 50), Vec2D(GetMouseX(), GetMouseY())))
         {
             button = 2;
         }
@@ -143,6 +143,7 @@ Tower* drawTowerUpgradeMenu(Tower* t, DataHolder& in, int& button)
         for (int i = 0; i < 3; i++){
             DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(in.lists.towerHolders.holders[i].getTexture()),toRayLibRectangle(in.lists.towerHolders.holders[i].getPosition(),Vec2D(128,128)),Vec2D(),0,GRAY);
             DrawRectangleRec(toRayLibRectangle(in.lists.towerHolders.holders[i].getPosition(),Vec2D(128,128)), Fade(BLACK,0.5));
+            DrawText(TextFormat("Cost: %d",in.lists.towerHolders.holders[i].getCost()), in.lists.towerHolders.holders[i].getPosition().x + 150, in.lists.towerHolders.holders[i].getPosition().y + 50, 20, BLACK);
         }
     }
     return t;
