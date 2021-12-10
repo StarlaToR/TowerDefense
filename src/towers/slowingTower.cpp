@@ -18,7 +18,7 @@ SlowingTower::SlowingTower(Vec2D pos)
 }
 
 
-void SlowingTower::attack(Enemy* e,std::forward_list<Missile*>* missiles)
+void SlowingTower::attack(Enemy* e,std::forward_list<Missile*>& missiles)
 {
     e->getDamage(damage);
     e->setSlowed(slowingTime);

@@ -14,7 +14,7 @@ private:
 public:
     Missile(Vec2D targetPos, Vec2D pos, float lRotation, int dam, unsigned int col);
 
-    bool update(std::list<Enemy*>* enemies);
+    bool update(std::list<Enemy*>& enemies);
 
     unsigned int getColor() {return color;}
 

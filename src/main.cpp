@@ -24,7 +24,7 @@ int main(void)
     while (!WindowShouldClose() && !holder.closeWindow == true)
     {
         holder.handleGameState();
-        renderMain(&holder);
+        renderMain(holder);
     }
     holder.unloadDatas();
     CloseAudioDevice();

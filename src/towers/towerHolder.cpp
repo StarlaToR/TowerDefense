@@ -17,7 +17,7 @@ TowerHolder::~TowerHolder()
 
 }
 
-void TowerHolder::update(std::forward_list<Tower*>* towers, TileMap* map, int& money, Vec2D camPos, char camScale)
+void TowerHolder::update(std::forward_list<Tower*>& towers, TileMap& map, int& money, Vec2D camPos, char camScale)
 {
     if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
     {
@@ -32,16 +32,16 @@ void TowerHolder::update(std::forward_list<Tower*>* towers, TileMap* map, int& m
         Vec2D pos = (Vec2D(GetMouseX(),GetMouseY())) / (48*camScale) - (Vec2D(50, 50)-camPos)/48.0f;
         if(pos.x >= 0 && pos.x <= MAP_WIDTH && pos.y >= 0 && pos.y <= MAP_HEIGHT)
         {
-            if (map->isTileWithTower(pos))
+            if (map.isTileWithTower(pos))
             {
-                map->setTileWithTower(pos);
+                map.setTileWithTower(pos);
 
                 if(towerType == 0)
-                    towers->push_front(new ClassicTower(pos));
+                    towers.push_front(new ClassicTower(pos));
                 if(towerType == 1)
-                    towers->push_front(new SlowingTower(pos));
+                    towers.push_front(new SlowingTower(pos));
                 if(towerType == 2)
-                    towers->push_front(new ExplosiveTower(pos));
+                    towers.push_front(new ExplosiveTower(pos));
 
                 money -= cost;
             }

@@ -18,5 +18,5 @@ public:
     ~TowerHolder();
     
     int getTexture();
-    void update(std::forward_list<Tower*>* towers, TileMap* map, int& money, Vec2D camPos, char camScale);
+    void update(std::forward_list<Tower*>& towers, TileMap& map, int& money, Vec2D camPos, char camScale);
 };

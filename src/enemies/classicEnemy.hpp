@@ -4,7 +4,7 @@
 class ClassicEnemy: public Enemy
 {
 public:
-    ClassicEnemy(TileMap* t, int wave);
+    ClassicEnemy(TileMap& t, int wave);
 
     ClassicEnemy() {};
 

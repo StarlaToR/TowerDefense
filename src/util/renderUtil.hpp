@@ -14,9 +14,10 @@ Color getRGB(size_t frame);
 float getFade(size_t frame);
 
 Rectangle toRayLibRectangle(Vec2D origin, Vec2D rectSize);
-void DrawTileMap(DataHolder* in, RenderType type);
+void DrawTileMap(DataHolder& in, RenderType type);
 bool drawButton(const char* text, Vec2D pos, Vec2D size, Vec2D mousePos);
-bool drawButtonMenu(DataHolder* in, const char* text, Vec2D textSize, Vec2D pos, Vec2D size, Vec2D mousePos);
-bool drawButtonInvisible(DataHolder* in, Vec2D pos, Vec2D size, Vec2D mousePos);
-void drawMapElements(DataHolder* in, bool editor);
-Tower* drawTowerUpgradeMenu(Tower* t, std::forward_list<Tower*>* towers);
+bool drawButtonMenu(DataHolder& in, const char* text, Vec2D textSize, Vec2D pos, Vec2D size, Vec2D mousePos);
+bool drawButtonInvisible(Vec2D pos, Vec2D size, Vec2D mousePos);
+void drawMapElements(DataHolder& in, bool editor);
+void drawTowerUpgradeMenu(Tower* t, std::forward_list<Tower*>& towers, int& button);
+void drawTileAt(Texture& tx, Rectangle tile, Vec2D position, Vec2D size, float center, Color& color, bool center = false);

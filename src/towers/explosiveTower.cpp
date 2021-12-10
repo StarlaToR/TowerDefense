@@ -17,7 +17,7 @@ ExplosiveTower::ExplosiveTower(Vec2D pos)
     textureID = 99;
 }
 
-void ExplosiveTower::attack(Enemy* e, std::forward_list<Missile*>* missiles)
+void ExplosiveTower::attack(Enemy* e, std::forward_list<Missile*>& missiles)
 {
     
     attackCooldown = attackSpeed;
@@ -27,14 +27,14 @@ void ExplosiveTower::attack(Enemy* e, std::forward_list<Missile*>* missiles)
         if (missilesUsed > 4)
             missilesUsed = 0;
         else
-            missiles->push_front(new Missile(e->getPosition(), getPosition()+Vec2D(cosf(rotation)*0.5f,sinf(rotation)*0.5f), rotation, damage, getColor()));
+            missiles.push_front(new Missile(e->getPosition(), getPosition()+Vec2D(cosf(rotation)*0.5f,sinf(rotation)*0.5f), rotation, damage, getColor()));
     }
     else
     {
         if (missilesUsed > 6)
             missilesUsed = 0;
         else
-            missiles->push_front(new Missile(e->getPosition(), getPosition()+Vec2D(cosf(rotation)*0.5f,sinf(rotation)*0.5f), rotation, damage, getColor()));
+            missiles.push_front(new Missile(e->getPosition(), getPosition()+Vec2D(cosf(rotation)*0.5f,sinf(rotation)*0.5f), rotation, damage, getColor()));
     }
 }
 

@@ -215,11 +215,11 @@ void DataHolder::handleGameState()
         if (gameSpeed == 0 && IsKeyPressed(KEY_UP)) tmp = -1;
         while (tmp < gameSpeed)
         {
-            handleEnemiesBuffer(&lists.map, &lists.enemies, &lists.buffer, wave);
-            selectedTower = handleTowers(&lists.towers, &lists.enemies, &lists.missiles, selectedTower, cameraPos, cameraScale); 
-            handleMissiles(&lists.missiles, &lists.enemies, &lists.particles);
-            handleEnemies(&lists.map, &money, &lists.enemies, &lists.particles, life);
-            handleParticles(&lists.particles);
+            handleEnemiesBuffer(lists.map, lists.enemies, lists.buffer, wave);
+            selectedTower = handleTowers(lists.towers, lists.enemies, lists.missiles, selectedTower, cameraPos, cameraScale); 
+            handleMissiles(lists.missiles, lists.enemies, lists.particles);
+            handleEnemies(lists.map, money, lists.enemies, lists.particles, life);
+            handleParticles(lists.particles);
             tmp++;
         }
         if (IsMouseButtonDown(MOUSE_BUTTON_MIDDLE) || IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
@@ -246,6 +246,27 @@ void DataHolder::handleGameState()
                 {
                     lists.towers.push_front(new ClassicTower(tilePos));
                     lists.map.setTileWithTower(tilePos);
+                }
+            }
+            if (buttonSelected == 2)
+            {
+                selectedTower->upgrade();
+            }
+            else if (buttonSelected == 1)
+            {
+                std::forward_list<Tower*>::iterator oldT = lists.towers.before_begin();
+                for (std::forward_list<Tower*>::iterator i = lists.towers.begin(); i != lists.towers.end(); i++)
+                {
+                    if((*i) == selectedTower)
+                    {
+                        Vec2D tmpPos = (*i)->getPosition();
+                        lists.map.removeTowerFromTile(Vec2D((int)(tmpPos.x),(int)(tmpPos.y)));
+                        delete(*i);
+                        i = lists.towers.erase_after(oldT);
+                        selectedTower = nullptr;
+                        break;
+                    }
+                    oldT = i;
                 }
             }
         }
@@ -291,7 +312,7 @@ void DataHolder::handleGameState()
             {
                 Vec2D tilePos = (mousePos) / (48*cameraScale) - (Vec2D(50, 50)-cameraPos)/48.0f;
                 tilePos = Vec2D((int)(tilePos.x),(int)(tilePos.y));
-                placeTileAt(&lists.map,tilePos,&dragPos,lists.tHolders.holders.at(holderSelected).tile, lists.tHolders.holders.at(holderSelected).isDeco);
+                placeTileAt(lists.map,tilePos,dragPos,lists.tHolders.holders.at(holderSelected).tile, lists.tHolders.holders.at(holderSelected).isDeco);
             }
         }
         if (inputs.isRightPressed())

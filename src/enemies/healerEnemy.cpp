@@ -1,9 +1,9 @@
 #include "healerEnemy.hpp"
 #include "../particles/heal.hpp"
 
-HealerEnemy::HealerEnemy(TileMap* t, int wave)
+HealerEnemy::HealerEnemy(TileMap& t, int wave)
 {
-    position = t->startPos + Vec2D(0.5f,0.5f);
+    position = t.startPos + Vec2D(0.5f,0.5f);
     level = wave/4+1;
     slowTimer = 0;
     maxHealth = 20+20*level;
@@ -15,8 +15,8 @@ HealerEnemy::HealerEnemy(TileMap* t, int wave)
     healing = 5+level*2;
     healingCooldown = 0;
 
-    currentTile = Vec2D((int)t->startPos.x,(int)t->startPos.y);
-    currentDirection = t->getTileAt(currentTile)-ROAD_START_NORTH;
+    currentTile = Vec2D((int)t.startPos.x,(int)t.startPos.y);
+    currentDirection = t.getTileAt(currentTile)-ROAD_START_NORTH;
     targetDirection = dirToAngle(currentDirection.dir);
     rotation = targetDirection;
     targetPos = currentDirection.getFowardTile(currentTile) + Vec2D(0.5f, 0.5f);
@@ -24,28 +24,28 @@ HealerEnemy::HealerEnemy(TileMap* t, int wave)
     distanceToCenter = 0.1;
 }
 
-void HealerEnemy::heal(std::list<Enemy*>* enemies, Enemy* currentEnemy, std::forward_list<Particle*>* particles)
+void HealerEnemy::heal(std::list<Enemy*>& enemies, Enemy* currentEnemy, std::forward_list<Particle*>& particles)
 {
     bool healed = true;
-    for (std::list<Enemy*>::iterator i = enemies->begin(); i != enemies->end(); i++)
+    for (std::list<Enemy*>::iterator i = enemies.begin(); i != enemies.end(); i++)
     {
         if((getPosition() - (*i)->getPosition()).getLength() <= range && (*i) != (currentEnemy))
         {
             (*i)->getHealed(healing);
             healed = false;
-            particles->push_front(new HealParticle((*i)->getPosition()));
+            particles.push_front(new HealParticle((*i)->getPosition()));
         }
     }
     if (healed)
     {
         getHealed(healing);
-        particles->push_front(new HealParticle(position));
+        particles.push_front(new HealParticle(position));
     }
     healingCooldown = 60-(level <= 5 ? 6*level : 30);
 
 }
 
-bool HealerEnemy::update(TileMap* t, std::list<Enemy*>* enemies, std::forward_list<Particle*>* particles, int& playerLife)
+bool HealerEnemy::update(TileMap& t, std::list<Enemy*>& enemies, std::forward_list<Particle*>& particles, int& playerLife)
 {
     slowTimer = cut(slowTimer-1, 0, __INT_MAX__);
     healingCooldown = cut(healingCooldown-1, 0, __INT_MAX__);
@@ -54,7 +54,7 @@ bool HealerEnemy::update(TileMap* t, std::list<Enemy*>* enemies, std::forward_li
     {
         
         currentTile = currentTilePosition;
-        char newTile = t->getTileAt(currentTilePosition);
+        char newTile = t.getTileAt(currentTilePosition);
         if (newTile >= ROAD_END_NORTH && newTile <= ROAD_END_WEST)
         {
             playerLife -= health;
@@ -100,5 +100,5 @@ bool HealerEnemy::update(TileMap* t, std::list<Enemy*>* enemies, std::forward_li
 
     if (healingCooldown <= 0) heal(enemies, this, particles);
 
-    return (health <= 0 || position.x < 0 || position.y < 0 || position.x >= t->getWidth() || position.y >= t->getHeight());
+    return (health <= 0 || position.x < 0 || position.y < 0 || position.x >= t.getWidth() || position.y >= t.getHeight());
 }

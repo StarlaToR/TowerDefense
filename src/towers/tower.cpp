@@ -1,6 +1,6 @@
 #include "tower.hpp"
 
-void Tower::update(std::list<Enemy*>* enemyIn,std::forward_list<Missile*>* missiles)
+void Tower::update(std::list<Enemy*>& enemyIn,std::forward_list<Missile*>& missiles)
 {
     Enemy *target = getNearestEnemy(enemyIn);
     
@@ -35,11 +35,11 @@ void Tower::update(std::list<Enemy*>* enemyIn,std::forward_list<Missile*>* missi
     }
 }
 
-Enemy *Tower::getNearestEnemy(std::list<Enemy*>* enemyIn)
+Enemy *Tower::getNearestEnemy(std::list<Enemy*>& enemyIn)
 {
     Enemy *nearestEnemy = nullptr;
     float shortestDistance = 0;
-    for (std::list<Enemy*>::iterator i = enemyIn->begin(); i != enemyIn->end(); i++)
+    for (std::list<Enemy*>::iterator i = enemyIn.begin(); i != enemyIn.end(); i++)
     {
         if (((*i)->getPosition() - position).getLength() <= range)
         {
