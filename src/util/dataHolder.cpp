@@ -39,10 +39,13 @@ void DataHolder::unloadDatas()
     UnloadTexture(textures.credit);
     UnloadTexture(textures.button);
     UnloadTexture(textures.marie_antoine);
+    UnloadTexture(textures.logoIsart);
+    UnloadTexture(textures.gameUI);
     UnloadFont(fontButton);
     UnloadFont(fontTitle);
     UnloadSound(sounds.buttonSound);
     UnloadMusicStream(sounds.musicTroll);
+    UnloadMusicStream(sounds.introSong);
     UnloadMusicStream(sounds.gameplayMusic);
 }
 
@@ -56,6 +59,7 @@ void DataHolder::initDatas()
     textures.credit = LoadTexture("assets/textures/credit.png");
     textures.tileTexture = LoadTexture("assets/textures/tileSheet.png");
     textures.button = LoadTexture("assets/textures/button.png");
+    textures.gameUI = LoadTexture("assets/textures/ui.png");
     sounds.buttonSound = LoadSound("assets/sounds/button.ogg");
     sounds.musicTroll = LoadMusicStream("assets/sounds/ouioui.ogg");
     sounds.gameplayMusic = LoadMusicStream("assets/sounds/gameplayMusic.ogg");

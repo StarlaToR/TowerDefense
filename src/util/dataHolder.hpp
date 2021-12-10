@@ -39,6 +39,7 @@ struct TextureHolder
     Texture2D credit;
     Texture2D title;
     Texture2D logoIsart;
+    Texture2D gameUI;
 };
 
 struct SoundHolder

@@ -118,10 +118,7 @@ void drawMapElements(DataHolder& in, bool editor)
         }
     }
     EndMode2D();
-    DrawRectangle(0,0,50,in.screenHeight,LIGHTGRAY);
-    DrawRectangle(0,0,in.screenWidth,50,LIGHTGRAY);
-    DrawRectangle(1202,0,in.screenWidth,in.screenHeight,LIGHTGRAY);
-    DrawRectangle(0,626,in.screenWidth,in.screenHeight,LIGHTGRAY);
+    DrawTexture(in.textures.gameUI,0,0,WHITE);
 }
 
 Tower* drawTowerUpgradeMenu(Tower* t, DataHolder& in, int& button)
