@@ -143,7 +143,7 @@ void drawTowerUpgradeMenu(Tower* t, std::forward_list<Tower*>& towers, int& butt
     }
 }
 
-void drawTileAt(Texture& tx, Rectangle tile, Vec2D position, Vec2D size, float center, Color& color, bool center)
+void drawTileAt(Texture& tx, Rectangle tile, Vec2D position, Vec2D size, float rotation, Color& color, bool center)
 {
 
 }
