@@ -16,7 +16,16 @@ public:
     TowerHolder(Vec2D pos,int type, int cost);
     TowerHolder();
     ~TowerHolder();
-    
+
+    Vec2D getPosition();
     int getTexture();
     void update(std::forward_list<Tower*>& towers, TileMap& map, int& money, Vec2D camPos, char camScale);
+};
+
+class TowerHolders
+{
+
+    public:
+        TowerHolder holders[3];
+        TowerHolders();
 };

@@ -19,5 +19,5 @@ bool drawButton(const char* text, Vec2D pos, Vec2D size, Vec2D mousePos);
 bool drawButtonMenu(DataHolder& in, const char* text, Vec2D textSize, Vec2D pos, Vec2D size, Vec2D mousePos);
 bool drawButtonInvisible(Vec2D pos, Vec2D size, Vec2D mousePos);
 void drawMapElements(DataHolder& in, bool editor);
-void drawTowerUpgradeMenu(Tower* t, std::forward_list<Tower*>& towers, int& button);
+Tower* drawTowerUpgradeMenu(Tower* t, DataHolder& in, int& button);
 void drawTileAt(Texture& tx, Rectangle tile, Vec2D position, Vec2D size, float rotation, Color& color, bool center = false);

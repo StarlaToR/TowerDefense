@@ -8,9 +8,7 @@ TowerHolder::TowerHolder(Vec2D pos, int type, int cost)
     cost = cost;
 }
 
-TowerHolder::TowerHolder()
-{
-}
+TowerHolder::TowerHolder(){};
 
 TowerHolder::~TowerHolder()
 {
@@ -29,20 +27,21 @@ void TowerHolder::update(std::forward_list<Tower*>& towers, TileMap& map, int& m
     }
     if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && isUsed)
     {
-        Vec2D pos = (Vec2D(GetMouseX(),GetMouseY())) / (48*camScale) - (Vec2D(50, 50)-camPos)/48.0f;
-        if(pos.x >= 0 && pos.x <= MAP_WIDTH && pos.y >= 0 && pos.y <= MAP_HEIGHT)
+        Vec2D tilePos = (Vec2D(GetMouseX(),GetMouseY())) / (48*camScale) - (Vec2D(50, 50)-camPos)/48.0f;
+        tilePos = Vec2D((int)(tilePos.x),(int)(tilePos.y));
+        if (GetMouseX() > 50 && GetMouseY() > 50 && GetMouseX() < 1202 && GetMouseY() < 626 && tilePos.x >= 0 && tilePos.y >= 0 && tilePos.x < map.getWidth() && tilePos.y < map.getHeight())
         {
-            if (map.isTileWithTower(pos))
+            if (!map.isRoad(map.getTileAt(tilePos)) && map.getTileAt(tilePos,true) == UNDEFINED && !map.isTileWithTower(tilePos))
             {
-                map.setTileWithTower(pos);
+                map.setTileWithTower(tilePos);
 
                 if(towerType == 0)
-                    towers.push_front(new ClassicTower(pos));
+                    towers.push_front(new ClassicTower(tilePos));
                 if(towerType == 1)
-                    towers.push_front(new SlowingTower(pos));
+                    towers.push_front(new SlowingTower(tilePos));
                 if(towerType == 2)
-                    towers.push_front(new ExplosiveTower(pos));
-
+                    towers.push_front(new ExplosiveTower(tilePos));
+                map.setTileWithTower(tilePos);
                 money -= cost;
             }
         }
@@ -65,4 +64,16 @@ int TowerHolder::getTexture()
         return 99;
     }
     return 121;
+}
+
+Vec2D TowerHolder::getPosition()
+{
+    return position;
+}
+
+TowerHolders::TowerHolders()
+{
+    holders[0] = TowerHolder(Vec2D(1250, 100), 0, 5);
+    holders[1] = TowerHolder(Vec2D(1250, 200), 1, 10);
+    holders[2] = TowerHolder(Vec2D(1250, 300), 2, 20);
 }

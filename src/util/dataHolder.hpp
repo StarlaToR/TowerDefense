@@ -13,6 +13,7 @@
 #include "../particles/explosion.hpp"
 #include "gameUtil.hpp"
 #include "../tile/tileHolder.hpp"
+#include "../towers/towerHolder.hpp"
 
 typedef enum GameState : int
 {
@@ -58,6 +59,7 @@ struct ListHolder
     std::forward_list<Particle*> particles = std::forward_list<Particle*>();
     std::forward_list<EnemySpawner> buffer = std::forward_list<EnemySpawner>();
     TileHolders tHolders = TileHolders();
+    TowerHolders towerHolders = TowerHolders();
 };
 
 class InputHelper

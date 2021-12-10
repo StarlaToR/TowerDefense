@@ -124,7 +124,7 @@ void drawMapElements(DataHolder& in, bool editor)
     DrawRectangle(0,626,in.screenWidth,in.screenHeight,LIGHTGRAY);
 }
 
-void drawTowerUpgradeMenu(Tower* t, std::forward_list<Tower*>& towers, int& button)
+Tower* drawTowerUpgradeMenu(Tower* t, DataHolder& in, int& button)
 {
     if(t != nullptr)
     {
@@ -141,6 +141,11 @@ void drawTowerUpgradeMenu(Tower* t, std::forward_list<Tower*>& towers, int& butt
             button = 2;
         }
     }
+    else{
+        for (int i = 0; i < 3; i++)
+            DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(in.lists.towerHolders.holders[i].getTexture()),toRayLibRectangle(in.lists.towerHolders.holders[i].getPosition(),Vec2D(128,128)),Vec2D(),0,GRAY);
+    }
+    return t;
 }
 
 void drawTileAt(Texture& tx, Rectangle tile, Vec2D position, Vec2D size, float rotation, Color& color, bool center)

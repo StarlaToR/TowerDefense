@@ -240,7 +240,7 @@ void DataHolder::handleGameState()
         {
             Vec2D tilePos = (mousePos) / (48*cameraScale) - (Vec2D(50, 50)-cameraPos)/48.0f;
             tilePos = Vec2D((int)(tilePos.x),(int)(tilePos.y));
-            if (mousePos.x > 50 && mousePos.y > 50 && mousePos.x < 1202 && mousePos.y < 626 && tilePos.x > 0 && tilePos.y > 0 && tilePos.x < lists.map.getWidth() && tilePos.y < lists.map.getHeight())
+            if (mousePos.x > 50 && mousePos.y > 50 && mousePos.x < 1202 && mousePos.y < 626 && tilePos.x >= 0 && tilePos.y >= 0 && tilePos.x < lists.map.getWidth() && tilePos.y < lists.map.getHeight())
             {
                 if (selectedTower == nullptr && !lists.map.isRoad(lists.map.getTileAt(tilePos)) && lists.map.getTileAt(tilePos,true) == UNDEFINED && !lists.map.isTileWithTower(tilePos))
                 {
@@ -268,6 +268,13 @@ void DataHolder::handleGameState()
                     }
                     oldT = i;
                 }
+            }
+        }
+        if(selectedTower == nullptr)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                lists.towerHolders.holders[i].update(lists.towers, lists.map, money, cameraPos, cameraScale);
             }
         }
     }

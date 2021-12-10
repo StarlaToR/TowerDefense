@@ -114,7 +114,7 @@ void renderGameplay(DataHolder& in)
 {
     drawMapElements(in, false);
     in.buttonSelected = 0;
-    drawTowerUpgradeMenu(in.selectedTower, in.lists.towers, in.buttonSelected);
+    in.selectedTower = drawTowerUpgradeMenu(in.selectedTower, in, in.buttonSelected);
     DrawText(TextFormat("Money : %d",in.money),50,680,30,BLACK);
     DrawText(TextFormat("Wave : %d",in.wave),1080,680,30,BLACK);
     DrawRectangleRec(toRayLibRectangle(Vec2D(50,750),Vec2D(1156,74)),BLACK);
