@@ -130,7 +130,7 @@ void drawTowerUpgradeMenu(DataHolder& in, int& button)
         DrawRectangleRec(toRayLibRectangle(Vec2D(1265,70),Vec2D(320,500)),GRAY);
         DrawText(in.selectedTower->getName(),1300,100,20,BLACK);
         DrawText(TextFormat("Level: %d",in.selectedTower->getLevel()),1300,145,20,BLACK);
-        DrawText(TextFormat("Health: %d%%",(int)(in.selectedTower->getHealth()*100)),1300,175,20,t->getHealth() > 0.5 ? DARKGREEN : (in.selectedTower->getHealth() > 0.15 ? ORANGE : RED));
+        DrawText(TextFormat("Health: %d%%",(int)(in.selectedTower->getHealth()*100)),1300,175,20,in.selectedTower->getHealth() > 0.5 ? DARKGREEN : (in.selectedTower->getHealth() > 0.15 ? ORANGE : RED));
         if(drawButton("Delete", Vec2D(1350, 330), Vec2D(150, 50), Vec2D(GetMouseX(), GetMouseY())))
         {
             button = 1;
