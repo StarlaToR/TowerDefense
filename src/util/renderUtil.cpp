@@ -131,13 +131,18 @@ void drawTowerUpgradeMenu(DataHolder& in, int& button)
         DrawText(in.selectedTower->getName(),1300,100,20,BLACK);
         DrawText(TextFormat("Level: %d",in.selectedTower->getLevel()),1300,145,20,BLACK);
         DrawText(TextFormat("Health: %d%%",(int)(in.selectedTower->getHealth()*100)),1300,175,20,in.selectedTower->getHealth() > 0.5 ? DARKGREEN : (in.selectedTower->getHealth() > 0.15 ? ORANGE : RED));
-        if(drawButton("Delete", Vec2D(1350, 330), Vec2D(150, 50), Vec2D(GetMouseX(), GetMouseY())))
+        DrawText(TextFormat("Cost: %d",in.selectedTower->getCost() * in.selectedTower->getLevel() / 2),1475,345,20,BLACK);
+        if(drawButton("Delete", Vec2D(1300, 330), Vec2D(150, 50), Vec2D(GetMouseX(), GetMouseY())))
         {
             button = 1;
         }
-        if(in.selectedTower->getLevel() < 4 && drawButton("Upgrade", Vec2D(1350, 250), Vec2D(150, 50), Vec2D(GetMouseX(), GetMouseY())))
+        if(in.selectedTower->getLevel() < 4)
         {
-            button = 2;
+            DrawText(TextFormat("Cost: %d",in.selectedTower->getCost()),1475,265,20,BLACK);
+            if (drawButton("Upgrade", Vec2D(1300, 250), Vec2D(150, 50), Vec2D(GetMouseX(), GetMouseY())))
+            {
+                button = 2;
+            }
         }
     }
     else{
