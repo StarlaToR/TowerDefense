@@ -8,7 +8,7 @@ EnemyExplosionParticle::EnemyExplosionParticle(Vec2D pos)
     counter = GetRandomValue(-15,2);
 }
 
-void EnemyExplosionParticle::drawParticle()
+void EnemyExplosionParticle::drawParticle(Texture2D& asset, Tiles& tiles)
 {
     if (counter >= 0) DrawCircle(position.x*48+50,position.y*48+50,counter*0.8f+1,Fade(subColor == 0 ? RED : (subColor == 1 ? YELLOW : GRAY),1.0f-counter/15.0f));
 }

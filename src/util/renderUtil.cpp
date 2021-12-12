@@ -122,7 +122,7 @@ void drawMapElements(DataHolder& in, bool editor)
         } 
         for (std::forward_list<Particle*>::iterator i = in.lists.particles.begin(); i != in.lists.particles.end(); i++)
         {
-            (*i)->drawParticle();
+            (*i)->drawParticle(in.textures.tileTexture, in.lists.tiles);
         }
         if (in.selectedTower != nullptr)
         {

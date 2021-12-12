@@ -58,7 +58,7 @@ enum TileID : unsigned char
     END_EAST,
     END_SOUTH,
     END_WEST,
-    TOWER_BASE = 154,
+    TOWER_BASE = 164,
     UNDEFINED = 255,
 };
 

@@ -11,7 +11,7 @@ public:
     ExplosionParticle(Vec2D pos) {position = pos;}
     ~ExplosionParticle() {}
 
-    void drawParticle() override;
+    void drawParticle(Texture2D& asset, Tiles& tiles) override;
     bool shouldDelete() override;
     void updateParticle() override;
 };

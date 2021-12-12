@@ -12,7 +12,7 @@ public:
     EnemyExplosionParticle(Vec2D pos);
     ~EnemyExplosionParticle() {}
 
-    void drawParticle() override;
+    void drawParticle(Texture2D& asset, Tiles& tiles) override;
     bool shouldDelete() override;
     void updateParticle() override;
 };
