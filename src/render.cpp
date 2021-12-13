@@ -32,7 +32,7 @@ void renderMain(DataHolder& in)
         renderGameOver(in);
         break;
     case VICTORY:
-        renderGameOver(in);
+        renderVictory(in);
         break;
     case OPTION:
         renderOption(in);
