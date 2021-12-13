@@ -97,6 +97,7 @@ public:
     int holderSelected = 0;
     float timePlayed = 0.0f;
     float masterVolume = 0.6f;
+    int saveSlot = 0;
     RenderType tileRenderType = EXTENDED;
     Vec2D dragPos = Vec2D(-1,-1);
     Vec2D cameraPos = Vec2D();

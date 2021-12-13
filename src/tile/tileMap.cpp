@@ -50,6 +50,8 @@ TileMap::TileMap() : startPos(Vec2D(0,6)), endPos(Vec2D(23,6))
         secondLayer[i] = UNDEFINED;
         tilesWithTower[i] = false;
     }
+    setTileAt(startPos,START_EAST,true);
+    setTileAt(endPos,END_WEST,true);
 }
 
 TileMap::TileMap(Vec2D start, Vec2D end) : startPos(start), endPos(end)

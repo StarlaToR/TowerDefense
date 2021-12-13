@@ -1,4 +1,5 @@
 #include "slowingTower.hpp"
+#include "../particles/laser.hpp"
 
 SlowingTower::SlowingTower(Vec2D pos)
 {
@@ -18,8 +19,10 @@ SlowingTower::SlowingTower(Vec2D pos)
 }
 
 
-void SlowingTower::attack(Enemy* e,std::forward_list<Missile*>& missiles)
+void SlowingTower::attack(Enemy* e, std::forward_list<Missile*>& missiles, std::forward_list<Particle*>& particles)
 {
+    Vec2D rPos = Vec2D(position.x+cosf(rotation)*0.6f, position.y+sinf(rotation)*0.6f);
+    particles.push_front(new Laser( rPos, e->getPosition(), getColor()));
     e->getDamage(damage);
     e->setSlowed(slowingTime);
     attackCooldown = attackSpeed;

@@ -13,12 +13,11 @@ void renderMain(DataHolder& in)
     switch (in.gameState)
     {
     case INTRO:
-        PlayMusicStream(in.sounds.introSong);
         renderStartAnim(in);
         break;
     case MENU:
         renderMainMenu(in);
-        menuEditor(in);
+        menuMain(in);
         break;
     case MENUPLAY:
         renderPlay(in);
@@ -120,9 +119,20 @@ void renderEditor(DataHolder& in)
     {
         in.buttonSelected = 3;
     }
-    if (drawButtonMenu(in, "Return", Vec2D(652, 780), Vec2D(650, 750),Vec2D(250,100), in.mousePos))
+    if (drawButton("Back", Vec2D(150, 730),Vec2D(250,70), in.mousePos))
     {
         in.buttonSelected = 4;
+    }
+    DrawRectangleRounded(toRayLibRectangle(Vec2D(600,740),Vec2D(250,50)),0.2,10,LIGHTGRAY);
+    DrawRectangleRoundedLines(toRayLibRectangle(Vec2D(600,740),Vec2D(250,50)),0.2,10,2,BLACK);
+    DrawText(TextFormat("Save slot: %d",in.saveSlot),610,755,30,BLACK);
+    if (drawButton("+", Vec2D(900, 740), Vec2D(50,50), in.mousePos))
+    {
+        in.buttonSelected = 5;
+    }
+    if (drawButton("-", Vec2D(1000, 740), Vec2D(50,50), in.mousePos))
+    {
+        in.buttonSelected = 6;
     }
     for (unsigned int i = 0; i < in.lists.tHolders.holders.size(); i++)
     {
@@ -166,9 +176,8 @@ void renderGameplay(DataHolder& in)
 
 }
 
-void menuEditor(DataHolder& in)
+void menuMain(DataHolder& in)
 {
-    in.gameState = MENU;
     in.buttonSelected = 0;
     
     if (drawButtonMenu(in, "Play", Vec2D(498, 345), Vec2D(455, 320),Vec2D(250,100), in.mousePos))
@@ -195,11 +204,6 @@ void menuEditor(DataHolder& in)
     {
         in.buttonSelected = 6;
     }
-    if (IsKeyPressed(KEY_SPACE))
-    {
-        StopMusicStream(in.sounds.musicTroll);
-    }
-
 }
 
 void renderPlay(DataHolder& in)

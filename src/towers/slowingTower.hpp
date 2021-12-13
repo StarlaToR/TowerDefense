@@ -10,7 +10,7 @@ public:
 
     SlowingTower():SlowingTower(Vec2D(0,0)){}
 
-    void attack(Enemy* e,std::forward_list<Missile*>& missiles);
+    void attack(Enemy* e, std::forward_list<Missile*>& missiles, std::forward_list<Particle*>& particles) override;
     int getTexture();
     void upgrade();
     const char* getName() override {return "Slowing Tower";}

@@ -53,7 +53,7 @@ bool drawButton(const char* text, Vec2D pos, Vec2D size, Vec2D mousePos) {
     bool isInside = (mousePos.x > pos.x && mousePos.y > pos.y && mousePos.x <= tmp.x && mousePos.y <= tmp.y);
     DrawRectangleRounded(toRayLibRectangle(pos,size),0.2f,10,isInside?SKYBLUE:LIGHTGRAY);
     DrawRectangleRoundedLines(toRayLibRectangle(pos,size),0.2f,10,2.0f,BLACK);
-    DrawText(text,pos.x+10,pos.y+(size.y/2)-15,30,DARKGRAY);
+    DrawText(text,pos.x+(size.x>200?size.x/2-30:10),pos.y+(size.y/2)-15,30,DARKGRAY);
     return isInside;
 }
 
@@ -86,7 +86,7 @@ void drawMapElements(DataHolder& in, bool editor)
         {
             int tx = (*i)->getTexture();
             int color = (*i)->getColor();
-            if (tx != 154) {
+            if (tx != TOWER_BASE) {
                 if (tx != 52)
                 {
                     DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(53),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(24,24),(*i)->getRotation()*RAD2DEG+90.0f,LIGHTGRAY);
@@ -102,7 +102,8 @@ void drawMapElements(DataHolder& in, bool editor)
             }
             else
             {
-                DrawTexturePro(in.textures.marie_antoine,in.lists.tiles.tileCrops.at(tx),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(96,96)),Vec2D(48,48),0,WHITE);
+                DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(53),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(192,192)),Vec2D(96,96),(*i)->getRotation()*RAD2DEG+90.0f,LIGHTGRAY);
+                DrawTexturePro(in.textures.marie_antoine,in.lists.tiles.tileCrops.at(tx),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(80,80)),Vec2D(40,40),0,WHITE);
                 DrawRectangleRec(toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(6,-8),Vec2D(88,18)),BLACK);
                 DrawRectangleRec(toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(7,-7),Vec2D(86,16)),RED);
                 DrawRectangleRec(toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(7,-7),Vec2D(86.0f*((*i)->getHealth()),16)),GREEN);

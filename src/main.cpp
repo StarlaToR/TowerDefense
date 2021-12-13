@@ -13,6 +13,7 @@ int main(void)
     InitAudioDevice();
     SetTargetFPS(60);
     holder.initDatas();
+    PlayMusicStream(holder.sounds.introSong);
 
     // Main game loop
     while (!WindowShouldClose() && !holder.closeWindow == true)

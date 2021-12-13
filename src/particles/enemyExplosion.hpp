@@ -2,15 +2,14 @@
 
 #include "particle.hpp"
 
-class ExplosionParticle : public Particle
+class EnemyExplosionParticle : public Particle
 {
 protected:
     int counter = 0;
-    int subColor;
 public:
-    ExplosionParticle();
-    ExplosionParticle(Vec2D pos);
-    ~ExplosionParticle() {}
+    EnemyExplosionParticle() {position = Vec2D();}
+    EnemyExplosionParticle(Vec2D pos);
+    ~EnemyExplosionParticle() {}
 
     void drawParticle(Texture2D& asset, Tiles& tiles) override;
     bool shouldDelete() override;

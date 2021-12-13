@@ -11,6 +11,8 @@ protected:
     int speed;
     int reward;
     int slowTimer;
+    bool underground = false;
+    int damageCooldown = 0;
     Direction currentDirection;
     float targetDirection;
     Vec2D currentTile;
@@ -21,8 +23,10 @@ protected:
 public:
     void setSlowed(int value);
     virtual bool update(TileMap& t, std::list<Enemy*>& enemies, std::forward_list<Particle*>& particles, int &playerLife);
-    void getDamage(int damageDealt) {health = cut(health-damageDealt,0,maxHealth);}
+    void getDamage(int damageDealt);
     void getHealed(int heal);
     int getReward();
     virtual ~Enemy() = 0;
+    unsigned int getColor() override;
+    
 };

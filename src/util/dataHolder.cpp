@@ -1,5 +1,6 @@
 #include "dataHolder.hpp"
 #include "../towers/classicTower.hpp"
+#include <string>
 
 void InputHelper::handleInputs()
 {
@@ -73,7 +74,7 @@ void DataHolder::initDatas()
     lists.map = TileMap();
     SetMusicVolume(sounds.musicTroll, 0.15f);
     selectedTower = nullptr;
-    lists.map.loadFromFile("saves/maps/game/game0.bin");
+    lists.map.loadFromFile("saves/maps/game/default.bin");
     lists.tiles.registerTiles();
     SetMasterVolume(masterVolume);
 }
@@ -96,9 +97,8 @@ void DataHolder::handleGameState()
     UpdateMusicStream(sounds.musicTroll);
     UpdateMusicStream(sounds.gameplayMusic);
     UpdateMusicStream(sounds.introSong);
-    if (timePlayed >= 16.0f)
-        StopMusicStream(sounds.musicTroll);
-    timePlayed = GetMusicTimePlayed(sounds.musicTroll);
+    if(GetMusicTimePlayed(sounds.musicTroll) >= GetMusicTimeLength(sounds.musicTroll)-0.05f) StopMusicStream(sounds.musicTroll);
+    if(GetMusicTimePlayed(sounds.introSong) >= GetMusicTimeLength(sounds.introSong)-0.05f) StopMusicStream(sounds.introSong);
     mousePos = Vec2D(GetMousePosition().x, GetMousePosition().y);
 
     if (gameState == INTRO)
@@ -136,12 +136,20 @@ void DataHolder::handleGameState()
             else if (buttonSelected == 5)
             {
                 PlaySound(sounds.buttonSound);
-                PlayMusicStream(sounds.musicTroll);
+                if (IsMusicStreamPlaying(sounds.musicTroll))
+                {
+                    StopMusicStream(sounds.musicTroll);
+                }
+                else
+                {
+                    PlayMusicStream(sounds.musicTroll);
+                }
             }
             else if (buttonSelected == 6)
             {
                 framecounter = 0;
                 PlaySound(sounds.buttonSound);
+                PlayMusicStream(sounds.introSong);
                 gameState = INTRO;
             }
         }
@@ -157,6 +165,7 @@ void DataHolder::handleGameState()
                 wave = 0;
                 money = 20;
                 tileRenderType = NORMAL;
+                lists.map.loadFromFile("saves/maps/game/game0.bin");
                 gameState = GAMEPLAY;
             }
             if (buttonSelected == 2)
@@ -232,7 +241,7 @@ void DataHolder::handleGameState()
         while (tmp < gameSpeed)
         {
             handleEnemiesBuffer(lists.map, lists.enemies, lists.buffer, wave);
-            selectedTower = handleTowers(lists.towers, lists.enemies, lists.missiles, selectedTower, cameraPos, cameraScale);
+            selectedTower = handleTowers(lists.towers, lists.enemies, lists.missiles, lists.particles, selectedTower, cameraPos, cameraScale); 
             handleMissiles(lists.missiles, lists.enemies, lists.particles);
             handleEnemies(lists.map, money, lists.enemies, lists.particles, life);
             handleParticles(lists.particles);
@@ -364,13 +373,16 @@ void DataHolder::handleGameState()
     {
         if (inputs.isLeftPressed())
         {
+            if (holderHovered >= 0 || buttonSelected != 0) PlaySound(sounds.buttonSound);
             if (holderHovered >= 0)
             {
                 holderSelected = holderHovered;
             }
             else if (buttonSelected == 1)
             {
-                lists.map.saveToFile("saves/maps/map2.bin");
+                std::string path = {"saves/maps/custom/map0.bin"};
+                path[21] = saveSlot + '0';
+                lists.map.saveToFile(path.data());
             }
             else if (buttonSelected == 2)
             {
@@ -394,11 +406,21 @@ void DataHolder::handleGameState()
                     break;
                 }
             }
-            if (buttonSelected == 4)
+            else if (buttonSelected == 4) 
             {
-                PlaySound(sounds.buttonSound);
                 gameState = MENU;
             }
+            else if (buttonSelected == 5) 
+            {
+                saveSlot++;
+                if (saveSlot > 9) saveSlot = 9;
+            }
+            else if (buttonSelected == 6) 
+            {
+                saveSlot--;
+                if (saveSlot < 0) saveSlot = 0;
+            }
+            
         }
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
         {

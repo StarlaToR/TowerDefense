@@ -1,13 +1,13 @@
 #include "gameUtil.hpp"
 
-Tower* handleTowers(std::forward_list<Tower*>& towers, std::list<Enemy*>& enemies, std::forward_list<Missile*>& missiles, Tower* selectedTower, Vec2D camPos, float camScale)
+Tower* handleTowers(std::forward_list<Tower*>& towers, std::list<Enemy*>& enemies, std::forward_list<Missile*>& missiles, std::forward_list<Particle*>& particles, Tower* selectedTower, Vec2D camPos, float camScale)
 {
     Vec2D mousePos = (Vec2D(GetMouseX(),GetMouseY())) / (48*camScale) - (Vec2D(50, 50)-camPos)/48.0f;
     Vec2D mousePosR = (Vec2D(GetMouseX(),GetMouseY()));
     bool insideMap = (mousePosR.x > 50 && mousePosR.y > 50 && mousePosR.x < 1202 && mousePosR.y < 626);
     for (std::forward_list<Tower*>::iterator i = towers.begin(); i != towers.end(); i++)
     {
-        (*i)->update(enemies, missiles);
+        (*i)->update(enemies, missiles, particles);
 
         if(insideMap && mousePos.x >= (*i)->getPosition().x - 0.5 && mousePos.x <= (*i)->getPosition().x + 0.5 && mousePos.y >= (*i)->getPosition().y - 0.5 && mousePos.y <= (*i)->getPosition().y + 0.5)
         {
@@ -27,7 +27,8 @@ void handleMissiles(std::forward_list<Missile *>& missiles, std::list<Enemy *>& 
     {
         if ((*i)->update(enemies))
         {
-            particles.push_front(new ExplosionParticle((*i)->getPosition()));
+            particles.push_front(new BigExplosionParticle((*i)->getPosition()));
+            for (int it = 0; it < 7; it++) particles.push_front(new ExplosionParticle((*i)->getPosition()));
             delete *i;
             i = missiles.erase_after(oldM);
         }
@@ -46,7 +47,7 @@ void handleEnemies(TileMap& map, int& money, std::list<Enemy *>& enemies, std::f
     {
         if ((*it)->update(map, enemies, particles, playerLife))
         {
-            for (int j = 0; j < 7; j++) particles.push_front(new EnemyExplosionParticle((*it)->getPosition()));
+            particles.push_front(new EnemyExplosionParticle((*it)->getPosition()));
             money += (*it)->getReward();
             delete *it;
             it = enemies.erase(it);
@@ -119,7 +120,7 @@ void handleEnemiesBuffer(TileMap& map, std::list<Enemy *>& enemies, std::forward
     enemiesBuffer(map, enemies, buffer, waves);
     if (enemies.empty() && buffer.empty())
     {
-        if (waves%5 == 0)
+        if (waves%5 == 4 && waves > 0)
         {
             for (int i = 0; i < waves/5+1; i++)
             {

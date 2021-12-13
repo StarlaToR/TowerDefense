@@ -4,7 +4,7 @@ PROGRAM=tower
 OBJS= src/main.o src/util/mathHelper.o src/render.o src/util/dataHolder.o src/util/renderUtil.o src/util/direction.o src/tile/tileMap.o src/tile/tiles.o
 OBJS+= src/enemies/enemy.o src/enemies/classicEnemy.o src/enemies/bigEnemy.o src/enemies/healerEnemy.o src/towers/tower.o src/towers/classicTower.o src/towers/slowingTower.o
 OBJS+= src/towers/explosiveTower.o src/object/missile.o src/particles/particle.o src/particles/explosion.o src/particles/heal.o src/util/gameUtil.o src/tile/tileHolder.o
-OBJS+= src/towers/towerHolder.o src/entities/entity.o src/particles/enemy_explosion.o src/enemies/bossEnemy.o
+OBJS+= src/towers/towerHolder.o src/entities/entity.o src/particles/enemyExplosion.o src/enemies/bossEnemy.o src/particles/bigExplosion.o src/particles/laser.o
 
 CXX?=g++
 TARGET?=$(shell $(CXX) -dumpmachine)

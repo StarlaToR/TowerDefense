@@ -8,6 +8,6 @@ public:
 
     BossEnemy() {};
 
-    int getTexture() override {return 154;}
+    int getTexture() override {return TOWER_BASE;}
     ~BossEnemy();
 };

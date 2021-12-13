@@ -6,7 +6,7 @@ void renderMain(DataHolder& in);
 void renderStartAnim(DataHolder& in);
 void renderMainMenu(DataHolder& in);
 void renderEditor(DataHolder& in);
-void menuEditor(DataHolder& in);
+void menuMain(DataHolder& in);
 void renderPlay(DataHolder& in);
 void renderGameplay(DataHolder& in);
 void renderGameOver(DataHolder& in);

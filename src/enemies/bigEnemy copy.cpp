@@ -1,15 +1,15 @@
-#include "bossEnemy.hpp"
+#include "bigEnemy.hpp"
 
-BossEnemy::BossEnemy(TileMap& t, int wave)
+BigEnemy::BigEnemy(TileMap& t, int wave)
 {
     position = t.startPos + Vec2D(0.5f,0.5f);
-    level = 1;
+    level = wave/4+1;
     slowTimer = 0;
-    maxHealth = 100000;
+    maxHealth = 20+30*level;
     health = maxHealth;
-    reward = 100000;
-    speed = 1;
-    damage = 50;
+    reward = 10+level*5;
+    speed = 1+level/2;
+    damage = 5+level;
 
     currentTile = Vec2D((int)t.startPos.x,(int)t.startPos.y);
     currentDirection = t.getTileAt(currentTile)-ROAD_START_NORTH;
@@ -20,6 +20,6 @@ BossEnemy::BossEnemy(TileMap& t, int wave)
     distanceToCenter = 0.1;
 }
 
-BossEnemy::~BossEnemy()
+BigEnemy::~BigEnemy()
 {
 }

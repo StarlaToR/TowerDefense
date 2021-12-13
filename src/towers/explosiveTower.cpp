@@ -17,7 +17,7 @@ ExplosiveTower::ExplosiveTower(Vec2D pos)
     textureID = 99;
 }
 
-void ExplosiveTower::attack(Enemy* e, std::forward_list<Missile*>& missiles)
+void ExplosiveTower::attack(Enemy* e, std::forward_list<Missile*>& missiles, std::forward_list<Particle*>& particles)
 {
     
     attackCooldown = attackSpeed;

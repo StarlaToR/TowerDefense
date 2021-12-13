@@ -47,6 +47,7 @@ void HealerEnemy::heal(std::list<Enemy*>& enemies, Enemy* currentEnemy, std::for
 
 bool HealerEnemy::update(TileMap& t, std::list<Enemy*>& enemies, std::forward_list<Particle*>& particles, int& playerLife)
 {
+    damageCooldown--;
     slowTimer = cut(slowTimer-1, 0, __INT_MAX__);
     healingCooldown = cut(healingCooldown-1, 0, __INT_MAX__);
     Vec2D currentTilePosition((int)getPosition().x, (int)getPosition().y);

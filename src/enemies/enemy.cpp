@@ -7,6 +7,7 @@ void Enemy::setSlowed(int value)
 
 bool Enemy::update(TileMap& t, std::list<Enemy*>& enemies, std::forward_list<Particle*>& particles, int &playerLife)
 {
+    damageCooldown--;
     slowTimer = cut(slowTimer-1, 0, __INT_MAX__);
     Vec2D currentTilePosition((int)getPosition().x, (int)getPosition().y);
     if ((currentTilePosition.x != currentTile.x || currentTilePosition.y != currentTile.y) && (position - targetPos).lengthSquared() < distanceToCenter)
@@ -64,6 +65,7 @@ void Enemy::getHealed(int heal)
     health += heal;
     if (health > maxHealth)
     {
+        damageCooldown = 0;
         health = maxHealth;
     }
 }
@@ -75,4 +77,23 @@ int Enemy::getReward()
 
 Enemy::~Enemy()
 {
+}
+
+void Enemy::getDamage(int damageDealt)
+{
+    health -= damageDealt;
+    if (health < 0) health = 0;
+    damageCooldown = 6;
+}
+
+unsigned int Enemy::getColor()
+{
+    if (damageCooldown > 0) return 0xff8080ff;
+    if (level <= 1) return 0x00f030ff;
+    if (level == 2) return 0x0080f0ff;
+    if (level == 3) return 0xff9000ff;
+    if (level == 4) return 0xf03030ff;
+    if (level == 5) return 0x909090ff;
+    if (level == 6) return 0xffa0a0ff;
+    return 0;
 }
