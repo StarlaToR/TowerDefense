@@ -286,6 +286,10 @@ void DataHolder::handleGameState()
         {
             gameState = GAMEOVER;
         }
+        if(wave >= 26)
+        {
+            gameState = VICTORY;
+        }
     }
     else if (gameState == GAMEOVER)
     {
@@ -299,6 +303,26 @@ void DataHolder::handleGameState()
             lists.towers.clear();
             lists.missiles.clear();
             lists.buffer.clear();
+            selectedTower = nullptr;
+            gameSpeed = 1;
+
+            PlaySound(sounds.buttonSound);
+            gameState = MENU;
+        }
+    }
+    else if (gameState == VICTORY)
+    {
+        
+        if (inputs.isLeftPressed())
+        {
+            for (std::list<Enemy*>::iterator i = lists.enemies.begin(); i != lists.enemies.end(); i++) delete *i;
+            for (std::forward_list<Tower*>::iterator i = lists.towers.begin(); i != lists.towers.end(); i++) delete *i;
+            for (std::forward_list<Missile*>::iterator i = lists.missiles.begin(); i != lists.missiles.end(); i++) delete *i;
+            lists.enemies.clear();
+            lists.towers.clear();
+            lists.missiles.clear();
+            lists.buffer.clear();
+            //lists.map.tilesWithTower.clear()
             selectedTower = nullptr;
             gameSpeed = 1;
 

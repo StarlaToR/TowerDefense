@@ -32,6 +32,9 @@ void renderMain(DataHolder& in)
     case GAMEOVER:
         renderGameOver(in);
         break;
+    case VICTORY:
+        renderGameOver(in);
+        break;
     case OPTION:
         renderOption(in);
         break;
@@ -82,6 +85,11 @@ void renderMainMenu(DataHolder& in)
 void renderGameOver(DataHolder& in)
 {
     DrawTextEx(in.fontTitle, "GameOver", Vector2{480,27},70,4,BLACK);
+}
+
+void renderVictory(DataHolder& in)
+{
+    DrawTextEx(in.fontTitle, "Victory", Vector2{480,27},70,4,BLACK);
 }
 
 void renderEditor(DataHolder& in)

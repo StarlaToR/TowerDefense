@@ -10,6 +10,7 @@ void menuEditor(DataHolder& in);
 void renderPlay(DataHolder& in);
 void renderGameplay(DataHolder& in);
 void renderGameOver(DataHolder& in);
+void renderVictory(DataHolder& in);
 void renderCredit(DataHolder& in);
 void renderOption(DataHolder& in);
 void renderLoad(DataHolder& in);
