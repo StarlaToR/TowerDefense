@@ -36,6 +36,8 @@ void DataHolder::unloadDatas()
         delete *i;
     for (std::forward_list<Missile *>::iterator i = lists.missiles.begin(); i != lists.missiles.end(); i++)
         delete *i;
+    for (std::forward_list<Particle *>::iterator i = lists.particles.begin(); i != lists.particles.end(); i++)
+        delete *i;
     UnloadTexture(textures.logo);
     UnloadTexture(textures.tileTexture);
     UnloadTexture(textures.background);
@@ -300,10 +302,10 @@ void DataHolder::handleGameState()
                 lists.towerHolders.holders[i].update(lists.towers, lists.map, money, cameraPos, cameraScale);
             }
         }
-        /*if (life <= 0)
+        if (life <= 0)
         {
             gameState = GAMEOVER;
-        }*/
+        }
         if (IsKeyPressed(KEY_P))
         {
             gameState = GAMEOVER;
@@ -323,10 +325,12 @@ void DataHolder::handleGameState()
             for (std::list<Enemy*>::iterator i = lists.enemies.begin(); i != lists.enemies.end(); i++) delete *i;
             for (std::forward_list<Tower*>::iterator i = lists.towers.begin(); i != lists.towers.end(); i++) delete *i;
             for (std::forward_list<Missile*>::iterator i = lists.missiles.begin(); i != lists.missiles.end(); i++) delete *i;
+            for (std::forward_list<Particle *>::iterator i = lists.particles.begin(); i != lists.particles.end(); i++) delete *i;
             lists.enemies.clear();
             lists.towers.clear();
             lists.missiles.clear();
             lists.buffer.clear();
+            lists.particles.clear();
             selectedTower = nullptr;
             gameSpeed = 1;
 
