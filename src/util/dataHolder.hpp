@@ -21,6 +21,7 @@ typedef enum GameState : int
     MENU,
     MENUPLAY,
     GAMEPLAY,
+    GAMEOVER,
     EDITOR,
     LOAD,
     OPTION,
@@ -98,12 +99,12 @@ public:
     Vec2D dragPos = Vec2D(-1,-1);
     Vec2D cameraPos = Vec2D();
     char cameraScale = 1;
-    int wave = 0;
+    int wave;
     Tower* selectedTower =nullptr;
     int gameSpeed = 1;
 
     int money = 20;
-    int life = 100;
+    int life;
 
     DataHolder() {}
     ~DataHolder() {}

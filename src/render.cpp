@@ -29,6 +29,9 @@ void renderMain(DataHolder& in)
     case GAMEPLAY:
         renderGameplay(in);
         break;
+    case GAMEOVER:
+        renderGameOver(in);
+        break;
     case OPTION:
         renderOption(in);
         break;
@@ -74,6 +77,11 @@ void renderMainMenu(DataHolder& in)
     DrawTexturePro(in.textures.logo, Rectangle{0,0,300,300},Rectangle{width, heigth,100,100},Vector2{100,100}, 0, WHITE);
     DrawTextEx(in.fontTitle, "Tower Defense", Vector2{480,27},70,4,BLACK);
     
+}
+
+void renderGameOver(DataHolder& in)
+{
+    DrawTextEx(in.fontTitle, "GameOver", Vector2{480,27},70,4,BLACK);
 }
 
 void renderEditor(DataHolder& in)
