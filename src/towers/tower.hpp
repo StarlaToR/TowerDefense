@@ -22,6 +22,7 @@ public:
     int getLevel();
     float getRange();
     int getCost();
+    void setCost(int a);
     virtual const char* getName() = 0;
     void getDamage(int damageDealt);
     virtual ~Tower() = 0;

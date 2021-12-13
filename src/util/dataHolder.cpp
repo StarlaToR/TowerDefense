@@ -147,6 +147,7 @@ void DataHolder::handleGameState()
                 PlaySound(sounds.buttonSound);
                 life = 100;
                 wave = 0;
+                money = 20;
                 tileRenderType = NORMAL;
                 gameState = GAMEPLAY;
             }
@@ -252,6 +253,7 @@ void DataHolder::handleGameState()
                 {
                     selectedTower->upgrade();
                     money -= selectedTower->getCost();
+                    selectedTower->setCost(selectedTower->getCost() * 2);
                 }
             }
             else if (buttonSelected == 1)
@@ -262,7 +264,7 @@ void DataHolder::handleGameState()
                     if((*i) == selectedTower)
                     {
                         Vec2D tmpPos = (*i)->getPosition();
-                        money += (*i)->getCost() * (*i)->getLevel() / 2;
+                        money += (*i)->getCost() * (*i)->getLevel() / 4;
                         lists.map.removeTowerFromTile(Vec2D((int)(tmpPos.x),(int)(tmpPos.y)));
                         delete(*i);
                         i = lists.towers.erase_after(oldT);
@@ -297,6 +299,7 @@ void DataHolder::handleGameState()
             lists.towers.clear();
             lists.missiles.clear();
             lists.buffer.clear();
+            selectedTower = nullptr;
             gameSpeed = 1;
 
             PlaySound(sounds.buttonSound);

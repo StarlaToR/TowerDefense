@@ -71,8 +71,8 @@ bool drawButtonInvisible(Vec2D pos, Vec2D size, Vec2D mousePos) {
     //DrawRectangleRec(toRayLibRectangle(pos,size),Fade(BLACK,0.5));
     return isInside;
 }
-void drawMapElements(DataHolder& in, bool editor)
 
+void drawMapElements(DataHolder& in, bool editor)
 {
     DrawRectangle(0,0,in.screenWidth,in.screenHeight,DARKGREEN);
     Camera2D cam = Camera2D();
@@ -141,7 +141,7 @@ void drawTowerUpgradeMenu(DataHolder& in, int& button)
         DrawText(in.selectedTower->getName(),1300,100,20,BLACK);
         DrawText(TextFormat("Level: %d",in.selectedTower->getLevel()),1300,145,20,BLACK);
         DrawText(TextFormat("Health: %d%%",(int)(in.selectedTower->getHealth()*100)),1300,175,20,in.selectedTower->getHealth() > 0.5 ? DARKGREEN : (in.selectedTower->getHealth() > 0.15 ? ORANGE : RED));
-        DrawText(TextFormat("Cost: %d",in.selectedTower->getCost() * in.selectedTower->getLevel() / 2),1475,345,20,BLACK);
+        DrawText(TextFormat("Cost: %d",in.selectedTower->getCost() * in.selectedTower->getLevel() / 4),1475,345,20,BLACK);
         if(drawButton("Delete", Vec2D(1300, 330), Vec2D(150, 50), Vec2D(GetMouseX(), GetMouseY())))
         {
             button = 1;
@@ -162,9 +162,4 @@ void drawTowerUpgradeMenu(DataHolder& in, int& button)
             DrawText(TextFormat("Cost: %d",in.lists.towerHolders.holders[i].getCost()), in.lists.towerHolders.holders[i].getPosition().x + 150, in.lists.towerHolders.holders[i].getPosition().y + 50, 20, BLACK);
         }
     }
-}
-
-void drawTileAt(Texture& tx, Rectangle tile, Vec2D position, Vec2D size, float rotation, Color& color, bool center)
-{
-
 }
