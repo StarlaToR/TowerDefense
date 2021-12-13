@@ -191,19 +191,20 @@ void renderPlay(DataHolder& in)
     DrawTexturePro(in.textures.background, Rectangle{in.framecounter/3.0f,0,1600,1000},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
     DrawTexturePro(in.textures.title, Rectangle{0,0,500,500},Rectangle{450, 0,1000,450},Vector2{150,150}, 0, WHITE);
     DrawTextEx(in.fontTitle, "Play", Vector2{660,0},100,4,BLACK);
-    if (drawButtonMenu(in, "New", Vec2D(695,350), Vec2D(650, 300),Vec2D(250,140), in.mousePos))
+    
+    if (drawButtonMenu(in, "New", Vec2D(710,265), Vec2D(650, 220),Vec2D(250,140), in.mousePos))
     {
         in.buttonSelected = 1;
     }
-    if (drawButtonMenu(in, "Load", Vec2D(695,475), Vec2D(650, 425),Vec2D(250,140), in.mousePos))
+    if (drawButtonMenu(in, "Load", Vec2D(695,445), Vec2D(650, 400),Vec2D(250,140), in.mousePos))
     {
         in.buttonSelected = 2;
     }
-    if (drawButtonMenu(in, "Editor", Vec2D(670, 600), Vec2D(650, 570),Vec2D(250,100), in.mousePos))
+    if (drawButtonMenu(in, "Editor", Vec2D(670, 605), Vec2D(650, 580),Vec2D(250,100), in.mousePos))
     {
         in.buttonSelected = 3;
     }
-    if (drawButtonMenu(in, "Return", Vec2D(652, 780), Vec2D(650, 750),Vec2D(250,100), in.mousePos))
+    if (drawButtonMenu(in, "Return", Vec2D(652, 780), Vec2D(650, 760),Vec2D(250,100), in.mousePos))
     {
         in.buttonSelected = 4;
     }
