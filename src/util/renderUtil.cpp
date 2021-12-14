@@ -127,8 +127,10 @@ void drawMapElements(DataHolder& in, bool editor)
             DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(153),toRayLibRectangle(tower->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(24,24),0,LIGHTGRAY);
             DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(tower->getTexture()),toRayLibRectangle(tower->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(80,80)),Vec2D(40,40),tower->getRotation()*RAD2DEG+90.0f,GetColor(tower->getColor()));
         }
-        DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(in.lists.map.getTileAt(in.lists.map.startPos,true)),toRayLibRectangle(in.lists.map.startPos*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(),0.0f,WHITE);
-        DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(in.lists.map.getTileAt(in.lists.map.endPos,true)),toRayLibRectangle(in.lists.map.endPos*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(),0.0f,WHITE);
+        unsigned char tmp1 = in.lists.map.getTileAt(in.lists.map.startPos,true);
+        if (tmp1 != UNDEFINED) DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(tmp1),toRayLibRectangle(in.lists.map.startPos*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(),0.0f,WHITE);
+        tmp1 = in.lists.map.getTileAt(in.lists.map.endPos,true);
+        if (tmp1 != UNDEFINED) DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(tmp1),toRayLibRectangle(in.lists.map.endPos*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(),0.0f,WHITE);
         for (std::forward_list<Missile*>::iterator i = in.lists.missiles.begin(); i != in.lists.missiles.end(); i++)
         {
             DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(54),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(80,80)),Vec2D(40,40),(*i)->getRotation()*RAD2DEG+90.0f,GetColor((*i)->getColor()));

@@ -89,8 +89,12 @@ void placeTileAt(TileMap& map, Vec2D pos, Vec2D& drag, unsigned char tile, bool 
             {
                 if (map.isValidStartEnd(old))
                 {
-                    map.setTileAt((tile == START_EAST ? map.startPos : map.endPos), map.getDefaultTile(map.getTileAt((tile == START_EAST ? map.startPos : map.endPos))));
-                    map.setTileAt((tile == START_EAST ? map.startPos : map.endPos), UNDEFINED, true);
+                    unsigned char tileTmp = map.getTileAt(tile == START_EAST ? map.startPos : map.endPos, true);
+                    if (tileTmp >= START_NORTH && tileTmp <= END_WEST)
+                    {
+                        map.setTileAt((tile == START_EAST ? map.startPos : map.endPos), map.getDefaultTile(map.getTileAt((tile == START_EAST ? map.startPos : map.endPos))));
+                        map.setTileAt((tile == START_EAST ? map.startPos : map.endPos), UNDEFINED, true);
+                    }
                     map.setTileAt(pos, map.getTileAt(pos) + (tile == START_EAST ? 23 : 27), true);
                     map.setTileAt(pos, map.getTileAt(pos) + (tile == START_EAST ? 4 : 8));
                     (tile == START_EAST ? map.startPos : map.endPos) = pos;
