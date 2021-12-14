@@ -35,7 +35,7 @@ typedef enum GameState : int
 struct TextureHolder
 {
     Texture2D logo;
-    Texture2D marie_antoine;
+    Texture2D boss;
     Texture2D tileTexture;
     Texture2D background;
     Texture2D button;

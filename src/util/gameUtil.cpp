@@ -96,6 +96,13 @@ void placeTileAt(TileMap& map, Vec2D pos, Vec2D& drag, unsigned char tile, bool 
                     (tile == START_EAST ? map.startPos : map.endPos) = pos;
                 }
             }
+            else if (tile == TUNNEL_EAST)
+            {
+                if (map.isValidStartEnd(old))
+                {
+                    map.setTileAt(pos, map.getTileAt(pos) + 143, true);
+                }
+            }
             else if (!map.isRoad(old))
                 map.setTileAt(pos, tile, true);
         }

@@ -9,7 +9,7 @@ ClassicEnemy::ClassicEnemy(TileMap& t, int wave)
     health = maxHealth;
     reward = 2;
     speed = 1+level;
-    damage = 2+level;
+    damage = 1;
 
     currentTile = Vec2D((int)t.startPos.x,(int)t.startPos.y);
     currentDirection = t.getTileAt(currentTile)-ROAD_START_NORTH;

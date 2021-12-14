@@ -9,13 +9,13 @@ BossEnemy::BossEnemy(TileMap& t, int wave)
     health = maxHealth;
     reward = 100000;
     speed = 1;
-    damage = 50;
+    damage = 1000;
 
     currentTile = Vec2D((int)t.startPos.x,(int)t.startPos.y);
     currentDirection = t.getTileAt(currentTile)-ROAD_START_NORTH;
     targetDirection = dirToAngle(currentDirection.dir);
     rotation = targetDirection;
-    targetPos = currentDirection.getFowardTile(currentTile) + Vec2D(0.5f, 0.5f);
+    targetPos = t.endPos + Vec2D(0.5f, 0.5f);
     angularVelocity= 0.05*speed;
     distanceToCenter = 0.1;
 }

@@ -44,7 +44,7 @@ void DataHolder::unloadDatas()
     UnloadTexture(textures.title);
     UnloadTexture(textures.credit);
     UnloadTexture(textures.button);
-    UnloadTexture(textures.marie_antoine);
+    UnloadTexture(textures.boss);
     UnloadTexture(textures.logoIsart);
     UnloadTexture(textures.gameUI);
     UnloadFont(fontButton);
@@ -59,7 +59,7 @@ void DataHolder::initDatas()
 {
     textures.logo = LoadTexture("assets/textures/logo.png");
     textures.logoIsart = LoadTexture("assets/textures/logo_isart.png");
-    textures.marie_antoine = LoadTexture("assets/textures/Marie-Antoine.png");
+    textures.boss = LoadTexture("assets/textures/boss.png");
     textures.background = LoadTexture("assets/textures/background.png");
     textures.title = LoadTexture("assets/textures/title.png");
     textures.credit = LoadTexture("assets/textures/credit.png");
@@ -469,6 +469,7 @@ void DataHolder::handleGameState()
             }
             else if (buttonSelected == 4) 
             {
+                holderSelected = 0;
                 gameState = MENU;
             }
             else if (buttonSelected == 5) 

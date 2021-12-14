@@ -55,15 +55,37 @@ bool HealerEnemy::update(TileMap& t, std::list<Enemy*>& enemies, std::forward_li
     {
         
         currentTile = currentTilePosition;
-        char newTile = t.getTileAt(currentTilePosition);
+        unsigned char newTile = t.getTileAt(currentTilePosition);
+        unsigned char newTile2 = t.getTileAt(currentTilePosition,true);
         if (newTile >= ROAD_END_NORTH && newTile <= ROAD_END_WEST)
         {
-            playerLife -= 1;
+            playerLife -= damage;
             reward = 0;
             health = 0;
         }
-        currentDirection = getNextDirection(newTile, currentDirection);
-        targetPos = currentDirection.getFowardTile(currentTilePosition) + Vec2D(0.5f, 0.5f);
+        else if (newTile2 >= TUNNEL_NORTH && newTile2 <= TUNNEL_WEST)
+        {
+            if (!underground)
+            {
+                underground = true;
+                targetPos = currentDirection.getFowardTile(currentTilePosition) + Vec2D(0.5f, 0.5f);
+            }
+            else
+            {
+                underground = false;
+                currentDirection = getNextDirection(newTile, currentDirection);
+                targetPos = currentDirection.getFowardTile(currentTilePosition) + Vec2D(0.5f, 0.5f);
+            }
+        }
+        else if (underground)
+        {
+            targetPos = currentDirection.getFowardTile(currentTilePosition) + Vec2D(0.5f, 0.5f);
+        }
+        else
+        {
+            currentDirection = getNextDirection(newTile, currentDirection);
+            targetPos = currentDirection.getFowardTile(currentTilePosition) + Vec2D(0.5f, 0.5f);
+        }
     }
     Vec2D dif = targetPos - position;
     float tmpDir;

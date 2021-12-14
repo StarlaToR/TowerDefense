@@ -32,7 +32,7 @@ void DrawTileMap(DataHolder& in, RenderType type)
         {
             tile = tile-7;
         }
-        bool gry = (in.holderSelected == 3 || in.holderSelected == 4);
+        bool gry = (in.holderSelected >= 3 && in.holderSelected <= 5);
         bool sPos = (tile >= ROAD_NORTH && tile <= ROAD_WEST);
         DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(tile),toRayLibRectangle(origin,Vec2D(48,48)),{0,0},0.0f, (gry && !sPos) ? GetColor(0xccccccff) : WHITE);
         if (tile2 != UNDEFINED) DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(tile2),toRayLibRectangle(origin,Vec2D(48,48)),{0,0},0.0f,(gry) ? GetColor(0xccccccff) : WHITE);
@@ -40,10 +40,23 @@ void DrawTileMap(DataHolder& in, RenderType type)
         {
             DrawRectangleLinesEx(toRayLibRectangle(origin,Vec2D(48,48)),1,BLACK);
         }
-        if (type  == DEBUG)
+        if (type == DEBUG)
         {
             DrawText(TextFormat("%d",tile),origin.x+2,origin.y+1,10,BLACK);
             DrawText(TextFormat("%d",tile2),origin.x+2,origin.y+10,10,BLACK);
+        }
+    }
+}
+
+void DrawSpecialTiles(DataHolder& in)
+{
+    for (int i = 0; i < in.lists.map.getWidth()*in.lists.map.getHeight(); i++)
+    {
+        Vec2D tilePos = Vec2D(i%in.lists.map.getWidth(),i/in.lists.map.getWidth());
+        Vec2D origin = Vec2D(50,50)+Vec2D(48,48)*tilePos;
+        unsigned char tile = in.lists.map.getTileAt(tilePos, true);
+        if (tile >= TUNNEL_NORTH && tile <= TUNNEL_WEST) {
+            DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(tile),toRayLibRectangle(origin,Vec2D(48,48)),{0,0},0.0f, WHITE);
         }
     }
 }
@@ -82,8 +95,11 @@ void drawMapElements(DataHolder& in, bool editor)
     DrawTileMap(in,in.tileRenderType);
     if (!editor)
     {
+        bool drawBoss = false;
+        Enemy* boss;
         for (std::list<Enemy*>::iterator i = in.lists.enemies.begin(); i != in.lists.enemies.end(); i++)
         {
+            if ((*i)->isUnderGround()) continue;
             int tx = (*i)->getTexture();
             int color = (*i)->getColor();
             if (tx != TOWER_BASE) {
@@ -102,14 +118,10 @@ void drawMapElements(DataHolder& in, bool editor)
             }
             else
             {
-                DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(53),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(192,192)),Vec2D(96,96),(*i)->getRotation()*RAD2DEG+90.0f,LIGHTGRAY);
-                DrawTexturePro(in.textures.marie_antoine,in.lists.tiles.tileCrops.at(tx),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(80,80)),Vec2D(40,40),0,WHITE);
-                DrawRectangleRec(toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(6,-8),Vec2D(88,18)),BLACK);
-                DrawRectangleRec(toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(7,-7),Vec2D(86,16)),RED);
-                DrawRectangleRec(toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(7,-7),Vec2D(86.0f*((*i)->getHealth()),16)),GREEN);
+                drawBoss = true;
+                boss = *i;
             }
         }
-        //for (std::forward_list<Tower*>::iterator i = in.lists.towers.begin(); i != in.lists.towers.end(); i++)
         for (Tower* tower : in.lists.towers)
         {
             DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(153),toRayLibRectangle(tower->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(24,24),0,LIGHTGRAY);
@@ -120,14 +132,24 @@ void drawMapElements(DataHolder& in, bool editor)
         for (std::forward_list<Missile*>::iterator i = in.lists.missiles.begin(); i != in.lists.missiles.end(); i++)
         {
             DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(54),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(80,80)),Vec2D(40,40),(*i)->getRotation()*RAD2DEG+90.0f,GetColor((*i)->getColor()));
-        } 
+        }
+        DrawSpecialTiles(in);
         for (std::forward_list<Particle*>::iterator i = in.lists.particles.begin(); i != in.lists.particles.end(); i++)
         {
             (*i)->drawParticle(in.textures.tileTexture, in.lists.tiles);
         }
+        if (drawBoss)
+        {
+            DrawTexturePro(in.textures.boss,in.lists.tiles.tileCrops.at(boss->getTexture()),toRayLibRectangle((boss)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(192,192)),Vec2D(96,96),(boss)->getRotation()*RAD2DEG-90.0f,WHITE);
+            DrawRectangleRec(toRayLibRectangle((boss)->getPosition()*Vec2D(48,48)+Vec2D(6,-8),Vec2D(88,18)),BLACK);
+            DrawRectangleRec(toRayLibRectangle((boss)->getPosition()*Vec2D(48,48)+Vec2D(7,-7),Vec2D(86,16)),RED);
+            DrawRectangleRec(toRayLibRectangle((boss)->getPosition()*Vec2D(48,48)+Vec2D(7,-7),Vec2D(86.0f*((boss)->getHealth()),16)),GREEN);
+        }
         if (in.selectedTower != nullptr)
         {
             DrawCircleV(in.selectedTower->getPosition()*Vec2D(48,48)+Vec2D(50,50),in.selectedTower->getRange()*48.0f,Fade(RED,0.2f));
+            DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(153),toRayLibRectangle(in.selectedTower->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(24,24),0,LIGHTGRAY);
+            DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(in.selectedTower->getTexture()),toRayLibRectangle(in.selectedTower->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(80,80)),Vec2D(40,40),in.selectedTower->getRotation()*RAD2DEG+90.0f,GetColor(in.selectedTower->getColor()));
         }
     }
     EndMode2D();

@@ -11,7 +11,7 @@ class TileHolder
         TileHolder() : tile(GRASS) {}
         TileHolder(TileID id, bool deco, Vec2D pos) : tile(id), isDeco(deco), position(pos) {}
 
-        char getTile() {return tile;}
+        unsigned char getTile() {return tile;}
 };
 
 class TileHolders {

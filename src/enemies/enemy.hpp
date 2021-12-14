@@ -28,5 +28,6 @@ public:
     int getReward();
     virtual ~Enemy() = 0;
     unsigned int getColor() override;
+    bool isUnderGround() {return underground;}
     
 };

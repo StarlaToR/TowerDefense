@@ -41,7 +41,7 @@ Enemy *Tower::getNearestEnemy(std::list<Enemy*>& enemyIn)
     float shortestDistance = 0;
     for (std::list<Enemy*>::iterator i = enemyIn.begin(); i != enemyIn.end(); i++)
     {
-        if (((*i)->getPosition() - position).getLength() <= range)
+        if (!(*i)->isUnderGround() && ((*i)->getPosition() - position).getLength() <= range)
         {
             if (nearestEnemy == nullptr)
             {
