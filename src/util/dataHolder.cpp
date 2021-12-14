@@ -331,6 +331,7 @@ void DataHolder::handleGameState()
             lists.missiles.clear();
             lists.buffer.clear();
             lists.particles.clear();
+            for (int i = 0; i < (MAP_HEIGHT*MAP_WIDTH); i++) lists.map.tilesWithTower[i] = false;
             selectedTower = nullptr;
             gameSpeed = 1;
 
@@ -351,7 +352,8 @@ void DataHolder::handleGameState()
             lists.towers.clear();
             lists.missiles.clear();
             lists.buffer.clear();
-            //lists.map.tilesWithTower.clear()
+            lists.particles.clear();
+            for (int i = 0; i < (MAP_HEIGHT*MAP_WIDTH); i++) lists.map.tilesWithTower[i] = false;
             selectedTower = nullptr;
             gameSpeed = 1;
             if (buttonSelected == 1)
