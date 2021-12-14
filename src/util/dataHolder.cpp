@@ -199,72 +199,11 @@ void DataHolder::handleGameState()
     {
         if (inputs.isLeftPressed())
         {
-            if (buttonSelected == 1)
+            if (buttonSelected >= 1 && buttonSelected <= 10)
             {
-                lists.map.loadFromFile("saves/maps/game/game0.bin");
-                timeCounter.start();
-                PlaySound(sounds.buttonSound);
-                gameState = GAMEPLAY;
-            }
-            else if (buttonSelected == 2)
-            {
-                lists.map.loadFromFile("saves/maps/game/game1.bin");
-                timeCounter.start();
-                PlaySound(sounds.buttonSound);
-                gameState = GAMEPLAY;
-            }
-            else if (buttonSelected == 3)
-            {
-                lists.map.loadFromFile("saves/maps/game/game2.bin");
-                timeCounter.start();
-                PlaySound(sounds.buttonSound);
-                gameState = GAMEPLAY;
-            }
-            else if (buttonSelected == 4)
-            {
-                lists.map.loadFromFile("saves/maps/game/game3.bin");
-                timeCounter.start();
-                PlaySound(sounds.buttonSound);
-                gameState = GAMEPLAY;
-            }
-            else if (buttonSelected == 5)
-            {
-                lists.map.loadFromFile("saves/maps/game/game4.bin");
-                timeCounter.start();
-                PlaySound(sounds.buttonSound);
-                gameState = GAMEPLAY;
-            }
-            else if (buttonSelected == 6)
-            {
-                lists.map.loadFromFile("saves/maps/game/game5.bin");
-                timeCounter.start();
-                PlaySound(sounds.buttonSound);
-                gameState = GAMEPLAY;
-            }
-            else if (buttonSelected == 7)
-            {
-                lists.map.loadFromFile("saves/maps/game/game6.bin");
-                timeCounter.start();
-                PlaySound(sounds.buttonSound);
-                gameState = GAMEPLAY;
-            }
-            else if (buttonSelected == 8)
-            {
-                lists.map.loadFromFile("saves/maps/game/game7.bin");
-                timeCounter.start();
-                PlaySound(sounds.buttonSound);
-                gameState = GAMEPLAY;
-            }
-            else if (buttonSelected == 9)
-            {
-                lists.map.loadFromFile("saves/maps/game/game8.bin");
-                timeCounter.start();
-                PlaySound(sounds.buttonSound);
-                gameState = GAMEPLAY;
-            }
-            else if (buttonSelected == 10)
-            {
-                lists.map.loadFromFile("saves/maps/game/game9.bin");
+                std::string path = {"saves/maps/game/game0.bin"};
+                path[20] = buttonSelected-1 + '0';
+                lists.map.loadFromFile(path.data());
                 timeCounter.start();
                 PlaySound(sounds.buttonSound);
                 gameState = GAMEPLAY;
@@ -285,100 +224,20 @@ void DataHolder::handleGameState()
     {
         if (inputs.isLeftPressed())
         {
-            if (buttonSelected == 1)
-            {
-                int a = lists.map.loadFromFile("saves/maps/custom/map0.bin");
-                if (a >= 0)
-                {
-                    PlaySound(sounds.buttonSound);
-                    gameState = GAMEPLAY;
-                }
-            }
-            else if (buttonSelected == 2)
-            {
-                int a = lists.map.loadFromFile("saves/maps/custom/map1.bin");
-                if (a >= 0)
-                {
-                    PlaySound(sounds.buttonSound);
-                    gameState = GAMEPLAY;
-                }
-            }
-            else if (buttonSelected == 3)
-            {
-                int a = lists.map.loadFromFile("saves/maps/custom/map2.bin");
-                if (a >= 0)
-                {
-                    PlaySound(sounds.buttonSound);
-                    gameState = GAMEPLAY;
-                }
-            }
-            else if (buttonSelected == 4)
-            {
-                int a = lists.map.loadFromFile("saves/maps/custom/map3.bin");
-                if (a >= 0)
-                {
-                    PlaySound(sounds.buttonSound);
-                    gameState = GAMEPLAY;
-                }
-            }
-            else if (buttonSelected == 5)
-            {
-                int a = lists.map.loadFromFile("saves/maps/custom/map4.bin");
-                if (a >= 0)
-                {
-                    PlaySound(sounds.buttonSound);
-                    gameState = GAMEPLAY;
-                }
-            }
-            else if (buttonSelected == 6)
-            {
-                int a = lists.map.loadFromFile("saves/maps/game/game5.bin");
-                if (a >= 0)
-                {
-                    PlaySound(sounds.buttonSound);
-                    gameState = GAMEPLAY;
-                }
-            }
-            else if (buttonSelected == 7)
-            {
-                int a = lists.map.loadFromFile("saves/maps/custom/map6.bin");
-                if (a >= 0)
-                {
-                    PlaySound(sounds.buttonSound);
-                    gameState = GAMEPLAY;
-                }
-            }
-            else if (buttonSelected == 8)
-            {
-                int a = lists.map.loadFromFile("saves/maps/custom/map7.bin");
-                if (a >= 0)
-                {
-                    PlaySound(sounds.buttonSound);
-                    gameState = GAMEPLAY;
-                }
-            }
-            else if (buttonSelected == 9)
-            {
-                int a = lists.map.loadFromFile("saves/maps/custom/map8.bin");
-                if (a >= 0)
-                {
-                    PlaySound(sounds.buttonSound);
-                    gameState = GAMEPLAY;
-                }
-            }
-            else if (buttonSelected == 10)
-            {
-                int a = lists.map.loadFromFile("saves/maps/custom/map9.bin");
-                if (a >= 0)
-                {
-                    PlaySound(sounds.buttonSound);
-                    gameState = GAMEPLAY;
-                }
-            }
-            else if (buttonSelected == 11)
+            if (buttonSelected == 11)
             {
                 PlaySound(sounds.buttonSound);
                 gameState = MENUMAP;
+            }
+            else
+            {
+                std::string path = {"saves/maps/custom/map0.bin"};
+                path[21] = buttonSelected-1 + '0';
+                if (lists.map.loadFromFile(path.data()) >= 0)
+                {
+                    PlaySound(sounds.buttonSound);
+                    gameState = GAMEPLAY;
+                }
             }
         }
     }

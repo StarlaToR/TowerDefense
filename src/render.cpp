@@ -144,7 +144,7 @@ void renderEditor(DataHolder& in)
     }
     DrawRectangleRounded(toRayLibRectangle(Vec2D(600,740),Vec2D(250,50)),0.2,10,LIGHTGRAY);
     DrawRectangleRoundedLines(toRayLibRectangle(Vec2D(600,740),Vec2D(250,50)),0.2,10,2,BLACK);
-    DrawText(TextFormat("Save slot: %d",in.saveSlot),610,755,30,BLACK);
+    DrawText(TextFormat("Save slot: %d",in.saveSlot+1),610,755,30,BLACK);
     if (drawButton("+", Vec2D(900, 740), Vec2D(50,50), in.mousePos))
     {
         in.buttonSelected = 5;
