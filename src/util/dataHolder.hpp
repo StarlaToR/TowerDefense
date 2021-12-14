@@ -14,6 +14,7 @@
 #include "gameUtil.hpp"
 #include "../tile/tileHolder.hpp"
 #include "../towers/towerHolder.hpp"
+#include "timeCounter.hpp"
 
 typedef enum GameState : int
 {
@@ -100,7 +101,7 @@ public:
     int buttonSelected = 0;
     int holderHovered = 0;
     int holderSelected = 0;
-    float timePlayed = 0.0f;
+    TimeCounter timeCounter;
     float masterVolume = 0.6f;
     int saveSlot = 0;
     RenderType tileRenderType = EXTENDED;

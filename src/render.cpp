@@ -53,6 +53,7 @@ void renderMain(DataHolder& in)
         break;
     }
     DrawText(TextFormat("Speed: x%d",in.gameSpeed),100,10,20,BLACK);
+    DrawText(TextFormat("Chrono: %d",in.timeCounter.getTime()),100,100,20,in.timeCounter.isRunning() ? GREEN : RED);
     DrawFPS(10, 10);
     EndDrawing();
 }
