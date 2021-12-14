@@ -14,3 +14,4 @@ void renderVictory(DataHolder& in);
 void renderCredit(DataHolder& in);
 void renderOption(DataHolder& in);
 void renderLoad(DataHolder& in);
+void renderMenuMap(DataHolder& in);

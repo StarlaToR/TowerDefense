@@ -73,10 +73,10 @@ void DataHolder::initDatas()
     sounds.introSong = LoadMusicStream("assets/sounds/introSong.ogg");
     fontButton = LoadFontEx("assets/font/ethnocentric.ttf", 100, 0, 0);
     fontTitle = LoadFontEx("assets/font/godofwar.ttf", 100, 0, 0);
+    lists.map.loadFromFile("saves/maps/game/default.bin");
     lists.map = TileMap();
     SetMusicVolume(sounds.musicTroll, 0.15f);
     selectedTower = nullptr;
-    lists.map.loadFromFile("saves/maps/game/default.bin");
     lists.tiles.registerTiles();
     SetMasterVolume(masterVolume);
 }
@@ -167,8 +167,7 @@ void DataHolder::handleGameState()
                 wave = 0;
                 money = 20;
                 tileRenderType = NORMAL;
-                lists.map.loadFromFile("saves/maps/game/game0.bin");
-                gameState = GAMEPLAY;
+                gameState = MENUMAP;
             }
             if (buttonSelected == 2)
             {
@@ -185,6 +184,77 @@ void DataHolder::handleGameState()
             {
                 PlaySound(sounds.buttonSound);
                 gameState = MENU;
+            }
+        }
+    }
+    else if (gameState == MENUMAP)
+    {
+        if (inputs.isLeftPressed())
+        {
+            if (buttonSelected == 1)
+            {
+                lists.map.loadFromFile("saves/maps/game/game0.bin");
+                PlaySound(sounds.buttonSound);
+                gameState = GAMEPLAY;
+            }
+            else if (buttonSelected == 2)
+            {
+                lists.map.loadFromFile("saves/maps/game/game1.bin");
+                PlaySound(sounds.buttonSound);
+                gameState = GAMEPLAY;
+            }
+            else if (buttonSelected == 3)
+            {
+                lists.map.loadFromFile("saves/maps/game/game2.bin");
+                PlaySound(sounds.buttonSound);
+                gameState = GAMEPLAY;
+            }
+            else if (buttonSelected == 4)
+            {
+                lists.map.loadFromFile("saves/maps/game/game3.bin");
+                PlaySound(sounds.buttonSound);
+                gameState = GAMEPLAY;
+            }
+            else if (buttonSelected == 5)
+            {
+                lists.map.loadFromFile("saves/maps/game/game4.bin");
+                PlaySound(sounds.buttonSound);
+                gameState = GAMEPLAY;
+            }
+            else if (buttonSelected == 6)
+            {
+                lists.map.loadFromFile("saves/maps/game/game5.bin");
+                PlaySound(sounds.buttonSound);
+                gameState = GAMEPLAY;
+            }
+            else if (buttonSelected == 7)
+            {
+                lists.map.loadFromFile("saves/maps/game/game6.bin");
+                PlaySound(sounds.buttonSound);
+                gameState = GAMEPLAY;
+            }
+            else if (buttonSelected == 8)
+            {
+                lists.map.loadFromFile("saves/maps/game/game7.bin");
+                PlaySound(sounds.buttonSound);
+                gameState = GAMEPLAY;
+            }
+            else if (buttonSelected == 9)
+            {
+                lists.map.loadFromFile("saves/maps/game/game8.bin");
+                PlaySound(sounds.buttonSound);
+                gameState = GAMEPLAY;
+            }
+            else if (buttonSelected == 10)
+            {
+                lists.map.loadFromFile("saves/maps/game/game9.bin");
+                PlaySound(sounds.buttonSound);
+                gameState = GAMEPLAY;
+            }
+            else if (buttonSelected == 11)
+            {
+                PlaySound(sounds.buttonSound);
+                gameState = MENUPLAY;
             }
         }
     }

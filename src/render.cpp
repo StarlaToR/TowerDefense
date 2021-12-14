@@ -28,6 +28,9 @@ void renderMain(DataHolder& in)
     case GAMEPLAY:
         renderGameplay(in);
         break;
+    case MENUMAP:
+        renderMenuMap(in);
+        break;
     case GAMEOVER:
         renderGameOver(in);
         break;
@@ -288,5 +291,57 @@ void renderLoad(DataHolder& in)
     if (drawButtonMenu(in, "Return", Vec2D(652, 780), Vec2D(650, 750),Vec2D(250,100), in.mousePos))
     {
         in.buttonSelected = 1;
+    }
+}
+
+void renderMenuMap(DataHolder& in)
+{
+    in.buttonSelected = 0;
+    float width = in.screenWidth;
+    float heigth = in.screenHeight;
+    DrawTexturePro(in.textures.background, Rectangle{in.framecounter/3.0f,0,1600,1000},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
+    if (drawButtonMenu(in, "Level 1", Vec2D(252,225), Vec2D(250, 200),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 1;
+    }
+    if (drawButtonMenu(in, "Level 2", Vec2D(652, 225), Vec2D(650, 200),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 2;
+    }
+    if (drawButtonMenu(in, "Level 3", Vec2D(1052, 225), Vec2D(1050, 200),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 3;
+    }
+    if (drawButtonMenu(in, "Level 4", Vec2D(252, 345), Vec2D(250, 320),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 4;
+    }
+    if (drawButtonMenu(in, "Level 5", Vec2D(652,345), Vec2D(650, 320),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 5;
+    }
+    if (drawButtonMenu(in, "Level 6", Vec2D(1052,345), Vec2D(1050,320 ),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 6;
+    }
+    if (drawButtonMenu(in, "Level 7", Vec2D(252, 465), Vec2D(250,440),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 7;
+    }
+    if (drawButtonMenu(in, "Level 8", Vec2D(652, 465), Vec2D(650,440 ),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 8;
+    }
+    if (drawButtonMenu(in, "Level 9", Vec2D(1052, 465), Vec2D(1050,440),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 9;
+    }
+    if (drawButtonMenu(in, "Level10", Vec2D(650, 585), Vec2D(650,560 ),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 10;
+    }
+    if (drawButtonMenu(in, "Return", Vec2D(652, 780), Vec2D(650, 750),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 11;
     }
 }
