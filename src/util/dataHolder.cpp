@@ -235,6 +235,7 @@ void DataHolder::handleGameState()
                 path[21] = buttonSelected-1 + '0';
                 if (lists.map.loadFromFile(path.data()) >= 0)
                 {
+                    timeCounter.start();
                     PlaySound(sounds.buttonSound);
                     gameState = GAMEPLAY;
                 }
