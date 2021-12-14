@@ -7,7 +7,7 @@ ClassicEnemy::ClassicEnemy(TileMap& t, int wave)
     level = wave/4+1;
     maxHealth = 10+10*level;
     health = maxHealth;
-    reward = 10*level;
+    reward = 2;
     speed = 1+level;
     damage = 2+level;
 

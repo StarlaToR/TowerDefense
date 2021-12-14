@@ -8,7 +8,7 @@ ExplosiveTower::ExplosiveTower(Vec2D pos)
     maxHealth = 150;
     attackSpeed = 75;
     attackCooldown = 0;
-    cost = 20;
+    cost = 50;
     position = pos + Vec2D(0.5f,0.5f);
     rotation = 0;
     angularVelocity = 0.07f;

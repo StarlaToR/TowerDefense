@@ -79,6 +79,6 @@ int TowerHolder::getCost()
 TowerHolders::TowerHolders()
 {
     holders[0] = TowerHolder(Vec2D(1300, 100), 0, 5);
-    holders[1] = TowerHolder(Vec2D(1300, 250), 1, 10);
-    holders[2] = TowerHolder(Vec2D(1300, 400), 2, 20);
+    holders[1] = TowerHolder(Vec2D(1300, 250), 1, 20);
+    holders[2] = TowerHolder(Vec2D(1300, 400), 2, 50);
 }

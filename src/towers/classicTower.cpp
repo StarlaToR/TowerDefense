@@ -3,7 +3,7 @@
 ClassicTower::ClassicTower(Vec2D pos)
 {
     position = pos+Vec2D(0.5f,0.5f);
-    damage = 2;
+    damage = 4;
     range = 3;
     health = 100;
     maxHealth = 100;

@@ -8,7 +8,7 @@ HealerEnemy::HealerEnemy(TileMap& t, int wave)
     slowTimer = 0;
     maxHealth = 20+20*level;
     health = maxHealth;
-    reward = 2+level*2;
+    reward = 3;
     speed = 2*level;
     damage = level;
     range = 2.0f+level;

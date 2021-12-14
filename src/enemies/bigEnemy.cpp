@@ -7,7 +7,7 @@ BigEnemy::BigEnemy(TileMap& t, int wave)
     slowTimer = 0;
     maxHealth = 20+30*level;
     health = maxHealth;
-    reward = 10+level*5;
+    reward = 5;
     speed = 1+level/2;
     damage = 5+level;
 

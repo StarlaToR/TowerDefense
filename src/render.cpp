@@ -89,7 +89,7 @@ void renderGameOver(DataHolder& in)
     DrawTexturePro(in.textures.title, Rectangle{0,0,500,500},Rectangle{450, 0,1000,450},Vector2{150,150}, 0, WHITE);
     DrawTexturePro(in.textures.board, Rectangle{0,0,720,900},Rectangle{680, 350,500,500},Vector2{150,150}, 0, WHITE);
     DrawTextEx(in.fontTitle, "Game Over", Vector2{560,27},70,4,BLACK);
-    DrawText(TextFormat("Wave : %d",in.wave),1080,680,30,BLACK);
+    DrawTextEx(in.fontButton, TextFormat("Wave : %d",in.wave),Vector2{680,300},40,0, BLACK);
     if (drawButtonMenu(in, "Return", Vec2D(652, 780), Vec2D(650, 750),Vec2D(250,100), in.mousePos))
     {
         in.buttonSelected = 1;
