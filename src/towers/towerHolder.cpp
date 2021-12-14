@@ -1,11 +1,12 @@
 #include "towerHolder.hpp"
 
-TowerHolder::TowerHolder(Vec2D pos, int type, int cos)
+TowerHolder::TowerHolder(Vec2D pos, int type, int cos, Sound* sound)
 {
     position = pos;
     towerType = type;
     isUsed = false;
     cost = cos;
+    towerSound = sound;
 }
 
 TowerHolder::TowerHolder(){};
@@ -36,11 +37,11 @@ void TowerHolder::update(std::forward_list<Tower*>& towers, TileMap& map, int& m
                 map.setTileWithTower(tilePos);
 
                 if(towerType == 0)
-                    towers.push_front(new ClassicTower(tilePos));
+                    towers.push_front(new ClassicTower(tilePos, towerSound));
                 if(towerType == 1)
-                    towers.push_front(new SlowingTower(tilePos));
+                    towers.push_front(new SlowingTower(tilePos, towerSound));
                 if(towerType == 2)
-                    towers.push_front(new ExplosiveTower(tilePos));
+                    towers.push_front(new ExplosiveTower(tilePos, towerSound));
                 map.setTileWithTower(tilePos);
                 money -= cost;
             }
@@ -76,9 +77,12 @@ int TowerHolder::getCost()
     return cost;
 }
 
-TowerHolders::TowerHolders()
+void TowerHolders::initTowers(Sound* classic, Sound* slow, Sound* explosive)
 {
-    holders[0] = TowerHolder(Vec2D(1300, 100), 0, 5);
-    holders[1] = TowerHolder(Vec2D(1300, 250), 1, 20);
-    holders[2] = TowerHolder(Vec2D(1300, 400), 2, 50);
+    classicTowerSound = classic;
+    slowTowerSound = slow;
+    explosiveTowerSound = explosive;
+    holders[0] = TowerHolder(Vec2D(1300, 100), 0, 5, classicTowerSound);
+    holders[1] = TowerHolder(Vec2D(1300, 250), 1, 20, slowTowerSound);
+    holders[2] = TowerHolder(Vec2D(1300, 400), 2, 50, explosiveTowerSound);
 }

@@ -1,6 +1,6 @@
 #include "classicTower.hpp"
 
-ClassicTower::ClassicTower(Vec2D pos)
+ClassicTower::ClassicTower(Vec2D pos, Sound* sound)
 {
     position = pos+Vec2D(0.5f,0.5f);
     damage = 4;
@@ -14,6 +14,7 @@ ClassicTower::ClassicTower(Vec2D pos)
     angularVelocity = 0.1f;
     level = 1;
     textureID = 121;
+    towerSound = sound;
 }
 
 int ClassicTower::getTexture()

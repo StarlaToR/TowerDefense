@@ -1,7 +1,7 @@
 #include "slowingTower.hpp"
 #include "../particles/laser.hpp"
 
-SlowingTower::SlowingTower(Vec2D pos)
+SlowingTower::SlowingTower(Vec2D pos, Sound* sound)
 {
     damage = 3;
     range = 5;
@@ -16,6 +16,7 @@ SlowingTower::SlowingTower(Vec2D pos)
     level = 1;
     slowingTime = 120;
     textureID = 55;
+    towerSound = sound;
 }
 
 

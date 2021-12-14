@@ -1,6 +1,6 @@
 #include "explosiveTower.hpp"
 
-ExplosiveTower::ExplosiveTower(Vec2D pos)
+ExplosiveTower::ExplosiveTower(Vec2D pos, Sound* sound)
 {
     damage = 25;
     range = 4;
@@ -15,6 +15,7 @@ ExplosiveTower::ExplosiveTower(Vec2D pos)
     missilesUsed = 0;
     level = 1;
     textureID = 99;
+    towerSound = sound;
 }
 
 void ExplosiveTower::attack(Enemy* e, std::forward_list<Missile*>& missiles, std::forward_list<Particle*>& particles)

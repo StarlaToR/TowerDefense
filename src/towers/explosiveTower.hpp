@@ -7,9 +7,9 @@ class ExplosiveTower : public Tower
 private:
     int missilesUsed;
 public:
-    ExplosiveTower(Vec2D pos);
+    ExplosiveTower(Vec2D pos, Sound* );
 
-    ExplosiveTower():ExplosiveTower(Vec2D(0,0)){}
+    ExplosiveTower():ExplosiveTower(Vec2D(0,0), nullptr){}
 
     void upgrade();
     void attack(Enemy* e, std::forward_list<Missile*>& missiles, std::forward_list<Particle*>& particles) override;

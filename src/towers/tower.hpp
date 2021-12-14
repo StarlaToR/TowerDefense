@@ -8,11 +8,12 @@
 class Tower: public Entity
 {
 protected:
-    int range;
-    int cost;
-    int attackCooldown;
-    float angularVelocity;
-    int textureID;
+    int range = 0;
+    int cost = 0;
+    int attackCooldown = 0;
+    float angularVelocity = 0;
+    int textureID = 0;
+    Sound* towerSound = nullptr;
 
 public:
     void update(std::list<Enemy*>& enemyIn, std::forward_list<Missile*>& missiles, std::forward_list<Particle*>& particles);

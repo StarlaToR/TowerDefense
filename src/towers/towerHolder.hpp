@@ -10,10 +10,11 @@ private:
     int towerType;
     Vec2D position;
     int cost;
+    Sound* towerSound;
 
 public:
     bool isUsed;
-    TowerHolder(Vec2D pos,int type, int cos);
+    TowerHolder(Vec2D pos,int type, int cos, Sound* sound);
     TowerHolder();
     ~TowerHolder();
 
@@ -25,8 +26,13 @@ public:
 
 class TowerHolders
 {
+    private:
+        Sound* slowTowerSound = nullptr;
+        Sound* classicTowerSound = nullptr;
+        Sound* explosiveTowerSound = nullptr;
 
     public:
         TowerHolder holders[3];
-        TowerHolders();
+        TowerHolders() {}
+        void initTowers(Sound* classic, Sound* slow, Sound* explosive);
 };
