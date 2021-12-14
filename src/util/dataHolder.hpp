@@ -110,7 +110,7 @@ public:
     int wave;
     Tower* selectedTower =nullptr;
     int gameSpeed = 1;
-
+    bool onPause;
     int money = 20;
     int life;
 
