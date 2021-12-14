@@ -218,7 +218,7 @@ void renderPlay(DataHolder& in)
     DrawTexturePro(in.textures.title, Rectangle{0,0,500,500},Rectangle{450, 0,1000,450},Vector2{150,150}, 0, WHITE);
     DrawTextEx(in.fontTitle, "Play", Vector2{660,0},100,4,BLACK);
     
-    if (drawButtonMenu(in, "New", Vec2D(710,265), Vec2D(650, 220),Vec2D(250,140), in.mousePos))
+    if (drawButtonMenu(in, "New", Vec2D(710,285), Vec2D(650, 240),Vec2D(250,140), in.mousePos))
     {
         in.buttonSelected = 1;
     }
@@ -300,6 +300,8 @@ void renderMenuMap(DataHolder& in)
     float width = in.screenWidth;
     float heigth = in.screenHeight;
     DrawTexturePro(in.textures.background, Rectangle{in.framecounter/3.0f,0,1600,1000},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
+    DrawTexturePro(in.textures.title, Rectangle{0,0,500,500},Rectangle{450, 0,1000,450},Vector2{150,150}, 0, WHITE);
+    DrawTextEx(in.fontTitle, "Choose a map", Vector2{440,10},90,4,BLACK);
     if (drawButtonMenu(in, "Level 1", Vec2D(252,225), Vec2D(250, 200),Vec2D(250,100), in.mousePos))
     {
         in.buttonSelected = 1;
