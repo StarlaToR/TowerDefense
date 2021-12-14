@@ -12,7 +12,7 @@ public:
     ExplosiveTower():ExplosiveTower(Vec2D(0,0), nullptr){}
 
     void upgrade();
-    void attack(Enemy* e, std::forward_list<Missile*>& missiles, std::forward_list<Particle*>& particles) override;
+    bool attack(Enemy* e, std::forward_list<Missile*>& missiles, std::forward_list<Particle*>& particles) override;
     int getTexture();
     const char* getName() override {return "Rocket Launcher tower";}
 };

@@ -28,8 +28,7 @@ void Tower::update(std::list<Enemy*>& enemyIn, std::forward_list<Missile*>& miss
         rotation = mod(rotation - dec, -PI, PI);
         if (attackCooldown <= 0 && ang == dec)
         {
-            attack(target, missiles, particles);
-            if (towerSound != nullptr) PlaySound(*towerSound);
+            if (attack(target, missiles, particles) && towerSound != nullptr) PlaySound(*towerSound);
         }
     }
 

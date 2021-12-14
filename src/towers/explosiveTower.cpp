@@ -18,7 +18,7 @@ ExplosiveTower::ExplosiveTower(Vec2D pos, Sound* sound)
     towerSound = sound;
 }
 
-void ExplosiveTower::attack(Enemy* e, std::forward_list<Missile*>& missiles, std::forward_list<Particle*>& particles)
+bool ExplosiveTower::attack(Enemy* e, std::forward_list<Missile*>& missiles, std::forward_list<Particle*>& particles)
 {
     
     attackCooldown = attackSpeed;
@@ -26,16 +26,28 @@ void ExplosiveTower::attack(Enemy* e, std::forward_list<Missile*>& missiles, std
     if (level < 4)
     {
         if (missilesUsed > 4)
+        {
             missilesUsed = 0;
+            return false;
+        }
         else
+        {
             missiles.push_front(new Missile(e->getPosition(), getPosition()+Vec2D(cosf(rotation)*0.5f,sinf(rotation)*0.5f), rotation, damage, getColor()));
+            return true;
+        }
     }
     else
     {
         if (missilesUsed > 6)
+        {
             missilesUsed = 0;
+            return false;
+        }
         else
+        {
             missiles.push_front(new Missile(e->getPosition(), getPosition()+Vec2D(cosf(rotation)*0.5f,sinf(rotation)*0.5f), rotation, damage, getColor()));
+            return true;
+        }
     }
 }
 

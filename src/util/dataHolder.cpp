@@ -50,6 +50,9 @@ void DataHolder::unloadDatas()
     UnloadFont(fontButton);
     UnloadFont(fontTitle);
     UnloadSound(sounds.buttonSound);
+    UnloadSound(sounds.classicTowerSound);
+    UnloadSound(sounds.slowTowerSound);
+    UnloadSound(sounds.explosiveTowerSound);
     UnloadMusicStream(sounds.musicTroll);
     UnloadMusicStream(sounds.introSong);
     UnloadMusicStream(sounds.gameplayMusic);
@@ -76,13 +79,13 @@ void DataHolder::initDatas()
     sounds.explosiveTowerSound = LoadSound("assets/sounds/explosiveTower.ogg");
     fontButton = LoadFontEx("assets/font/ethnocentric.ttf", 100, 0, 0);
     fontTitle = LoadFontEx("assets/font/godofwar.ttf", 100, 0, 0);
-    lists.map.loadFromFile("saves/maps/game/default.bin");
     lists.map = TileMap();
     SetMusicVolume(sounds.musicTroll, 0.15f);
     selectedTower = nullptr;
     lists.tiles.registerTiles();
     SetMasterVolume(masterVolume);
     lists.towerHolders.initTowers(&sounds.classicTowerSound, &sounds.slowTowerSound, &sounds.explosiveTowerSound);
+    timeCounter = TimeCounter();
 }
 
 void DataHolder::handleGameState()
@@ -181,6 +184,7 @@ void DataHolder::handleGameState()
             else if (buttonSelected == 3)
             {
                 PlaySound(sounds.buttonSound);
+                lists.map.loadFromFile("saves/maps/game/default.bin");
                 tileRenderType = EXTENDED;
                 gameState = EDITOR;
             }
@@ -198,60 +202,70 @@ void DataHolder::handleGameState()
             if (buttonSelected == 1)
             {
                 lists.map.loadFromFile("saves/maps/game/game0.bin");
+                timeCounter.start();
                 PlaySound(sounds.buttonSound);
                 gameState = GAMEPLAY;
             }
             else if (buttonSelected == 2)
             {
                 lists.map.loadFromFile("saves/maps/game/game1.bin");
+                timeCounter.start();
                 PlaySound(sounds.buttonSound);
                 gameState = GAMEPLAY;
             }
             else if (buttonSelected == 3)
             {
                 lists.map.loadFromFile("saves/maps/game/game2.bin");
+                timeCounter.start();
                 PlaySound(sounds.buttonSound);
                 gameState = GAMEPLAY;
             }
             else if (buttonSelected == 4)
             {
                 lists.map.loadFromFile("saves/maps/game/game3.bin");
+                timeCounter.start();
                 PlaySound(sounds.buttonSound);
                 gameState = GAMEPLAY;
             }
             else if (buttonSelected == 5)
             {
                 lists.map.loadFromFile("saves/maps/game/game4.bin");
+                timeCounter.start();
                 PlaySound(sounds.buttonSound);
                 gameState = GAMEPLAY;
             }
             else if (buttonSelected == 6)
             {
                 lists.map.loadFromFile("saves/maps/game/game5.bin");
+                timeCounter.start();
                 PlaySound(sounds.buttonSound);
                 gameState = GAMEPLAY;
             }
             else if (buttonSelected == 7)
             {
                 lists.map.loadFromFile("saves/maps/game/game6.bin");
+                timeCounter.start();
                 PlaySound(sounds.buttonSound);
                 gameState = GAMEPLAY;
             }
             else if (buttonSelected == 8)
             {
                 lists.map.loadFromFile("saves/maps/game/game7.bin");
+                timeCounter.start();
                 PlaySound(sounds.buttonSound);
                 gameState = GAMEPLAY;
             }
             else if (buttonSelected == 9)
             {
                 lists.map.loadFromFile("saves/maps/game/game8.bin");
+                timeCounter.start();
                 PlaySound(sounds.buttonSound);
                 gameState = GAMEPLAY;
             }
             else if (buttonSelected == 10)
             {
                 lists.map.loadFromFile("saves/maps/game/game9.bin");
+                timeCounter.start();
                 PlaySound(sounds.buttonSound);
                 gameState = GAMEPLAY;
             }
