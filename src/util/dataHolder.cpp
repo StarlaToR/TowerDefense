@@ -163,7 +163,7 @@ void DataHolder::handleGameState()
             if (buttonSelected == 1)
             {
                 PlaySound(sounds.buttonSound);
-                life = 100;
+                life = 20;
                 wave = 0;
                 money = 20;
                 tileRenderType = NORMAL;
@@ -356,23 +356,8 @@ void DataHolder::handleGameState()
             for (int i = 0; i < (MAP_HEIGHT*MAP_WIDTH); i++) lists.map.tilesWithTower[i] = false;
             selectedTower = nullptr;
             gameSpeed = 1;
-            if (buttonSelected == 1)
-            {
-
-                for (std::list<Enemy *>::iterator i = lists.enemies.begin(); i != lists.enemies.end(); i++)
-                    delete *i;
-                for (std::forward_list<Tower *>::iterator i = lists.towers.begin(); i != lists.towers.end(); i++)
-                    delete *i;
-                for (std::forward_list<Missile *>::iterator i = lists.missiles.begin(); i != lists.missiles.end(); i++)
-                    delete *i;
-                lists.enemies.clear();
-                lists.towers.clear();
-                lists.missiles.clear();
-                lists.buffer.clear();
-                gameSpeed = 1;
-                PlaySound(sounds.buttonSound);
-                gameState = MENU;
-            }
+            PlaySound(sounds.buttonSound);
+            gameState = MENU;
         }
     }
     else if (gameState == EDITOR)

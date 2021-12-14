@@ -162,7 +162,7 @@ void renderGameplay(DataHolder& in)
     DrawText(TextFormat("Wave : %d",in.wave),1080,680,30,BLACK);
     DrawRectangleRec(toRayLibRectangle(Vec2D(50,750),Vec2D(1156,74)),BLACK);
     DrawRectangleRec(toRayLibRectangle(Vec2D(52,752),Vec2D(1152,70)),RED);
-    DrawRectangleRec(toRayLibRectangle(Vec2D(52,752),Vec2D(11.52*in.life,70)),GREEN);
+    DrawRectangleRec(toRayLibRectangle(Vec2D(52,752),Vec2D(57.6 * in.life,70)),GREEN);
     for (int i = 0; i < 3; i++)
     {
         TowerHolder* tmpHolder = &in.lists.towerHolders.holders[i];
