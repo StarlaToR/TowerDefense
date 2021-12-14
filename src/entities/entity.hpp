@@ -6,7 +6,6 @@ class Entity : public Object
 protected:
     int health;
     int maxHealth;
-    int damage;
     int attackSpeed;
     int level;
 public:
