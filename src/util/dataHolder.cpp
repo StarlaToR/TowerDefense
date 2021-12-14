@@ -406,6 +406,7 @@ void DataHolder::handleGameState()
             gameSpeed = 1;
 
             PlaySound(sounds.buttonSound);
+            StopMusicStream(sounds.gameplayMusic);
             gameState = MENU;
             }
         }

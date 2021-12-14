@@ -9,7 +9,7 @@ SlowingTower::SlowingTower(Vec2D pos)
     maxHealth = 100;
     attackSpeed = 60;
     attackCooldown = 0;
-    cost = 10;
+    cost = 20;
     position = pos+Vec2D(0.5f,0.5f);
     rotation = 0;
     angularVelocity = 0.07f;

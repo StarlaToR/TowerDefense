@@ -92,7 +92,9 @@ void renderGameOver(DataHolder& in)
     DrawTexturePro(in.textures.title, Rectangle{0,0,500,500},Rectangle{450, 0,1000,450},Vector2{150,150}, 0, WHITE);
     DrawTexturePro(in.textures.board, Rectangle{0,0,720,900},Rectangle{680, 350,500,500},Vector2{150,150}, 0, WHITE);
     DrawTextEx(in.fontTitle, "Game Over", Vector2{560,27},70,4,BLACK);
-    DrawTextEx(in.fontButton, TextFormat("Wave : %d",in.wave),Vector2{680,300},40,0, BLACK);
+    DrawTextEx(in.fontButton, TextFormat("Wave : %d",in.wave),Vector2{650,450},40,0, BLACK);
+    DrawTextEx(in.fontButton, "You noob,",Vector2{650,300},40,0, BLACK);
+    DrawTextEx(in.fontButton, "Try again",Vector2{650,350},40,0, BLACK);
     if (drawButtonMenu(in, "Return", Vec2D(652, 780), Vec2D(650, 750),Vec2D(250,100), in.mousePos))
     {
         in.buttonSelected = 1;
@@ -102,7 +104,17 @@ void renderGameOver(DataHolder& in)
 
 void renderVictory(DataHolder& in)
 {
-    DrawTextEx(in.fontTitle, "Victory", Vector2{480,27},70,4,BLACK);
+    float width = in.screenWidth;
+    float heigth = in.screenHeight;
+    DrawTexturePro(in.textures.background, Rectangle{(float)(in.framecounter/3.0f),0,1600,1000},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
+    DrawTexturePro(in.textures.title, Rectangle{0,0,500,500},Rectangle{450, 0,1000,450},Vector2{150,150}, 0, WHITE);
+    DrawTexturePro(in.textures.board, Rectangle{0,0,720,900},Rectangle{680, 350,500,500},Vector2{150,150}, 0, WHITE);
+    DrawTextEx(in.fontTitle, "Victory", Vector2{560,27},70,4,BLACK);
+    DrawTextEx(in.fontButton, TextFormat("Wave : %d",in.wave-1),Vector2{650,450},40,0, BLACK);
+    if (drawButtonMenu(in, "Return", Vec2D(652, 780), Vec2D(650, 750),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 1;
+    }
 }
 
 void renderEditor(DataHolder& in)
