@@ -52,6 +52,9 @@ struct SoundHolder
     Music musicTroll;
     Music gameplayMusic;
     Music introSong;
+    Sound classicTowerSound;
+    Sound slowTowerSound;
+    Sound explosiveTowerSound;
 };
 
 struct ListHolder

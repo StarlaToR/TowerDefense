@@ -71,6 +71,9 @@ void DataHolder::initDatas()
     sounds.musicTroll = LoadMusicStream("assets/sounds/ouioui.ogg");
     sounds.gameplayMusic = LoadMusicStream("assets/sounds/gameplayMusic.ogg");
     sounds.introSong = LoadMusicStream("assets/sounds/introSong.ogg");
+    sounds.classicTowerSound = LoadSound("assets/sounds/classicTower.ogg");
+    sounds.slowTowerSound = LoadSound("assets/sounds/slowTower.ogg");
+    sounds.explosiveTowerSound = LoadSound("assets/sounds/explosiveTower.ogg");
     fontButton = LoadFontEx("assets/font/ethnocentric.ttf", 100, 0, 0);
     fontTitle = LoadFontEx("assets/font/godofwar.ttf", 100, 0, 0);
     lists.map.loadFromFile("saves/maps/game/default.bin");
@@ -79,6 +82,7 @@ void DataHolder::initDatas()
     selectedTower = nullptr;
     lists.tiles.registerTiles();
     SetMasterVolume(masterVolume);
+    lists.towerHolders.initTowers(&sounds.classicTowerSound, &sounds.slowTowerSound, &sounds.explosiveTowerSound);
 }
 
 void DataHolder::handleGameState()
