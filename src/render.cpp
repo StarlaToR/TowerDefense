@@ -31,6 +31,9 @@ void renderMain(DataHolder& in)
     case MENUMAP:
         renderMenuMap(in);
         break;
+    case MENUMAPCUSTOM:
+        renderMenuMapCustom(in);
+        break;
     case GAMEOVER:
         renderGameOver(in);
         break;
@@ -351,6 +354,64 @@ void renderMenuMap(DataHolder& in)
         in.buttonSelected = 9;
     }
     if (drawButtonMenu(in, "Level10", Vec2D(650, 585), Vec2D(650,560 ),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 10;
+    }
+    if (drawButtonMenu(in, "Return", Vec2D(652, 780), Vec2D(650, 750),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 11;
+    }
+    if (drawButtonMenu(in, "Custom", Vec2D(1052, 780), Vec2D(1050, 750),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 12;
+    }
+}
+
+void renderMenuMapCustom(DataHolder& in)
+{
+    in.buttonSelected = 0;
+    float width = in.screenWidth;
+    float heigth = in.screenHeight;
+    DrawTexturePro(in.textures.background, Rectangle{in.framecounter/3.0f,0,1600,1000},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
+    DrawTexturePro(in.textures.title, Rectangle{0,0,500,500},Rectangle{450, 0,1000,450},Vector2{150,150}, 0, WHITE);
+    DrawTextEx(in.fontTitle, "Choose a map", Vector2{440,10},90,4,BLACK);
+    if (drawButtonMenu(in, "Map 1", Vec2D(270,225), Vec2D(250, 200),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 1;
+    }
+    if (drawButtonMenu(in, "Map 2", Vec2D(670, 225), Vec2D(650, 200),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 2;
+    }
+    if (drawButtonMenu(in, "Map 3", Vec2D(1070, 225), Vec2D(1050, 200),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 3;
+    }
+    if (drawButtonMenu(in, "Map 4", Vec2D(270, 345), Vec2D(250, 320),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 4;
+    }
+    if (drawButtonMenu(in, "Map 5", Vec2D(670,345), Vec2D(650, 320),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 5;
+    }
+    if (drawButtonMenu(in, "Map 6", Vec2D(1070,345), Vec2D(1050,320 ),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 6;
+    }
+    if (drawButtonMenu(in, "Map 7", Vec2D(270, 465), Vec2D(250,440),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 7;
+    }
+    if (drawButtonMenu(in, "Map 8", Vec2D(670, 465), Vec2D(650,440 ),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 8;
+    }
+    if (drawButtonMenu(in, "Map 9", Vec2D(1070, 465), Vec2D(1050,440),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 9;
+    }
+    if (drawButtonMenu(in, "Map 10", Vec2D(670, 585), Vec2D(650,560 ),Vec2D(250,100), in.mousePos))
     {
         in.buttonSelected = 10;
     }

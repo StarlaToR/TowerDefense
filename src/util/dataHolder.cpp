@@ -260,6 +260,112 @@ void DataHolder::handleGameState()
                 PlaySound(sounds.buttonSound);
                 gameState = MENUPLAY;
             }
+            else if (buttonSelected == 12)
+            {
+                PlaySound(sounds.buttonSound);
+                gameState = MENUMAPCUSTOM;
+            }
+        }
+    }
+    else if (gameState == MENUMAPCUSTOM)
+    {
+        if (inputs.isLeftPressed())
+        {
+            if (buttonSelected == 1)
+            {
+                int a = lists.map.loadFromFile("saves/maps/custom/map0.bin");
+                if (a >= 0)
+                {
+                    PlaySound(sounds.buttonSound);
+                    gameState = GAMEPLAY;
+                }
+            }
+            else if (buttonSelected == 2)
+            {
+                int a = lists.map.loadFromFile("saves/maps/custom/map1.bin");
+                if (a >= 0)
+                {
+                    PlaySound(sounds.buttonSound);
+                    gameState = GAMEPLAY;
+                }
+            }
+            else if (buttonSelected == 3)
+            {
+                int a = lists.map.loadFromFile("saves/maps/custom/map2.bin");
+                if (a >= 0)
+                {
+                    PlaySound(sounds.buttonSound);
+                    gameState = GAMEPLAY;
+                }
+            }
+            else if (buttonSelected == 4)
+            {
+                int a = lists.map.loadFromFile("saves/maps/custom/map3.bin");
+                if (a >= 0)
+                {
+                    PlaySound(sounds.buttonSound);
+                    gameState = GAMEPLAY;
+                }
+            }
+            else if (buttonSelected == 5)
+            {
+                int a = lists.map.loadFromFile("saves/maps/custom/map4.bin");
+                if (a >= 0)
+                {
+                    PlaySound(sounds.buttonSound);
+                    gameState = GAMEPLAY;
+                }
+            }
+            else if (buttonSelected == 6)
+            {
+                int a = lists.map.loadFromFile("saves/maps/game/game5.bin");
+                if (a >= 0)
+                {
+                    PlaySound(sounds.buttonSound);
+                    gameState = GAMEPLAY;
+                }
+            }
+            else if (buttonSelected == 7)
+            {
+                int a = lists.map.loadFromFile("saves/maps/custom/map6.bin");
+                if (a >= 0)
+                {
+                    PlaySound(sounds.buttonSound);
+                    gameState = GAMEPLAY;
+                }
+            }
+            else if (buttonSelected == 8)
+            {
+                int a = lists.map.loadFromFile("saves/maps/custom/map7.bin");
+                if (a >= 0)
+                {
+                    PlaySound(sounds.buttonSound);
+                    gameState = GAMEPLAY;
+                }
+            }
+            else if (buttonSelected == 9)
+            {
+                int a = lists.map.loadFromFile("saves/maps/custom/map8.bin");
+                if (a >= 0)
+                {
+                    PlaySound(sounds.buttonSound);
+                    gameState = GAMEPLAY;
+                }
+            }
+            else if (buttonSelected == 10)
+            {
+                int a = lists.map.loadFromFile("saves/maps/custom/map9.bin");
+                if (a >= 0)
+                {
+                    PlaySound(sounds.buttonSound);
+                    gameState = GAMEPLAY;
+                }
+            }
+            else if (buttonSelected == 11)
+            {
+                PlaySound(sounds.buttonSound);
+                gameState = MENUMAP;
+            }
         }
     }
     else if (gameState == OPTION)

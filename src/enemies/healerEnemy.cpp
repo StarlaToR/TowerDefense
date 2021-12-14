@@ -9,10 +9,10 @@ HealerEnemy::HealerEnemy(TileMap& t, int wave)
     maxHealth = 20+20*level;
     health = maxHealth;
     reward = 3;
-    speed = 2*level;
+    speed = 1.5*level;
     damage = level;
     range = 2.0f+level;
-    healing = level*2;
+    healing = level;
     healingCooldown = 0;
 
     currentTile = Vec2D((int)t.startPos.x,(int)t.startPos.y);

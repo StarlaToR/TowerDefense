@@ -21,6 +21,7 @@ typedef enum GameState : int
     MENU,
     MENUPLAY,
     MENUMAP,
+    MENUMAPCUSTOM,
     GAMEPLAY,
     GAMEOVER,
     VICTORY,
