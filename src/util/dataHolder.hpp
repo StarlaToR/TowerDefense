@@ -47,6 +47,7 @@ struct TextureHolder
     Texture2D logoIsart;
     Texture2D gameUI;
     Texture2D board;
+    Texture2D optionButton;
 };
 
 struct SoundHolder
@@ -104,6 +105,7 @@ public:
     int holderSelected = 0;
     TimeCounter timeCounter;
     float masterVolume = 0.6f;
+    float effectVolume = 0.5f;
     int saveSlot = 0;
     RenderType tileRenderType = EXTENDED;
     Vec2D dragPos = Vec2D(-1,-1);

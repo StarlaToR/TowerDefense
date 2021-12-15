@@ -308,14 +308,19 @@ void renderOption(DataHolder& in)
     {
         in.buttonSelected = 1;
     }
-    DrawRectangleRounded(toRayLibRectangle(Vec2D(400,550),Vec2D(450,50)),0.2,10,LIGHTGRAY);
-    DrawRectangleRoundedLines(toRayLibRectangle(Vec2D(400,550),Vec2D(450,50)),0.2,10,2,BLACK);
-    DrawText(TextFormat("Master Volume: %.2f",in.masterVolume),410,557,40,GRAY);
-    if (drawButton("+", Vec2D(950, 550), Vec2D(50,50), in.mousePos))
+    DrawTexturePro(in.textures.optionButton, Rectangle{0,0,540,160},Rectangle{400, 300,500,100},Vector2{0,0}, 0, WHITE);
+    DrawTexturePro(in.textures.optionButton, Rectangle{0,0,540,160},Rectangle{400, 300,500,100},Vector2{0,0}, 0, WHITE);
+    DrawTexturePro(in.textures.optionButton, Rectangle{0,0,540,160},Rectangle{400, 300,500,100},Vector2{0,0}, 0, WHITE);
+    DrawTexturePro(in.textures.optionButton, Rectangle{0,0,540,160},Rectangle{400, 300,500,100},Vector2{0,0}, 0, WHITE);
+    DrawTextEx(in.fontTitle, TextFormat("Master Volume: %.2f",in.masterVolume), Vector2{420,320},40,0,WHITE);
+    DrawTextEx(in.fontTitle, TextFormat("Classic Tower Volume:\n %.2f",in.masterVolume), Vector2{420,420},40,0,WHITE);
+    DrawTextEx(in.fontTitle, TextFormat("Slowing Tower Volume:\n %.2f",in.masterVolume), Vector2{420,520},40,0,WHITE);
+    DrawTextEx(in.fontTitle, TextFormat("Explosif Tower Volume:\n %.2f",in.masterVolume), Vector2{420,620},40,0,WHITE);
+    if (drawButtonMenu(in, "+",Vec2D(955, 315), Vec2D(950, 315), Vec2D(50,50), in.mousePos))
     {
         in.buttonSelected = 2;
     }
-    if (drawButton("-", Vec2D(1050, 550), Vec2D(50,50), in.mousePos))
+    if (drawButtonMenu(in, "-", Vec2D(1058, 315), Vec2D(1050, 315), Vec2D(50,50), in.mousePos))
     {
         in.buttonSelected = 3;
     }
