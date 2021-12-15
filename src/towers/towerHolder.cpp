@@ -1,12 +1,13 @@
 #include "towerHolder.hpp"
 
-TowerHolder::TowerHolder(Vec2D pos, int type, int cos, Sound* sound)
+TowerHolder::TowerHolder(Vec2D pos, int type, int cos, Sound* sound, float towerRange)
 {
     position = pos;
     towerType = type;
     isUsed = false;
     cost = cos;
     towerSound = sound;
+    range = towerRange;
 }
 
 TowerHolder::TowerHolder(){};
@@ -82,7 +83,7 @@ void TowerHolders::initTowers(Sound* classic, Sound* slow, Sound* explosive)
     classicTowerSound = classic;
     slowTowerSound = slow;
     explosiveTowerSound = explosive;
-    holders[0] = TowerHolder(Vec2D(1300, 100), 0, 5, classicTowerSound);
-    holders[1] = TowerHolder(Vec2D(1300, 250), 1, 20, slowTowerSound);
-    holders[2] = TowerHolder(Vec2D(1300, 400), 2, 50, explosiveTowerSound);
+    holders[0] = TowerHolder(Vec2D(1300, 100), 0, 5, classicTowerSound, 3.0f);
+    holders[1] = TowerHolder(Vec2D(1300, 250), 1, 20, slowTowerSound, 5.0f);
+    holders[2] = TowerHolder(Vec2D(1300, 400), 2, 50, explosiveTowerSound, 4.0f);
 }

@@ -6,10 +6,10 @@ HealerEnemy::HealerEnemy(TileMap& t, int wave)
     position = t.startPos + Vec2D(0.5f,0.5f);
     level = wave/4+1;
     slowTimer = 0;
-    maxHealth = 20+20*level;
+    maxHealth = 20+10*level;
     health = maxHealth;
     reward = 3;
-    speed = 1.5*level;
+    speed = level+1;
     damage = level;
     range = 2.0f+level;
     healing = level;

@@ -209,6 +209,7 @@ void renderGameplay(DataHolder& in)
             {
                 bool valid = (in.mousePos.x > 50 && in.mousePos.y > 50 && in.mousePos.x < 1202 && in.mousePos.y < 626 && !in.lists.map.isRoad(in.lists.map.getTileAt(mTilePos))
                  && in.lists.map.getTileAt(mTilePos,true) == UNDEFINED && !in.lists.map.isTileWithTower(mTilePos));
+                DrawCircleV(in.mousePos, tmpHolder->getRange()*48*in.cameraScale,Fade(valid ? GREEN : RED,0.3f));
                 DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(tmpHolder->getTexture()),toRayLibRectangle(in.mousePos,Vec2D(80,80)),Vec2D(40,40),0,Fade(valid ? GREEN : RED,0.6f));
             }
         }

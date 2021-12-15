@@ -107,6 +107,7 @@ public:
     float masterVolume = 0.6f;
     float effectVolume = 0.5f;
     int saveSlot = 0;
+    char maxLevel = 0;
     RenderType tileRenderType = EXTENDED;
     Vec2D dragPos = Vec2D(-1,-1);
     Vec2D cameraPos = Vec2D();

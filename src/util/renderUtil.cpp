@@ -155,6 +155,7 @@ void drawMapElements(DataHolder& in, bool editor)
         }
     }
     EndMode2D();
+    //DrawRectangleRec(toRayLibRectangle(Vec2D(50,50),Vec2D(1202.0f,626.0f)),GetColor(0x000014c0));
     DrawTexture(in.textures.gameUI,0,0,WHITE);
 }
 

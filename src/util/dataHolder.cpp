@@ -428,14 +428,12 @@ void DataHolder::handleGameState()
             }
             if (life <= 0)
             {
-                gameState = GAMEOVER;
-            }
-            if (IsKeyPressed(KEY_P))
-            {
+                timeCounter.stop();
                 gameState = GAMEOVER;
             }
             if(wave >= 26)
             {
+                timeCounter.stop();
                 gameState = VICTORY;
             }
         }
