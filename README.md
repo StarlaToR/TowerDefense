@@ -111,9 +111,11 @@ The selected element will surrounded by red anf you just have to *left-click* wh
 
 >You cannot place Decoration on Road element and if you place Road element on Decoration, it will **erase** it.
 
-Place the road has a special functioning : you must *maintain the click* and draw the road that you want. To erase it, this is the same.
+Place the road has a special **functioning** : you must *maintain the click* and draw the road that you want. To **erase** it, this is the same.
 
-For the Decoration, if you *right-click* on it, it will **change** its **style**.
+*Right-click* on a cross-road will change its **style** and **functioning**. 
+
+For the Decoration, *right-click* on it will **change** its **style**.
 
 # Sources
 
