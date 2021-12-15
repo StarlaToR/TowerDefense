@@ -290,83 +290,109 @@ void DataHolder::handleGameState()
     }
     else if (gameState == GAMEPLAY)
     {
-        PlayMusicStream(sounds.gameplayMusic);
-        int tmp = 0;
-        if (gameSpeed == 0 && IsKeyPressed(KEY_UP))
-            tmp = -1;
-        while (tmp < gameSpeed)
+        if (!onPause)
         {
-            handleEnemiesBuffer(lists.map, lists.enemies, lists.buffer, wave);
-            selectedTower = handleTowers(lists.towers, lists.enemies, lists.missiles, lists.particles, selectedTower, cameraPos, cameraScale); 
-            handleMissiles(lists.missiles, lists.enemies, lists.particles);
-            handleEnemies(lists.map, money, lists.enemies, lists.particles, life);
-            handleParticles(lists.particles);
-            tmp++;
-        }
-        if (IsMouseButtonDown(MOUSE_BUTTON_MIDDLE) || IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
-        {
-            cameraPos = cameraPos - Vec2D(GetMouseDelta().x, GetMouseDelta().y) / cameraScale;
-        }
-        if (GetMouseWheelMove() > 0.1 && cameraScale < 3)
-        {
-            cameraScale++;
-            cameraPos = cameraPos + Vec2D(300, 160) / (cameraScale == 2 ? 1 : 3);
-        }
-        if (GetMouseWheelMove() < -0.1 && cameraScale > 1)
-        {
-            cameraScale--;
-            cameraPos = cameraPos - Vec2D(300, 160) / (cameraScale == 1 ? 1 : 3);
-        }
-        if (inputs.isLeftPressed())
-        {
-            Vec2D tilePos = (mousePos) / (48 * cameraScale) - (Vec2D(50, 50) - cameraPos) / 48.0f;
-            tilePos = Vec2D((int)(tilePos.x), (int)(tilePos.y));
-            if (buttonSelected == 2)
+            PlayMusicStream(sounds.gameplayMusic);
+            int tmp = 0;
+            if (gameSpeed == 0 && IsKeyPressed(KEY_UP))
+                tmp = -1;
+            while (tmp < gameSpeed)
             {
-                if (money >= selectedTower->getCost())
-                {
-                    selectedTower->upgrade();
-                    money -= selectedTower->getCost();
-                    selectedTower->setCost(selectedTower->getCost() * 2);
-                }
+                handleEnemiesBuffer(lists.map, lists.enemies, lists.buffer, wave);
+                selectedTower = handleTowers(lists.towers, lists.enemies, lists.missiles, lists.particles, selectedTower, cameraPos, cameraScale); 
+                handleMissiles(lists.missiles, lists.enemies, lists.particles);
+                handleEnemies(lists.map, money, lists.enemies, lists.particles, life);
+                handleParticles(lists.particles);
+                tmp++;
             }
-            else if (buttonSelected == 1)
+            if (IsMouseButtonDown(MOUSE_BUTTON_MIDDLE) || IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
             {
-                std::forward_list<Tower *>::iterator oldT = lists.towers.before_begin();
-                for (std::forward_list<Tower *>::iterator i = lists.towers.begin(); i != lists.towers.end(); i++)
+                cameraPos = cameraPos - Vec2D(GetMouseDelta().x, GetMouseDelta().y) / cameraScale;
+            }
+            if (GetMouseWheelMove() > 0.1 && cameraScale < 3)
+            {
+                cameraScale++;
+                cameraPos = cameraPos + Vec2D(300, 160) / (cameraScale == 2 ? 1 : 3);
+            }
+            if (GetMouseWheelMove() < -0.1 && cameraScale > 1)
+            {
+                cameraScale--;
+                cameraPos = cameraPos - Vec2D(300, 160) / (cameraScale == 1 ? 1 : 3);
+            }
+            if (inputs.isLeftPressed())
+            {
+                Vec2D tilePos = (mousePos) / (48 * cameraScale) - (Vec2D(50, 50) - cameraPos) / 48.0f;
+                tilePos = Vec2D((int)(tilePos.x), (int)(tilePos.y));
+                if (buttonSelected == 2)
                 {
-                    if ((*i) == selectedTower)
+                    if (money >= selectedTower->getCost())
                     {
-                        Vec2D tmpPos = (*i)->getPosition();
-                        money += (*i)->getCost() * (*i)->getLevel() / 4;
-                        lists.map.removeTowerFromTile(Vec2D((int)(tmpPos.x),(int)(tmpPos.y)));
-                        delete(*i);
-                        i = lists.towers.erase_after(oldT);
-                        selectedTower = nullptr;
-                        break;
+                        selectedTower->upgrade();
+                        money -= selectedTower->getCost();
+                        selectedTower->setCost(selectedTower->getCost() * 2);
                     }
-                    oldT = i;
+                }
+                else if (buttonSelected == 1)
+                {
+                    std::forward_list<Tower *>::iterator oldT = lists.towers.before_begin();
+                    for (std::forward_list<Tower *>::iterator i = lists.towers.begin(); i != lists.towers.end(); i++)
+                    {
+                        if ((*i) == selectedTower)
+                        {
+                            Vec2D tmpPos = (*i)->getPosition();
+                            money += (*i)->getCost() * (*i)->getLevel() / 4;
+                            lists.map.removeTowerFromTile(Vec2D((int)(tmpPos.x),(int)(tmpPos.y)));
+                            delete(*i);
+                            i = lists.towers.erase_after(oldT);
+                            selectedTower = nullptr;
+                            break;
+                        }
+                        oldT = i;
+                    }
+                }
+                else if(buttonSelected == 3)
+                {
+                    onPause = true;
                 }
             }
-        }
-        if (selectedTower == nullptr)
-        {
-            for (int i = 0; i < 3; i++)
+            if (selectedTower == nullptr)
             {
-                lists.towerHolders.holders[i].update(lists.towers, lists.map, money, cameraPos, cameraScale);
+                for (int i = 0; i < 3; i++)
+                {
+                    lists.towerHolders.holders[i].update(lists.towers, lists.map, money, cameraPos, cameraScale);
+                }
+            }
+            if (life <= 0)
+            {
+                gameState = GAMEOVER;
+            }
+            if (IsKeyPressed(KEY_P))
+            {
+                gameState = GAMEOVER;
+            }
+            if(wave >= 26)
+            {
+                gameState = VICTORY;
             }
         }
-        if (life <= 0)
+        else
         {
-            gameState = GAMEOVER;
-        }
-        if (IsKeyPressed(KEY_P))
-        {
-            gameState = GAMEOVER;
-        }
-        if(wave >= 26)
-        {
-            gameState = VICTORY;
+            gameSpeed = 0;
+            if (inputs.isLeftPressed())
+            {
+                if (buttonSelected == 1)
+                {
+                    onPause = false;
+                }
+                else if (buttonSelected == 2)
+                {
+                    gameState = MENUMAP;
+                }
+                else if (buttonSelected == 3)
+                {
+                    gameState = MENU;
+                }
+            }
         }
     }
     else if (gameState == GAMEOVER)

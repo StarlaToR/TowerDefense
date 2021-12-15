@@ -176,20 +176,42 @@ void renderGameplay(DataHolder& in)
     mTilePos = Vec2D((int)(mTilePos.x),(int)(mTilePos.y));
     drawMapElements(in, false);
     in.buttonSelected = 0;
-    drawTowerUpgradeMenu(in, in.buttonSelected);
     DrawText(TextFormat("Money : %d",in.money),50,680,30,BLACK);
     DrawText(TextFormat("Wave : %d",in.wave),1080,680,30,BLACK);
     DrawRectangleRec(toRayLibRectangle(Vec2D(50,750),Vec2D(1156,74)),BLACK);
     DrawRectangleRec(toRayLibRectangle(Vec2D(52,752),Vec2D(1152,70)),RED);
     DrawRectangleRec(toRayLibRectangle(Vec2D(52,752),Vec2D(57.6 * in.life,70)),GREEN);
-    for (int i = 0; i < 3; i++)
+    if (in.onPause)
     {
-        TowerHolder* tmpHolder = &in.lists.towerHolders.holders[i];
-        if (tmpHolder->isUsed)
+        if (drawButtonMenu(in, "Return", Vec2D(660,285), Vec2D(650, 240),Vec2D(250,140), in.mousePos))
         {
-            bool valid = (in.mousePos.x > 50 && in.mousePos.y > 50 && in.mousePos.x < 1202 && in.mousePos.y < 626 && !in.lists.map.isRoad(in.lists.map.getTileAt(mTilePos))
-             && in.lists.map.getTileAt(mTilePos,true) == UNDEFINED && !in.lists.map.isTileWithTower(mTilePos));
-            DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(tmpHolder->getTexture()),toRayLibRectangle(in.mousePos,Vec2D(80,80)),Vec2D(40,40),0,Fade(valid ? GREEN : RED,0.6f));
+            in.buttonSelected = 1;
+        }
+        if (drawButtonMenu(in, "Change Map",  Vec2D(665,445), Vec2D(650, 400),Vec2D(250,140), in.mousePos))
+        {
+            in.buttonSelected = 2;
+        }
+        if (drawButtonMenu(in, "Main Menu", Vec2D(660, 605), Vec2D(650, 580),Vec2D(250,100), in.mousePos))
+        {
+            in.buttonSelected = 3;
+        }
+    }
+    else
+    {
+        drawTowerUpgradeMenu(in, in.buttonSelected);
+        for (int i = 0; i < 3; i++)
+        {
+            TowerHolder* tmpHolder = &in.lists.towerHolders.holders[i];
+            if (tmpHolder->isUsed)
+            {
+                bool valid = (in.mousePos.x > 50 && in.mousePos.y > 50 && in.mousePos.x < 1202 && in.mousePos.y < 626 && !in.lists.map.isRoad(in.lists.map.getTileAt(mTilePos))
+                 && in.lists.map.getTileAt(mTilePos,true) == UNDEFINED && !in.lists.map.isTileWithTower(mTilePos));
+                DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(tmpHolder->getTexture()),toRayLibRectangle(in.mousePos,Vec2D(80,80)),Vec2D(40,40),0,Fade(valid ? GREEN : RED,0.6f));
+            }
+        }
+        if (drawButton("Pause", Vec2D(1350, 750),Vec2D(150, 75) , in.mousePos))
+        {
+            in.buttonSelected = 3;
         }
     }
 
