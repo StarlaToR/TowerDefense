@@ -156,6 +156,9 @@ void renderEditor(DataHolder& in)
     {
         in.buttonSelected = 6;
     }
+    DrawText("Terrain", 1300, 70, 20, BLACK);
+    DrawText("Road element", 1300, 200, 20, BLACK);
+    DrawText("Decoration", 1300, 380, 20, BLACK);
     for (unsigned int i = 0; i < in.lists.tHolders.holders.size(); i++)
     {
         TileHolder* tmp = &in.lists.tHolders.holders.at(i);

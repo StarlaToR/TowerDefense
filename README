@@ -1,4 +1,78 @@
 Projet Tower Defense
 
-Ce projet a pour but de créer un jeu dans le style d'un "Tower defense"
-Le but du jeu est de défendre une tour ou une base face à des vagues d'ennemis se déplaçant sur un chemin. Pour atteindre cet objectif, le joueur dispose de tours qu’il peut placer sur la carte. Ces tours vont attaquer les ennemis et les empêcher d’atteindre la base.
+This project's goal is to create a "Tower Defense" game. 
+
+In this game, you have to defend a base against waves of enemies that follow a road.
+To acheive this goal, you have different types of tower which you can place on the map.
+These towers will attack this enemies et kill them before they can reach your base.
+If the enemies reach the base, it is damaged and if too many of them reach it, you lose.
+Your goal is to survive 25 waves without having your base destroyed.
+
+        Introduction's cinematic:
+You can skip if you click on your left mouse button.
+
+        Main menu:
+
+After the cinematic, you arrive in the main menu. You have 4 options :
+
+    Play :
+You open the Menu Play.
+
+    Options :
+You open a menu where you can adjust the sound of the game.
+
+    Credits :
+You open the credits.
+
+    Exit : 
+You leave the game.
+
+    Easter eggs :
+If you left click on our logo in the bottom right corner of the menu, you can play again the introduction's cinematic.
+
+If you left click on the sun in the background, it will launch a music a bit special.
+
+
+        Play Menu:
+    New:
+You open the level selection menu.
+
+    Load:
+You open the load menu where you can load your own map.
+
+    Editor:
+You open the map editor where you can create your own map.
+
+    Return:
+You come back in the main menu.
+
+
+        Level selection Menu:
+You have 10 different levels that you can test.
+
+You also can go in the custom maps menu where you can play on your home made maps.
+
+When you have selected the map you want to play with, you enter the game.
+
+
+        Gameplay:
+To place towers, you must first chose between your 3 towers :
+    - the Classic, cheap, low damage, quick attack speed
+    - the Slowing, really low damage but slow the enemy on hit, medium attack speed
+    - the Explosive, expensive, high damage in explosion, slow attack speed
+If you don't have enough money to buy it, you can't place it.
+Once you chose your tower, you left click on its image in the right side of the screen, keep your click down and release it when your cursor is on the place you want to place your tower.
+
+Once your towers are on the battlefield, you can upgrade them. 
+For that, left click on a tower. It will open the upgrade menu in the right side of the screen.
+You have now the option to upgrade your tower and its cost and to delete this tower. This last option will give you back a part of the money you used to buy and upgrade this tower.
+To leave this menu, you just have to click on any tile of the map since it doesn't have a tower on.
+
+You can set the speed of the game with the direction arrows. The right one will increase it and the left one will slow it.
+You can accelerate the game to x16 or you can stop the game while putting it in x0. It allows you to place, delete or upgrade towers without care of the waves.
+
+In the bottom right corner, you can open the pause menu. It will stop the game.
+You will have 3 options:
+    -Return : come back to the game;
+    -Option : go in the option where you can adjust the sound.
+    -Main menu : Come back to main menu. It will erase your current game.
