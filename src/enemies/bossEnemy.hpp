@@ -4,7 +4,7 @@
 class BossEnemy: public Enemy
 {
 public:
-    BossEnemy(TileMap& t, int wave);
+    BossEnemy(TileMap& t, int wave, int difficulty);
 
     BossEnemy() {};
 

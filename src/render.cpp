@@ -6,6 +6,8 @@
 #include <raylib.h>
 #include "util/renderUtil.hpp"
 
+const char* difficultyString[4] = {"             Easy", "           Medium","             Hard", "       NIGHTMARE"};
+
 void renderMain(DataHolder& in) 
 {
     BeginDrawing();
@@ -27,6 +29,9 @@ void renderMain(DataHolder& in)
         break;
     case GAMEPLAY:
         renderGameplay(in);
+        break;
+    case LOAD:
+        renderLoad(in);
         break;
     case MENUMAP:
         renderMenuMap(in);
@@ -315,9 +320,11 @@ void renderOption(DataHolder& in)
     DrawTexturePro(in.textures.optionButton, Rectangle{0,0,540,160},Rectangle{400, 300,500,100},Vector2{0,0}, 0, WHITE);
     DrawTexturePro(in.textures.optionButton, Rectangle{0,0,540,160},Rectangle{400, 400,500,100},Vector2{0,0}, 0, WHITE);
     DrawTexturePro(in.textures.optionButton, Rectangle{0,0,540,160},Rectangle{400, 500,500,100},Vector2{0,0}, 0, WHITE);
+    DrawTexturePro(in.textures.optionButton, Rectangle{0,0,540,160},Rectangle{400, 600,500,160},Vector2{0,0}, 0, WHITE);
     DrawTextEx(in.fontTitle, TextFormat("Master Volume: %.2f",in.masterVolume), Vector2{420,320},40,0,WHITE);
     DrawTextEx(in.fontTitle, TextFormat("Effect Volume: %.2f",in.effectVolume), Vector2{420,420},40,0,WHITE);
     DrawTextEx(in.fontTitle, TextFormat("Music Volume: %.2f",in.musicVolume), Vector2{420,520},40,0,WHITE);
+    DrawTextEx(in.fontTitle, TextFormat("        Difficulty : \n%s", difficultyString[in.difficulty - 1]), Vector2{420,620},40,0,WHITE);
     if (drawButtonMenu(in, "+",Vec2D(955, 315), Vec2D(950, 315), Vec2D(50,50), in.mousePos))
     {
         in.buttonSelected = 2;
@@ -342,6 +349,15 @@ void renderOption(DataHolder& in)
     {
         in.buttonSelected = 7;
     }
+    if (drawButtonMenu(in, "+",Vec2D(955, 615), Vec2D(950, 615), Vec2D(50,50), in.mousePos))
+    {
+        in.buttonSelected = 8;
+    }
+    if (drawButtonMenu(in, "-", Vec2D(1058, 615), Vec2D(1050, 615), Vec2D(50,50), in.mousePos))
+    {
+        in.buttonSelected = 9;
+    }
+    
 }
 
 void renderGameOption(DataHolder& in)
@@ -393,9 +409,9 @@ void renderLoad(DataHolder& in)
     in.buttonSelected = 0;
     float width = in.screenWidth;
     float heigth = in.screenHeight;
-    DrawTexturePro(in.textures.background, Rectangle{in.framecounter/3.0f,0,2,2},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
+    DrawTexturePro(in.textures.background, Rectangle{in.framecounter/3.0f,0,1600,1000},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
     DrawTexturePro(in.textures.title, Rectangle{0,0,500,500},Rectangle{450, 0,1000,450},Vector2{150,150}, 0, WHITE);
-    DrawTextEx(in.fontTitle, "Load", Vector2{660,0},100,4,BLACK);
+    DrawTextEx(in.fontTitle, "Load", Vector2{650,0},100,4,BLACK);
     if (drawButtonMenu(in, "Return", Vec2D(652, 780), Vec2D(650, 750),Vec2D(250,100), in.mousePos))
     {
         in.buttonSelected = 1;

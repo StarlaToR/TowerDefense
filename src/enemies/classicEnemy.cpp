@@ -1,13 +1,13 @@
 #include "classicEnemy.hpp"
 
-ClassicEnemy::ClassicEnemy(TileMap& t, int wave)
+ClassicEnemy::ClassicEnemy(TileMap& t, int wave, int difficulty)
 {
     position = t.startPos + Vec2D(0.5f,0.5f);
     slowTimer = 0;
     level = wave/4+1;
-    maxHealth = 10+10*level;
+    maxHealth = 10+5*level + 5 * difficulty;
     health = maxHealth;
-    reward = 2;
+    reward = 5 - difficulty;
     speed = 1+level;
     damage = 1;
 

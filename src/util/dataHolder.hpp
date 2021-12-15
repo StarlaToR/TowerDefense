@@ -110,6 +110,7 @@ public:
     float masterVolume = 0.5f;
     float effectVolume = 0.5f;
     float musicVolume = 1.0f;
+    int difficulty = 2;
     int saveSlot = 0;
     char maxLevel = 0;
     RenderType tileRenderType = EXTENDED;

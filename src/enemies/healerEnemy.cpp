@@ -1,14 +1,14 @@
 #include "healerEnemy.hpp"
 #include "../particles/heal.hpp"
 
-HealerEnemy::HealerEnemy(TileMap& t, int wave)
+HealerEnemy::HealerEnemy(TileMap& t, int wave, int difficulty)
 {
     position = t.startPos + Vec2D(0.5f,0.5f);
     level = wave/4+1;
     slowTimer = 0;
-    maxHealth = 20+10*level;
+    maxHealth = 20+5*level + 5 * difficulty;
     health = maxHealth;
-    reward = 3;
+    reward = 5 - difficulty;
     speed = level+1;
     damage = level;
     range = 2.0f+level;

@@ -1,13 +1,13 @@
 #include "bigEnemy.hpp"
 
-BigEnemy::BigEnemy(TileMap& t, int wave)
+BigEnemy::BigEnemy(TileMap& t, int wave, int difficulty)
 {
     position = t.startPos + Vec2D(0.5f,0.5f);
     level = wave/4+1;
     slowTimer = 0;
-    maxHealth = 20+30*level;
+    maxHealth = 20+20*level + 20 * difficulty;
     health = maxHealth;
-    reward = 5;
+    reward = 6 - difficulty;
     speed = 1+level/2;
     damage = 5+level;
 

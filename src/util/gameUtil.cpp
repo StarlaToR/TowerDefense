@@ -126,9 +126,9 @@ void placeTileAt(TileMap& map, Vec2D pos, Vec2D& drag, unsigned char tile, bool 
     }
 }
 
-void handleEnemiesBuffer(TileMap& map, std::list<Enemy *>& enemies, std::forward_list<EnemySpawner>& buffer, int &waves)
+void handleEnemiesBuffer(TileMap& map, std::list<Enemy *>& enemies, std::forward_list<EnemySpawner>& buffer, int &waves, int &difficulty)
 {
-    enemiesBuffer(map, enemies, buffer, waves);
+    enemiesBuffer(map, enemies, buffer, waves, difficulty);
     if (enemies.empty() && buffer.empty())
     {
         if (waves%5 == 4 && waves > 0)
@@ -156,7 +156,7 @@ void handleEnemiesBuffer(TileMap& map, std::list<Enemy *>& enemies, std::forward
     }
 }
 
-void enemiesBuffer(TileMap& map, std::list<Enemy *>& enemies, std::forward_list<EnemySpawner>& buffer, int waves)
+void enemiesBuffer(TileMap& map, std::list<Enemy *>& enemies, std::forward_list<EnemySpawner>& buffer, int waves, int difficulty)
 {
     for (std::forward_list<EnemySpawner>::iterator i = buffer.begin(); i != buffer.end();)
     {
@@ -169,18 +169,18 @@ void enemiesBuffer(TileMap& map, std::list<Enemy *>& enemies, std::forward_list<
         switch ((i)->id)
         {
         case 1:
-            enemies.push_back(new ClassicEnemy(map,waves));
+            enemies.push_back(new ClassicEnemy(map,waves, difficulty));
             break;
 
         case 2:
-            enemies.push_back(new BigEnemy(map,waves));
+            enemies.push_back(new BigEnemy(map,waves, difficulty));
             break;
 
         case 3:
-            enemies.push_back(new HealerEnemy(map,waves));
+            enemies.push_back(new HealerEnemy(map,waves, difficulty));
             break;
         case 4:
-            enemies.push_back(new BossEnemy(map,waves));
+            enemies.push_back(new BossEnemy(map,waves, difficulty));
             break;
 
         default:

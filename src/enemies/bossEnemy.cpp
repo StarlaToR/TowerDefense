@@ -1,11 +1,11 @@
 #include "bossEnemy.hpp"
 
-BossEnemy::BossEnemy(TileMap& t, int wave)
+BossEnemy::BossEnemy(TileMap& t, int wave, int difficulty)
 {
     position = t.startPos + Vec2D(0.5f,0.5f);
     level = 1;
     slowTimer = 0;
-    maxHealth = 30000;
+    maxHealth = 10000 * difficulty;
     health = maxHealth;
     reward = 0;
     speed = 1;

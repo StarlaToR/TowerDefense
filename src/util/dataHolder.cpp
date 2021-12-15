@@ -297,6 +297,20 @@ void DataHolder::handleGameState()
                 musicVolume = cut(musicVolume - 0.05f, 0.0f, 1.0f);
                 SetMusicVolume(sounds.gameplayMusic, 0.4f * musicVolume);
             }
+            if (buttonSelected == 8)
+            {
+                PlaySound(sounds.buttonSound);
+                if(difficulty < 4)
+                    difficulty += 1;
+                
+            }
+            if (buttonSelected == 9)
+            {
+                PlaySound(sounds.buttonSound);
+                if(difficulty > 1)
+                    difficulty -= 1;
+                
+            }
         }
     }
     else if (gameState == GAMEOPTION)
@@ -371,8 +385,7 @@ void DataHolder::handleGameState()
             if (buttonSelected == 1)
             {
                 PlaySound(sounds.buttonSound);
-                tileRenderType = NORMAL;
-                gameState = GAMEPLAY;
+                gameState = MENU;
             }
             else if (buttonSelected >= 2 && buttonSelected <= 4)
             {
@@ -395,7 +408,7 @@ void DataHolder::handleGameState()
             int counter = 0;
             while (counter < gameSpeed)
             {
-                handleEnemiesBuffer(lists.map, lists.enemies, lists.buffer, wave);
+                handleEnemiesBuffer(lists.map, lists.enemies, lists.buffer, wave, difficulty);
                 selectedTower = handleTowers(lists.towers, lists.enemies, lists.missiles, lists.particles, selectedTower, cameraPos, cameraScale); 
                 handleMissiles(lists.missiles, lists.enemies, lists.particles);
                 handleEnemies(lists.map, money, lists.enemies, lists.particles, life);
