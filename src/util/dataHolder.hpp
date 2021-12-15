@@ -15,6 +15,7 @@
 #include "../tile/tileHolder.hpp"
 #include "../towers/towerHolder.hpp"
 #include "timeCounter.hpp"
+#include "saveFile.hpp"
 
 typedef enum GameState : int
 {
@@ -30,6 +31,7 @@ typedef enum GameState : int
     LOAD,
     OPTION,
     GAMEOPTION,
+    SAVE,
     CREDIT,
     EXIT,
 
@@ -72,6 +74,7 @@ struct ListHolder
     std::forward_list<EnemySpawner> buffer = std::forward_list<EnemySpawner>();
     TileHolders tHolders = TileHolders();
     TowerHolders towerHolders = TowerHolders();
+    SaveData saveDatas;
 };
 
 class InputHelper

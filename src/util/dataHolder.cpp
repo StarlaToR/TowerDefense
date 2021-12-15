@@ -105,7 +105,7 @@ void DataHolder::handleGameState()
         gameSpeed /= 2;
     if (gameSpeed > 16)
         gameSpeed = 16;
-    //if (gameSpeed < 1) gameSpeed = 1;
+    if (gameSpeed < 1) gameSpeed = 1;
     inputs.handleInputs();
     UpdateMusicStream(sounds.musicTroll);
     UpdateMusicStream(sounds.gameplayMusic);
@@ -374,6 +374,17 @@ void DataHolder::handleGameState()
                 tileRenderType = NORMAL;
                 gameState = GAMEPLAY;
             }
+            else if (buttonSelected >= 2 && buttonSelected <= 4)
+            {
+                loadFile(lists.saveDatas,buttonSelected-2);
+                std::string path = {"saves/maps/game/game0.bin"};
+                path[20] = lists.saveDatas.maxLevel + '0';
+                lists.map.loadFromFile(path.data());
+                timeCounter.setTime(lists.saveDatas.timePlayed);
+                timeCounter.start();
+                PlaySound(sounds.buttonSound);
+                gameState = GAMEPLAY;
+            }
         }
     }
     else if (gameState == GAMEPLAY)
@@ -381,17 +392,15 @@ void DataHolder::handleGameState()
         if (!onPause)
         {
             PlayMusicStream(sounds.gameplayMusic);
-            int tmp = 0;
-            if (gameSpeed == 0 && IsKeyPressed(KEY_UP))
-                tmp = -1;
-            while (tmp < gameSpeed)
+            int counter = 0;
+            while (counter < gameSpeed)
             {
                 handleEnemiesBuffer(lists.map, lists.enemies, lists.buffer, wave);
                 selectedTower = handleTowers(lists.towers, lists.enemies, lists.missiles, lists.particles, selectedTower, cameraPos, cameraScale); 
                 handleMissiles(lists.missiles, lists.enemies, lists.particles);
                 handleEnemies(lists.map, money, lists.enemies, lists.particles, life);
                 handleParticles(lists.particles);
-                tmp++;
+                counter++;
             }
             if (IsMouseButtonDown(MOUSE_BUTTON_MIDDLE) || IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
             {
@@ -495,6 +504,22 @@ void DataHolder::handleGameState()
                     StopMusicStream(sounds.gameplayMusic);
                     gameState = MENU;
                 }
+            }
+        }
+    }
+    else if (gameState == SAVE)
+    {
+        if (inputs.isLeftPressed())
+        {
+            if (buttonSelected == 1)
+            {
+                PlaySound(sounds.buttonSound);
+                tileRenderType = NORMAL;
+                gameState = MENUMAP;
+            }
+            if (buttonSelected >= 2 && buttonSelected <= 4)
+            {
+                saveFile(lists.saveDatas, buttonSelected-2);
             }
         }
     }
