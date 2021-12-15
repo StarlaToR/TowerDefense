@@ -1,6 +1,6 @@
 Projet Tower Defense
 
-![Image](./assets/textures/Marie-Antoine.png)
+![Image](assets/textures/Marie-Antoine.png)
 
 This project's goal is to create a "Tower Defense" game in 2D written in C++. 
 
