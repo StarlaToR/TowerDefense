@@ -389,7 +389,7 @@ void DataHolder::handleGameState()
             if (buttonSelected == 1)
             {
                 PlaySound(sounds.buttonSound);
-                gameState = MENU;
+                gameState = MENUPLAY;
             }
             else if (buttonSelected >= 2 && buttonSelected <= 4)
             {
@@ -519,6 +519,29 @@ void DataHolder::handleGameState()
                     timeCounter.stop();
                     gameState = MENU;
                 }
+                else if (buttonSelected == 4)
+                {
+                    onPause = false;
+                    life = 20;
+                    wave = 0;
+                    money = 20;
+                    for (std::list<Enemy*>::iterator i = lists.enemies.begin(); i != lists.enemies.end(); i++) delete *i;
+                    for (std::forward_list<Tower*>::iterator i = lists.towers.begin(); i != lists.towers.end(); i++) delete *i;
+                    for (std::forward_list<Missile*>::iterator i = lists.missiles.begin(); i != lists.missiles.end(); i++) delete *i;
+                    for (std::forward_list<Particle *>::iterator i = lists.particles.begin(); i != lists.particles.end(); i++) delete *i;
+                    lists.enemies.clear();
+                    lists.towers.clear();
+                    lists.missiles.clear();
+                    lists.buffer.clear();
+                    lists.particles.clear();
+                    for (int i = 0; i < (MAP_HEIGHT*MAP_WIDTH); i++) lists.map.tilesWithTower[i] = false;
+                    selectedTower = nullptr;
+                    gameSpeed = 1;
+
+                    PlaySound(sounds.buttonSound);
+                    StopMusicStream(sounds.gameplayMusic);
+                    gameState = GAMEPLAY;
+                }
             }
         }
     }
@@ -625,7 +648,7 @@ void DataHolder::handleGameState()
             else if (buttonSelected == 4) 
             {
                 holderSelected = 0;
-                gameState = MENU;
+                gameState = MENUPLAY;
             }
             else if (buttonSelected == 5) 
             {

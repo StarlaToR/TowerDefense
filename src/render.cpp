@@ -107,7 +107,7 @@ void renderGameOver(DataHolder& in)
     DrawTextEx(in.fontButton, TextFormat("Wave : %d",in.wave),Vector2{650,450},40,0, BLACK);
     DrawTextEx(in.fontButton, "You noob,",Vector2{650,300},40,0, BLACK);
     DrawTextEx(in.fontButton, "Try again",Vector2{650,350},40,0, BLACK);
-    if (drawButtonMenu(in, "Return", Vec2D(652, 780), Vec2D(650, 750),Vec2D(250,100), in.mousePos))
+    if (drawButtonMenu(in, "Return", Vec2D(652, 785), Vec2D(640, 760),Vec2D(270,100), in.mousePos))
     {
         in.buttonSelected = 1;
     }
@@ -123,7 +123,7 @@ void renderVictory(DataHolder& in)
     DrawTexturePro(in.textures.board, Rectangle{0,0,720,900},Rectangle{680, 350,500,500},Vector2{150,150}, 0, WHITE);
     DrawTextEx(in.fontTitle, "Victory", Vector2{560,27},70,4,BLACK);
     DrawTextEx(in.fontButton, TextFormat("Wave : %d",in.wave-1),Vector2{650,450},40,0, BLACK);
-    if (drawButtonMenu(in, "Return", Vec2D(652, 780), Vec2D(650, 750),Vec2D(250,100), in.mousePos))
+    if (drawButtonMenu(in, "Return", Vec2D(652, 785), Vec2D(640, 760),Vec2D(270,100), in.mousePos))
     {
         in.buttonSelected = 1;
     }
@@ -194,17 +194,21 @@ void renderGameplay(DataHolder& in)
     DrawRectangleRec(toRayLibRectangle(Vec2D(52,752),Vec2D(57.6 * in.life,70)),GREEN);
     if (in.onPause)
     {
-        if (drawButtonMenu(in, "Return", Vec2D(660,285), Vec2D(650, 240),Vec2D(250,140), in.mousePos))
+        if (drawButtonMenu(in, "Resume", Vec2D(657,150), Vec2D(650, 100),Vec2D(270,150), in.mousePos))
         {
             in.buttonSelected = 1;
         }
-        if (drawButtonMenu(in, "Option",  Vec2D(665,445), Vec2D(650, 400),Vec2D(250,140), in.mousePos))
+        if (drawButtonMenu(in, "Option",  Vec2D(670,450), Vec2D(650, 400),Vec2D(270,150), in.mousePos))
         {
             in.buttonSelected = 2;
         }
-        if (drawButtonMenu(in, "Main Menu", Vec2D(660, 605), Vec2D(650, 580),Vec2D(250,100), in.mousePos))
+        if (drawButtonMenu(in, "Menu", Vec2D(700, 630), Vec2D(650, 580),Vec2D(270,150), in.mousePos))
         {
             in.buttonSelected = 3;
+        }
+        if (drawButtonMenu(in, "Restart", Vec2D(638, 300), Vec2D(620, 250),Vec2D(320,150), in.mousePos))
+        {
+            in.buttonSelected = 4;
         }
     }
     else
@@ -241,11 +245,11 @@ void menuMain(DataHolder& in)
     {
         in.buttonSelected = 2;
     }
-    if (drawButtonMenu(in, "Credit",Vec2D(475, 570), Vec2D(455, 540),Vec2D(250,100), in.mousePos))
+    if (drawButtonMenu(in, "Credit",Vec2D(475, 565), Vec2D(455, 540),Vec2D(250,100), in.mousePos))
     {
         in.buttonSelected = 3;
     }
-    if (drawButtonMenu(in, "Exit",Vec2D(925, 570), Vec2D(860, 540),Vec2D(250,100), in.mousePos))
+    if (drawButtonMenu(in, "Exit",Vec2D(920, 565), Vec2D(860, 540),Vec2D(250,100), in.mousePos))
     {
         in.buttonSelected = 4;
     }
@@ -276,11 +280,11 @@ void renderPlay(DataHolder& in)
     {
         in.buttonSelected = 2;
     }
-    if (drawButtonMenu(in, "Editor", Vec2D(670, 605), Vec2D(650, 580),Vec2D(250,100), in.mousePos))
+    if (drawButtonMenu(in, "Editor", Vec2D(665, 605), Vec2D(650, 580),Vec2D(250,100), in.mousePos))
     {
         in.buttonSelected = 3;
     }
-    if (drawButtonMenu(in, "Return", Vec2D(652, 780), Vec2D(650, 760),Vec2D(250,100), in.mousePos))
+    if (drawButtonMenu(in, "Return", Vec2D(652, 785), Vec2D(640, 760),Vec2D(270,100), in.mousePos))
     {
         in.buttonSelected = 4;
     }
@@ -299,7 +303,7 @@ void renderCredit(DataHolder& in)
     DrawTextEx(in.fontTitle, "Quentin Lepine", Vector2{450,300},70,4,WHITE);
     DrawTextEx(in.fontTitle, "Antoine Mordant", Vector2{420,450},70,4,WHITE);
     DrawTextEx(in.fontTitle, "Umut Osmanoglu", Vector2{430,600},70,4,WHITE);
-    if (drawButtonMenu(in, "Return", Vec2D(652, 780), Vec2D(650, 750),Vec2D(250,100), in.mousePos))
+    if (drawButtonMenu(in, "Return", Vec2D(652, 785), Vec2D(640, 760),Vec2D(270,100), in.mousePos))
     {
         in.buttonSelected = 1;
     }
@@ -313,7 +317,7 @@ void renderOption(DataHolder& in)
     DrawTexturePro(in.textures.background, Rectangle{in.framecounter/3.0f,0,1600,1000},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
     DrawTexturePro(in.textures.title, Rectangle{0,0,500,500},Rectangle{450, 0,1000,450},Vector2{150,150}, 0, WHITE);
     DrawTextEx(in.fontTitle, "Option", Vector2{600,0},100,4,BLACK);
-    if (drawButtonMenu(in, "Return", Vec2D(652, 780), Vec2D(650, 750),Vec2D(250,100), in.mousePos))
+    if (drawButtonMenu(in, "Return", Vec2D(652, 785), Vec2D(640, 760),Vec2D(270,100), in.mousePos))
     {
         in.buttonSelected = 1;
     }
@@ -368,7 +372,7 @@ void renderGameOption(DataHolder& in)
     DrawTexturePro(in.textures.background, Rectangle{in.framecounter/3.0f,0,1600,1000},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
     DrawTexturePro(in.textures.title, Rectangle{0,0,500,500},Rectangle{450, 0,1000,450},Vector2{150,150}, 0, WHITE);
     DrawTextEx(in.fontTitle, "Option", Vector2{600,0},100,4,BLACK);
-    if (drawButtonMenu(in, "Return", Vec2D(652, 780), Vec2D(650, 750),Vec2D(250,100), in.mousePos))
+    if (drawButtonMenu(in, "Return", Vec2D(652, 785), Vec2D(640, 760),Vec2D(270,100), in.mousePos))
     {
         in.buttonSelected = 1;
     }
@@ -412,9 +416,21 @@ void renderLoad(DataHolder& in)
     DrawTexturePro(in.textures.background, Rectangle{in.framecounter/3.0f,0,1600,1000},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
     DrawTexturePro(in.textures.title, Rectangle{0,0,500,500},Rectangle{450, 0,1000,450},Vector2{150,150}, 0, WHITE);
     DrawTextEx(in.fontTitle, "Load", Vector2{650,0},100,4,BLACK);
-    if (drawButtonMenu(in, "Return", Vec2D(652, 780), Vec2D(650, 750),Vec2D(250,100), in.mousePos))
+    if (drawButtonMenu(in, "Return", Vec2D(652, 785), Vec2D(640, 760),Vec2D(270,100), in.mousePos))
     {
         in.buttonSelected = 1;
+    }
+    if (drawButtonMenu(in, "File 1", Vec2D(690,285), Vec2D(650, 240),Vec2D(250,140), in.mousePos))
+    {
+        in.buttonSelected = 2;
+    }
+    if (drawButtonMenu(in, "File 2", Vec2D(690,445), Vec2D(650, 400),Vec2D(250,140), in.mousePos))
+    {
+        in.buttonSelected = 3;
+    }
+    if (drawButtonMenu(in, "File 3", Vec2D(690, 605), Vec2D(650, 580),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 4;
     }
 }
 
@@ -426,51 +442,51 @@ void renderMenuMap(DataHolder& in)
     DrawTexturePro(in.textures.background, Rectangle{in.framecounter/3.0f,0,1600,1000},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
     DrawTexturePro(in.textures.title, Rectangle{0,0,500,500},Rectangle{450, 0,1000,450},Vector2{150,150}, 0, WHITE);
     DrawTextEx(in.fontTitle, "Choose a map", Vector2{440,10},90,4,BLACK);
-    if (drawButtonMenu(in, "Level 1", Vec2D(252,225), Vec2D(250, 200),Vec2D(250,100), in.mousePos))
+    if (drawButtonMenu(in, "Level 1", Vec2D(265,225), Vec2D(250, 200),Vec2D(280,100), in.mousePos))
     {
         in.buttonSelected = 1;
     }
-    if (drawButtonMenu(in, "Level 2", Vec2D(652, 225), Vec2D(650, 200),Vec2D(250,100), in.mousePos))
+    if (drawButtonMenu(in, "Level 2", Vec2D(665, 225), Vec2D(650, 200),Vec2D(280,100), in.mousePos))
     {
         in.buttonSelected = 2;
     }
-    if (drawButtonMenu(in, "Level 3", Vec2D(1052, 225), Vec2D(1050, 200),Vec2D(250,100), in.mousePos))
+    if (drawButtonMenu(in, "Level 3", Vec2D(1065, 225), Vec2D(1050, 200),Vec2D(280,100), in.mousePos))
     {
         in.buttonSelected = 3;
     }
-    if (drawButtonMenu(in, "Level 4", Vec2D(252, 345), Vec2D(250, 320),Vec2D(250,100), in.mousePos))
+    if (drawButtonMenu(in, "Level 4", Vec2D(265, 345), Vec2D(250, 320),Vec2D(280,100), in.mousePos))
     {
         in.buttonSelected = 4;
     }
-    if (drawButtonMenu(in, "Level 5", Vec2D(652,345), Vec2D(650, 320),Vec2D(250,100), in.mousePos))
+    if (drawButtonMenu(in, "Level 5", Vec2D(665,345), Vec2D(650, 320),Vec2D(280,100), in.mousePos))
     {
         in.buttonSelected = 5;
     }
-    if (drawButtonMenu(in, "Level 6", Vec2D(1052,345), Vec2D(1050,320 ),Vec2D(250,100), in.mousePos))
+    if (drawButtonMenu(in, "Level 6", Vec2D(1065,345), Vec2D(1050,320 ),Vec2D(280,100), in.mousePos))
     {
         in.buttonSelected = 6;
     }
-    if (drawButtonMenu(in, "Level 7", Vec2D(252, 465), Vec2D(250,440),Vec2D(250,100), in.mousePos))
+    if (drawButtonMenu(in, "Level 7", Vec2D(265, 465), Vec2D(250,440),Vec2D(280,100), in.mousePos))
     {
         in.buttonSelected = 7;
     }
-    if (drawButtonMenu(in, "Level 8", Vec2D(652, 465), Vec2D(650,440 ),Vec2D(250,100), in.mousePos))
+    if (drawButtonMenu(in, "Level 8", Vec2D(665, 465), Vec2D(650,440 ),Vec2D(280,100), in.mousePos))
     {
         in.buttonSelected = 8;
     }
-    if (drawButtonMenu(in, "Level 9", Vec2D(1052, 465), Vec2D(1050,440),Vec2D(250,100), in.mousePos))
+    if (drawButtonMenu(in, "Level 9", Vec2D(1065, 465), Vec2D(1050,440),Vec2D(280,100), in.mousePos))
     {
         in.buttonSelected = 9;
     }
-    if (drawButtonMenu(in, "Level10", Vec2D(650, 585), Vec2D(650,560 ),Vec2D(250,100), in.mousePos))
+    if (drawButtonMenu(in, "Level10", Vec2D(665, 585), Vec2D(650,560 ),Vec2D(280,100), in.mousePos))
     {
         in.buttonSelected = 10;
     }
-    if (drawButtonMenu(in, "Return", Vec2D(652, 780), Vec2D(650, 750),Vec2D(250,100), in.mousePos))
+    if (drawButtonMenu(in, "Return", Vec2D(652, 785), Vec2D(640, 760),Vec2D(280,100), in.mousePos))
     {
         in.buttonSelected = 11;
     }
-    if (drawButtonMenu(in, "Custom", Vec2D(1052, 780), Vec2D(1050, 750),Vec2D(250,100), in.mousePos))
+    if (drawButtonMenu(in, "Custom", Vec2D(1060, 775), Vec2D(1050, 750),Vec2D(280,100), in.mousePos))
     {
         in.buttonSelected = 12;
     }
@@ -524,7 +540,7 @@ void renderMenuMapCustom(DataHolder& in)
     {
         in.buttonSelected = 10;
     }
-    if (drawButtonMenu(in, "Return", Vec2D(652, 780), Vec2D(650, 750),Vec2D(250,100), in.mousePos))
+    if (drawButtonMenu(in, "Return", Vec2D(652, 785), Vec2D(640, 760),Vec2D(270,100), in.mousePos))
     {
         in.buttonSelected = 11;
     }
