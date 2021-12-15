@@ -1,5 +1,7 @@
 Projet Tower Defense
 
+![alt text](./assets/textures/Marie-Antoine.png)
+
 This project's goal is to create a "Tower Defense" game in 2D written in C++. 
 
 In this game, you have to defend a base against waves of enemies that follow a road.
