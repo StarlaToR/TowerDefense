@@ -79,7 +79,7 @@ void DataHolder::initDatas()
     sounds.slowTowerSound = LoadSound("assets/sounds/slowTower.ogg");
     sounds.explosiveTowerSound = LoadSound("assets/sounds/explosiveTower.ogg");
     fontButton = LoadFontEx("assets/font/ethnocentric.ttf", 100, 0, 0);
-    fontTitle = LoadFontEx("assets/font/godofwar.ttf", 100, 0, 0);
+    fontTitle = LoadFontEx("assets/font/title.ttf", 100, 0, 0);
     lists.map = TileMap();
     SetMusicVolume(sounds.musicTroll, 0.15f);
     SetSoundVolume(sounds.classicTowerSound, 0.20f);
@@ -267,6 +267,36 @@ void DataHolder::handleGameState()
                 masterVolume = cut(masterVolume - 0.05f, 0.0f, 1.0f);
                 SetMasterVolume(masterVolume);
             }
+            if (buttonSelected == 4)
+            {
+                PlaySound(sounds.buttonSound);
+                effectVolume = cut(effectVolume + 0.05f, 0.0f, 1.0f);
+                SetSoundVolume(sounds.classicTowerSound, 0.4f * effectVolume);
+                SetSoundVolume(sounds.slowTowerSound, 0.4f * effectVolume);
+                SetSoundVolume(sounds.explosiveTowerSound, 0.4f * effectVolume);
+                SetSoundVolume(sounds.buttonSound, 0.4f * effectVolume);
+            }
+            if (buttonSelected == 5)
+            {
+                PlaySound(sounds.buttonSound);
+                effectVolume = cut(effectVolume - 0.05f, 0.0f, 1.0f);
+                SetSoundVolume(sounds.classicTowerSound, 0.4f * effectVolume);
+                SetSoundVolume(sounds.slowTowerSound, 0.4f * effectVolume);
+                SetSoundVolume(sounds.explosiveTowerSound, 0.4f * effectVolume);
+                SetSoundVolume(sounds.buttonSound, 0.4f * effectVolume);
+            }
+            if (buttonSelected == 6)
+            {
+                PlaySound(sounds.buttonSound);
+                musicVolume = cut(musicVolume + 0.05f, 0.0f, 1.0f);
+                SetMusicVolume(sounds.gameplayMusic, 0.4f * musicVolume);
+            }
+            if (buttonSelected == 7)
+            {
+                PlaySound(sounds.buttonSound);
+                musicVolume = cut(musicVolume - 0.05f, 0.0f, 1.0f);
+                SetMusicVolume(sounds.gameplayMusic, 0.4f * musicVolume);
+            }
         }
     }
     else if (gameState == GAMEOPTION)
@@ -295,36 +325,30 @@ void DataHolder::handleGameState()
                 PlaySound(sounds.buttonSound);
                 effectVolume = cut(effectVolume + 0.05f, 0.0f, 1.0f);
                 SetSoundVolume(sounds.classicTowerSound, 0.4f * effectVolume);
+                SetSoundVolume(sounds.slowTowerSound, 0.4f * effectVolume);
+                SetSoundVolume(sounds.explosiveTowerSound, 0.4f * effectVolume);
+                SetSoundVolume(sounds.buttonSound, 0.4f * effectVolume);
             }
             if (buttonSelected == 5)
             {
                 PlaySound(sounds.buttonSound);
                 effectVolume = cut(effectVolume - 0.05f, 0.0f, 1.0f);
                 SetSoundVolume(sounds.classicTowerSound, 0.4f * effectVolume);
+                SetSoundVolume(sounds.slowTowerSound, 0.4f * effectVolume);
+                SetSoundVolume(sounds.explosiveTowerSound, 0.4f * effectVolume);
+                SetSoundVolume(sounds.buttonSound, 0.4f * effectVolume);
             }
             if (buttonSelected == 6)
             {
                 PlaySound(sounds.buttonSound);
-                effectVolume = cut(effectVolume + 0.05f, 0.0f, 1.0f);
-                SetSoundVolume(sounds.slowTowerSound, 0.4f * effectVolume);
+                musicVolume = cut(musicVolume + 0.05f, 0.0f, 1.0f);
+                SetMusicVolume(sounds.gameplayMusic, 0.4f * musicVolume);
             }
             if (buttonSelected == 7)
             {
                 PlaySound(sounds.buttonSound);
-                effectVolume = cut(effectVolume - 0.05f, 0.0f, 1.0f);
-                SetSoundVolume(sounds.slowTowerSound, 0.4f * effectVolume);
-            }
-            if (buttonSelected == 8)
-            {
-                PlaySound(sounds.buttonSound);
-                effectVolume = cut(effectVolume + 0.05f, 0.0f, 1.0f);
-                SetSoundVolume(sounds.explosiveTowerSound, 0.4f * effectVolume);
-            }
-            if (buttonSelected == 9)
-            {
-                PlaySound(sounds.buttonSound);
-                effectVolume = cut(effectVolume - 0.05f, 0.0f, 1.0f);
-                SetSoundVolume(sounds.explosiveTowerSound, 0.4f * effectVolume);
+                musicVolume = cut(musicVolume - 0.05f, 0.0f, 1.0f);
+                SetMusicVolume(sounds.gameplayMusic, 0.4f * musicVolume);
             }
             
         }

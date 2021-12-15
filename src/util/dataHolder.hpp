@@ -104,8 +104,9 @@ public:
     int holderHovered = 0;
     int holderSelected = 0;
     TimeCounter timeCounter;
-    float masterVolume = 0.6f;
+    float masterVolume = 0.5f;
     float effectVolume = 0.5f;
+    float musicVolume = 1.0f;
     int saveSlot = 0;
     char maxLevel = 0;
     RenderType tileRenderType = EXTENDED;
