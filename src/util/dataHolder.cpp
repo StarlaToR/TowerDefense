@@ -177,6 +177,8 @@ void DataHolder::handleGameState()
                 life = 20;
                 wave = 0;
                 money = 20;
+                lists.saveDatas.maxLevel = 0;
+                lists.saveDatas.timePlayed = 0;
                 tileRenderType = NORMAL;
                 gameState = MENUMAP;
             }
@@ -207,6 +209,7 @@ void DataHolder::handleGameState()
             {
                 std::string path = {"saves/maps/game/game0.bin"};
                 path[20] = buttonSelected-1 + '0';
+                currentLevel = buttonSelected-1;
                 lists.map.loadFromFile(path.data());
                 timeCounter.start();
                 PlaySound(sounds.buttonSound);
@@ -239,6 +242,7 @@ void DataHolder::handleGameState()
                 path[21] = buttonSelected-1 + '0';
                 if (lists.map.loadFromFile(path.data()) >= 0)
                 {
+                    currentLevel = -1;
                     timeCounter.start();
                     PlaySound(sounds.buttonSound);
                     gameState = GAMEPLAY;
@@ -300,7 +304,7 @@ void DataHolder::handleGameState()
             if (buttonSelected == 8)
             {
                 PlaySound(sounds.buttonSound);
-                if(difficulty < 4)
+                if(difficulty < (3 + (lists.saveDatas.maxLevel == 10)))
                     difficulty += 1;
                 
             }
@@ -390,13 +394,8 @@ void DataHolder::handleGameState()
             else if (buttonSelected >= 2 && buttonSelected <= 4)
             {
                 loadFile(lists.saveDatas,buttonSelected-2);
-                std::string path = {"saves/maps/game/game0.bin"};
-                path[20] = lists.saveDatas.maxLevel + '0';
-                lists.map.loadFromFile(path.data());
-                timeCounter.setTime(lists.saveDatas.timePlayed);
-                timeCounter.start();
                 PlaySound(sounds.buttonSound);
-                gameState = GAMEPLAY;
+                gameState = MENU;
             }
         }
     }
@@ -480,6 +479,8 @@ void DataHolder::handleGameState()
             if(wave >= 26)
             {
                 timeCounter.stop();
+                lists.saveDatas.timePlayed = timeCounter.getTime();
+                if (currentLevel == lists.saveDatas.maxLevel) lists.saveDatas.maxLevel++;
                 gameState = VICTORY;
             }
         }
@@ -515,6 +516,7 @@ void DataHolder::handleGameState()
 
                     PlaySound(sounds.buttonSound);
                     StopMusicStream(sounds.gameplayMusic);
+                    timeCounter.stop();
                     gameState = MENU;
                 }
             }
@@ -527,12 +529,13 @@ void DataHolder::handleGameState()
             if (buttonSelected == 1)
             {
                 PlaySound(sounds.buttonSound);
-                tileRenderType = NORMAL;
                 gameState = MENUMAP;
             }
             if (buttonSelected >= 2 && buttonSelected <= 4)
             {
+                PlaySound(sounds.buttonSound);
                 saveFile(lists.saveDatas, buttonSelected-2);
+                gameState = MENUMAP;
             }
         }
     }
@@ -579,7 +582,7 @@ void DataHolder::handleGameState()
             selectedTower = nullptr;
             gameSpeed = 1;
             PlaySound(sounds.buttonSound);
-            gameState = MENU;
+            gameState = SAVE;
         }
     }
     else if (gameState == EDITOR)
