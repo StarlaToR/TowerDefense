@@ -13,6 +13,7 @@ void renderGameOver(DataHolder& in);
 void renderVictory(DataHolder& in);
 void renderCredit(DataHolder& in);
 void renderOption(DataHolder& in);
+void renderGameOption(DataHolder& in);
 void renderLoad(DataHolder& in);
 void renderMenuMap(DataHolder& in);
 void renderMenuMapCustom(DataHolder& in);

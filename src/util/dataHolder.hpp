@@ -29,6 +29,7 @@ typedef enum GameState : int
     EDITOR,
     LOAD,
     OPTION,
+    GAMEOPTION,
     CREDIT,
     EXIT,
 

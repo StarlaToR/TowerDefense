@@ -265,6 +265,29 @@ void DataHolder::handleGameState()
             }
         }
     }
+    else if (gameState == GAMEOPTION)
+    {
+        if (inputs.isLeftPressed())
+        {
+            if (buttonSelected == 1)
+            {
+                PlaySound(sounds.buttonSound);
+                gameState = GAMEPLAY;
+            }
+            if (buttonSelected == 2)
+            {
+                PlaySound(sounds.buttonSound);
+                masterVolume = cut(masterVolume + 0.05f, 0.0f, 1.0f);
+                SetMasterVolume(masterVolume);
+            }
+            if (buttonSelected == 3)
+            {
+                PlaySound(sounds.buttonSound);
+                masterVolume = cut(masterVolume - 0.05f, 0.0f, 1.0f);
+                SetMasterVolume(masterVolume);
+            }
+        }
+    }
     else if (gameState == CREDIT)
     {
         if (inputs.isLeftPressed())
@@ -383,13 +406,30 @@ void DataHolder::handleGameState()
                 if (buttonSelected == 1)
                 {
                     onPause = false;
+                    gameSpeed = 1;
                 }
                 else if (buttonSelected == 2)
                 {
-                    gameState = MENUMAP;
+                    gameState = GAMEOPTION;
                 }
                 else if (buttonSelected == 3)
                 {
+                    onPause = false;
+                    for (std::list<Enemy*>::iterator i = lists.enemies.begin(); i != lists.enemies.end(); i++) delete *i;
+                    for (std::forward_list<Tower*>::iterator i = lists.towers.begin(); i != lists.towers.end(); i++) delete *i;
+                    for (std::forward_list<Missile*>::iterator i = lists.missiles.begin(); i != lists.missiles.end(); i++) delete *i;
+                    for (std::forward_list<Particle *>::iterator i = lists.particles.begin(); i != lists.particles.end(); i++) delete *i;
+                    lists.enemies.clear();
+                    lists.towers.clear();
+                    lists.missiles.clear();
+                    lists.buffer.clear();
+                    lists.particles.clear();
+                    for (int i = 0; i < (MAP_HEIGHT*MAP_WIDTH); i++) lists.map.tilesWithTower[i] = false;
+                    selectedTower = nullptr;
+                    gameSpeed = 1;
+
+                    PlaySound(sounds.buttonSound);
+                    StopMusicStream(sounds.gameplayMusic);
                     gameState = MENU;
                 }
             }
@@ -402,22 +442,22 @@ void DataHolder::handleGameState()
         {
             if (buttonSelected == 1)
             {
-            for (std::list<Enemy*>::iterator i = lists.enemies.begin(); i != lists.enemies.end(); i++) delete *i;
-            for (std::forward_list<Tower*>::iterator i = lists.towers.begin(); i != lists.towers.end(); i++) delete *i;
-            for (std::forward_list<Missile*>::iterator i = lists.missiles.begin(); i != lists.missiles.end(); i++) delete *i;
-            for (std::forward_list<Particle *>::iterator i = lists.particles.begin(); i != lists.particles.end(); i++) delete *i;
-            lists.enemies.clear();
-            lists.towers.clear();
-            lists.missiles.clear();
-            lists.buffer.clear();
-            lists.particles.clear();
-            for (int i = 0; i < (MAP_HEIGHT*MAP_WIDTH); i++) lists.map.tilesWithTower[i] = false;
-            selectedTower = nullptr;
-            gameSpeed = 1;
+                for (std::list<Enemy*>::iterator i = lists.enemies.begin(); i != lists.enemies.end(); i++) delete *i;
+                for (std::forward_list<Tower*>::iterator i = lists.towers.begin(); i != lists.towers.end(); i++) delete *i;
+                for (std::forward_list<Missile*>::iterator i = lists.missiles.begin(); i != lists.missiles.end(); i++) delete *i;
+                for (std::forward_list<Particle *>::iterator i = lists.particles.begin(); i != lists.particles.end(); i++) delete *i;
+                lists.enemies.clear();
+                lists.towers.clear();
+                lists.missiles.clear();
+                lists.buffer.clear();
+                lists.particles.clear();
+                for (int i = 0; i < (MAP_HEIGHT*MAP_WIDTH); i++) lists.map.tilesWithTower[i] = false;
+                selectedTower = nullptr;
+                gameSpeed = 1;
 
-            PlaySound(sounds.buttonSound);
-            StopMusicStream(sounds.gameplayMusic);
-            gameState = MENU;
+                PlaySound(sounds.buttonSound);
+                StopMusicStream(sounds.gameplayMusic);
+                gameState = MENU;
             }
         }
     }

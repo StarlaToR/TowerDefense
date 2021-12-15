@@ -43,6 +43,9 @@ void renderMain(DataHolder& in)
     case OPTION:
         renderOption(in);
         break;
+    case GAMEOPTION:
+        renderGameOption(in);
+        break;
     case CREDIT:
         renderCredit(in);
         break;
@@ -187,7 +190,7 @@ void renderGameplay(DataHolder& in)
         {
             in.buttonSelected = 1;
         }
-        if (drawButtonMenu(in, "Change Map",  Vec2D(665,445), Vec2D(650, 400),Vec2D(250,140), in.mousePos))
+        if (drawButtonMenu(in, "Option",  Vec2D(665,445), Vec2D(650, 400),Vec2D(250,140), in.mousePos))
         {
             in.buttonSelected = 2;
         }
@@ -294,6 +297,31 @@ void renderCredit(DataHolder& in)
 }
 
 void renderOption(DataHolder& in)
+{
+    in.buttonSelected = 0;
+    float width = in.screenWidth;
+    float heigth = in.screenHeight;
+    DrawTexturePro(in.textures.background, Rectangle{in.framecounter/3.0f,0,1600,1000},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
+    DrawTexturePro(in.textures.title, Rectangle{0,0,500,500},Rectangle{450, 0,1000,450},Vector2{150,150}, 0, WHITE);
+    DrawTextEx(in.fontTitle, "Option", Vector2{600,0},100,4,BLACK);
+    if (drawButtonMenu(in, "Return", Vec2D(652, 780), Vec2D(650, 750),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 1;
+    }
+    DrawRectangleRounded(toRayLibRectangle(Vec2D(400,550),Vec2D(450,50)),0.2,10,LIGHTGRAY);
+    DrawRectangleRoundedLines(toRayLibRectangle(Vec2D(400,550),Vec2D(450,50)),0.2,10,2,BLACK);
+    DrawText(TextFormat("Master Volume: %.2f",in.masterVolume),410,557,40,GRAY);
+    if (drawButton("+", Vec2D(950, 550), Vec2D(50,50), in.mousePos))
+    {
+        in.buttonSelected = 2;
+    }
+    if (drawButton("-", Vec2D(1050, 550), Vec2D(50,50), in.mousePos))
+    {
+        in.buttonSelected = 3;
+    }
+}
+
+void renderGameOption(DataHolder& in)
 {
     in.buttonSelected = 0;
     float width = in.screenWidth;
