@@ -1,6 +1,5 @@
 # Projet Tower Defense
 
-![Image](assets/textures/Marie-Antoine.png)
 
 This project's goal is to create a *Tower Defense* game in 2D written in C++. 
 
@@ -65,11 +64,20 @@ When you have selected the map you want to play with, you enter the **game**.
 
 
 # Gameplay
+
+![Image](assets/readme/gameplay.png)
+
 In this game, you must defend your base represent by the green building of the enemies that come from the red building.
 Different enemies will attack your base :
 - the **Classic**, not really resistant, medium speed
+
+![Image](assets/readme/classic.png)
 - the **Big**, really resistant, slow
+
+![Image](assets/readme/big.png)
 - the **Healer**, vulnerable, fast, **heal** others enemies around him
+
+![Image](assets/readme/healer.png)
 
 >The enemies become more and more **stronger** with time
 
@@ -77,8 +85,14 @@ Different enemies will attack your base :
 
 To place towers, you must first choose between your 3 towers :
 - the **Classic**, cheap, low damage, quick attack speed
+
+![Image](assets/readme/classicTower.png)
 - the **Slowing**, really low damage but **slow** the enemy on hit, medium attack speed
+
+![Image](assets/readme/slowingTower.png)
 - the **Explosive**, expensive, high damage in explosion, slow attack speed
+
+![Image](assets/readme/explosiveTower.png)
 
 >If you don't have **enough money** to buy it, you can't place it.
 
@@ -99,6 +113,9 @@ In the bottom right corner, you can open the pause menu. It will stop the game a
 - **Main menu** : Come back to main menu. It will erase your current game.
 
 # Map Editor
+
+![Image](assets/readme/editor.png)
+
 You have here all the tools to make your own map.
 For that, you have three different categories of tiles :
 - **Terrain** :  You can choose between grass and sand.
@@ -119,3 +136,4 @@ For the Decoration, *right-click* on it will **change** its **style**.
 
 # Sources
 
+![Image](assets/textures/Marie-Antoine.png)
