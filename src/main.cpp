@@ -9,9 +9,14 @@ int main(void)
 {
     DataHolder holder = DataHolder();
     SetRandomSeed(time(NULL));
+    #ifdef WIN
+    SetConfigFlags(FLAG_VSYNC_HINT);
+    #endif
     InitWindow(holder.screenWidth, holder.screenHeight, "Tower Defense");
     InitAudioDevice();
+    #ifndef WIN
     SetTargetFPS(60);
+    #endif
     holder.initDatas();
     PlayMusicStream(holder.sounds.introSong);
 

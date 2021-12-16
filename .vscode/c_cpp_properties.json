@@ -11,6 +11,20 @@
             "cStandard": "c11",
             "cppStandard": "c++14",
             "intelliSenseMode": "linux-clang-x64"
+        },
+        {
+            "name": "Win32",
+            "includePath": [
+                "${default}",
+                "${env:CYGWIN_PATH}/usr/include/**",
+                "${env:CYGWIN_PATH}/lib/gcc/x86_64-pc-cygwin/11/include/**",
+                "${workspaceFolder}/third_party/include"
+            ],
+            "defines": ["WIN"],
+            "cStandard": "c11",
+            "cppStandard": "c++14",
+            "compilerPath": "${env:CYGWIN_PATH}/bin/g++.exe",
+            "intelliSenseMode": "gcc-x64"
         }
     ],
     "version": 4
