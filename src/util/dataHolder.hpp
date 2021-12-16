@@ -44,6 +44,7 @@ struct TextureHolder
     Texture2D tileTexture;
     Texture2D background;
     Texture2D button;
+    Texture2D buttonDown;
     Texture2D credit;
     Texture2D title;
     Texture2D logoIsart;
@@ -75,6 +76,7 @@ struct ListHolder
     TileHolders tHolders = TileHolders();
     TowerHolders towerHolders = TowerHolders();
     SaveData saveDatas;
+    SaveData renderDatas[3];
 };
 
 class InputHelper
@@ -117,12 +119,12 @@ public:
     Vec2D dragPos = Vec2D(-1,-1);
     Vec2D cameraPos = Vec2D();
     char cameraScale = 1;
-    int wave;
+    int wave = 0;
     Tower* selectedTower =nullptr;
     int gameSpeed = 1;
     bool onPause = false;
     int money = 20;
-    int life;
+    int life = 20;
 
     DataHolder() {}
     ~DataHolder() {}

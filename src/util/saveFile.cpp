@@ -23,7 +23,13 @@ int loadFile(SaveData& data, char slot)
     std::string path = "saves/save0.bin";
     path[10] = slot + '0';
     save.open(path, std::ios::in | std::ios::binary);
-    if (!save.is_open()) return -1;
+    if (!save.is_open())
+    {
+        data.timePlayed = 0;
+        data.maxLevel = 0;
+        data.maxWave = 0;
+        return -1;
+    }
     save.read((char*)(&data),sizeof(data));
     save.close();
     return 0;

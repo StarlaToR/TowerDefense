@@ -3,6 +3,8 @@
 
 class BossEnemy: public Enemy
 {
+private:
+    int anim = 120;
 public:
     BossEnemy(TileMap& t, int wave, int difficulty);
 

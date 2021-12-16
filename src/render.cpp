@@ -33,6 +33,9 @@ void renderMain(DataHolder& in)
     case LOAD:
         renderLoad(in);
         break;
+    case SAVE:
+        renderSave(in);
+        break;
     case MENUMAP:
         renderMenuMap(in);
         break;
@@ -60,8 +63,6 @@ void renderMain(DataHolder& in)
     default:
         break;
     }
-    DrawText(TextFormat("Speed: x%d",in.gameSpeed),100,10,20,BLACK);
-    DrawText(TextFormat("Chrono: %d",in.timeCounter.getTime()),100,100,20,in.timeCounter.isRunning() ? GREEN : RED);
     DrawFPS(10, 10);
     EndDrawing();
 }
@@ -105,8 +106,12 @@ void renderGameOver(DataHolder& in)
     DrawTexturePro(in.textures.board, Rectangle{0,0,720,900},Rectangle{680, 350,500,500},Vector2{150,150}, 0, WHITE);
     DrawTextEx(in.fontTitle, "Game Over", Vector2{560,27},70,4,BLACK);
     DrawTextEx(in.fontButton, TextFormat("Wave : %d",in.wave),Vector2{650,450},40,0, BLACK);
-    DrawTextEx(in.fontButton, "You noob,",Vector2{650,300},40,0, BLACK);
-    DrawTextEx(in.fontButton, "Try again",Vector2{650,350},40,0, BLACK);
+    if (in.difficulty > 3 && in.wave > in.lists.saveDatas.maxWave) DrawText("New High Score!",650,500,20,getRGB(in.framecounter));
+    if (in.difficulty < 3)
+    {
+        DrawTextEx(in.fontButton, "You noob,",Vector2{650,300},40,0, BLACK);
+        DrawTextEx(in.fontButton, "Try again",Vector2{650,350},40,0, BLACK);
+    }
     if (drawButtonMenu(in, "Return", Vec2D(652, 785), Vec2D(640, 760),Vec2D(270,100), in.mousePos))
     {
         in.buttonSelected = 1;
@@ -123,7 +128,7 @@ void renderVictory(DataHolder& in)
     DrawTexturePro(in.textures.board, Rectangle{0,0,720,900},Rectangle{680, 350,500,500},Vector2{150,150}, 0, WHITE);
     DrawTextEx(in.fontTitle, "Victory", Vector2{560,27},70,4,BLACK);
     DrawTextEx(in.fontButton, TextFormat("Wave : %d",in.wave-1),Vector2{650,450},40,0, BLACK);
-    if (drawButtonMenu(in, "Return", Vec2D(652, 785), Vec2D(640, 760),Vec2D(270,100), in.mousePos))
+    if (drawButtonMenu(in, "Continue", Vec2D(652, 785), Vec2D(640, 760),Vec2D(270,100), in.mousePos))
     {
         in.buttonSelected = 1;
     }
@@ -420,17 +425,44 @@ void renderLoad(DataHolder& in)
     {
         in.buttonSelected = 1;
     }
-    if (drawButtonMenu(in, "File 1", Vec2D(690,285), Vec2D(650, 240),Vec2D(250,140), in.mousePos))
+    for (int i = 0; i < 3; i++)
     {
-        in.buttonSelected = 2;
+        SaveData* tmp = &in.lists.renderDatas[i];
+        if (tmp->timePlayed == 0) {
+            DrawText("New File",950,305+i*160,20,BLACK);
+        }
+        else
+        {
+            DrawText(TextFormat("Time played : %.2d:%.2d",tmp->timePlayed/60, tmp->timePlayed%60),950,275+i*160,20,BLACK);
+            if (tmp->maxLevel < 9) DrawText(TextFormat("Levels unlocked : %d",tmp->maxLevel+1),950,305+i*160,20,BLACK);
+            else DrawText("All levels unlocked!",950,305+i*160,20,BLACK);
+            if (in.lists.saveDatas.maxLevel == 10) DrawText(TextFormat("Max wave in HARDCORE : %d",tmp->maxWave),950,335+i*160,20,BLACK);
+        }
+        if (drawButtonMenu(in, TextFormat("File %d", i+1), Vec2D(690,285+i*160), Vec2D(650, 240+i*160),Vec2D(250,140), in.mousePos))
+        {
+            in.buttonSelected = i+2;
+        }
     }
-    if (drawButtonMenu(in, "File 2", Vec2D(690,445), Vec2D(650, 400),Vec2D(250,140), in.mousePos))
+}
+
+void renderSave(DataHolder& in)
+{
+    in.buttonSelected = 0;
+    float width = in.screenWidth;
+    float heigth = in.screenHeight;
+    DrawTexturePro(in.textures.background, Rectangle{in.framecounter/3.0f,0,1600,1000},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
+    DrawTexturePro(in.textures.title, Rectangle{0,0,500,500},Rectangle{450, 0,1000,450},Vector2{150,150}, 0, WHITE);
+    DrawTextEx(in.fontTitle, "Save to File", Vector2{650,0},100,4,BLACK);
+    if (drawButtonMenu(in, "Continue", Vec2D(652, 785), Vec2D(640, 760),Vec2D(270,100), in.mousePos))
     {
-        in.buttonSelected = 3;
+        in.buttonSelected = 1;
     }
-    if (drawButtonMenu(in, "File 3", Vec2D(690, 605), Vec2D(650, 580),Vec2D(250,100), in.mousePos))
+    for (int i = 0; i < 3; i++)
     {
-        in.buttonSelected = 4;
+        if (drawButtonMenu(in, TextFormat("File %d", i+1), Vec2D(690,285+i*160), Vec2D(650, 240+i*160),Vec2D(250,140), in.mousePos))
+        {
+            in.buttonSelected = i+2;
+        }
     }
 }
 
@@ -442,43 +474,14 @@ void renderMenuMap(DataHolder& in)
     DrawTexturePro(in.textures.background, Rectangle{in.framecounter/3.0f,0,1600,1000},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
     DrawTexturePro(in.textures.title, Rectangle{0,0,500,500},Rectangle{450, 0,1000,450},Vector2{150,150}, 0, WHITE);
     DrawTextEx(in.fontTitle, "Choose a map", Vector2{440,10},90,4,BLACK);
-    if (drawButtonMenu(in, "Level 1", Vec2D(265,225), Vec2D(250, 200),Vec2D(280,100), in.mousePos))
+    for (int i = 0; i < 9; i++)
     {
-        in.buttonSelected = 1;
+        if (in.lists.saveDatas.maxLevel >= i && drawButtonMenu(in, TextFormat("Level %d", i+1), Vec2D(265+(i%3)*400,225+(i/3)*120), Vec2D(250+(i%3)*400, 200+(i/3)*120),Vec2D(280,100), in.mousePos))
+        {
+            in.buttonSelected = i+1;
+        }
     }
-    if (drawButtonMenu(in, "Level 2", Vec2D(665, 225), Vec2D(650, 200),Vec2D(280,100), in.mousePos))
-    {
-        in.buttonSelected = 2;
-    }
-    if (drawButtonMenu(in, "Level 3", Vec2D(1065, 225), Vec2D(1050, 200),Vec2D(280,100), in.mousePos))
-    {
-        in.buttonSelected = 3;
-    }
-    if (drawButtonMenu(in, "Level 4", Vec2D(265, 345), Vec2D(250, 320),Vec2D(280,100), in.mousePos))
-    {
-        in.buttonSelected = 4;
-    }
-    if (drawButtonMenu(in, "Level 5", Vec2D(665,345), Vec2D(650, 320),Vec2D(280,100), in.mousePos))
-    {
-        in.buttonSelected = 5;
-    }
-    if (drawButtonMenu(in, "Level 6", Vec2D(1065,345), Vec2D(1050,320 ),Vec2D(280,100), in.mousePos))
-    {
-        in.buttonSelected = 6;
-    }
-    if (drawButtonMenu(in, "Level 7", Vec2D(265, 465), Vec2D(250,440),Vec2D(280,100), in.mousePos))
-    {
-        in.buttonSelected = 7;
-    }
-    if (drawButtonMenu(in, "Level 8", Vec2D(665, 465), Vec2D(650,440 ),Vec2D(280,100), in.mousePos))
-    {
-        in.buttonSelected = 8;
-    }
-    if (drawButtonMenu(in, "Level 9", Vec2D(1065, 465), Vec2D(1050,440),Vec2D(280,100), in.mousePos))
-    {
-        in.buttonSelected = 9;
-    }
-    if (drawButtonMenu(in, "Level10", Vec2D(665, 585), Vec2D(650,560 ),Vec2D(280,100), in.mousePos))
+    if (in.lists.saveDatas.maxLevel >= 9 && drawButtonMenu(in, "Level10", Vec2D(665, 585), Vec2D(650,560 ),Vec2D(280,100), in.mousePos))
     {
         in.buttonSelected = 10;
     }
@@ -500,41 +503,12 @@ void renderMenuMapCustom(DataHolder& in)
     DrawTexturePro(in.textures.background, Rectangle{in.framecounter/3.0f,0,1600,1000},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
     DrawTexturePro(in.textures.title, Rectangle{0,0,500,500},Rectangle{450, 0,1000,450},Vector2{150,150}, 0, WHITE);
     DrawTextEx(in.fontTitle, "Choose a map", Vector2{440,10},90,4,BLACK);
-    if (drawButtonMenu(in, "Map 1", Vec2D(270,225), Vec2D(250, 200),Vec2D(250,100), in.mousePos))
+    for (int i = 0; i < 9; i++)
     {
-        in.buttonSelected = 1;
-    }
-    if (drawButtonMenu(in, "Map 2", Vec2D(670, 225), Vec2D(650, 200),Vec2D(250,100), in.mousePos))
-    {
-        in.buttonSelected = 2;
-    }
-    if (drawButtonMenu(in, "Map 3", Vec2D(1070, 225), Vec2D(1050, 200),Vec2D(250,100), in.mousePos))
-    {
-        in.buttonSelected = 3;
-    }
-    if (drawButtonMenu(in, "Map 4", Vec2D(270, 345), Vec2D(250, 320),Vec2D(250,100), in.mousePos))
-    {
-        in.buttonSelected = 4;
-    }
-    if (drawButtonMenu(in, "Map 5", Vec2D(670,345), Vec2D(650, 320),Vec2D(250,100), in.mousePos))
-    {
-        in.buttonSelected = 5;
-    }
-    if (drawButtonMenu(in, "Map 6", Vec2D(1070,345), Vec2D(1050,320 ),Vec2D(250,100), in.mousePos))
-    {
-        in.buttonSelected = 6;
-    }
-    if (drawButtonMenu(in, "Map 7", Vec2D(270, 465), Vec2D(250,440),Vec2D(250,100), in.mousePos))
-    {
-        in.buttonSelected = 7;
-    }
-    if (drawButtonMenu(in, "Map 8", Vec2D(670, 465), Vec2D(650,440 ),Vec2D(250,100), in.mousePos))
-    {
-        in.buttonSelected = 8;
-    }
-    if (drawButtonMenu(in, "Map 9", Vec2D(1070, 465), Vec2D(1050,440),Vec2D(250,100), in.mousePos))
-    {
-        in.buttonSelected = 9;
+        if (drawButtonMenu(in, TextFormat("Map %d", i+1), Vec2D(270+(i%3)*400,225+(i/3)*120), Vec2D(250+(i%3)*400, 200+(i/3)*120),Vec2D(280,100), in.mousePos))
+        {
+            in.buttonSelected = i+1;
+        }
     }
     if (drawButtonMenu(in, "Map 10", Vec2D(670, 585), Vec2D(650,560 ),Vec2D(250,100), in.mousePos))
     {

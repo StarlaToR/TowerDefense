@@ -44,6 +44,7 @@ void DataHolder::unloadDatas()
     UnloadTexture(textures.title);
     UnloadTexture(textures.credit);
     UnloadTexture(textures.button);
+    UnloadTexture(textures.buttonDown);
     UnloadTexture(textures.boss);
     UnloadTexture(textures.logoIsart);
     UnloadTexture(textures.gameUI);
@@ -68,6 +69,7 @@ void DataHolder::initDatas()
     textures.credit = LoadTexture("assets/textures/credit.png");
     textures.tileTexture = LoadTexture("assets/textures/tileSheet.png");
     textures.button = LoadTexture("assets/textures/button.png");
+    textures.buttonDown = LoadTexture("assets/textures/button_down.png");
     textures.gameUI = LoadTexture("assets/textures/ui.png");
     textures.board = LoadTexture("assets/textures/board.png");
     textures.optionButton = LoadTexture("assets/textures/optionButton.png");
@@ -85,6 +87,7 @@ void DataHolder::initDatas()
     SetSoundVolume(sounds.classicTowerSound, 0.20f);
     SetSoundVolume(sounds.slowTowerSound, 0.10f);
     SetSoundVolume(sounds.explosiveTowerSound, 0.10f);
+    SetSoundVolume(sounds.buttonSound, 0.50f);
     selectedTower = nullptr;
     lists.tiles.registerTiles();
     SetMasterVolume(masterVolume);
@@ -177,6 +180,7 @@ void DataHolder::handleGameState()
                 life = 20;
                 wave = 0;
                 money = 20;
+                difficulty = 2;
                 lists.saveDatas.maxLevel = 0;
                 lists.saveDatas.timePlayed = 0;
                 tileRenderType = NORMAL;
@@ -185,6 +189,10 @@ void DataHolder::handleGameState()
             if (buttonSelected == 2)
             {
                 PlaySound(sounds.buttonSound);
+                for (int i = 0; i < 3; i++)
+                {
+                    loadFile(lists.renderDatas[i], i);
+                }
                 gameState = LOAD;
             }
             else if (buttonSelected == 3)
@@ -276,30 +284,30 @@ void DataHolder::handleGameState()
                 PlaySound(sounds.buttonSound);
                 effectVolume = cut(effectVolume + 0.05f, 0.0f, 1.0f);
                 SetSoundVolume(sounds.classicTowerSound, 0.4f * effectVolume);
-                SetSoundVolume(sounds.slowTowerSound, 0.4f * effectVolume);
-                SetSoundVolume(sounds.explosiveTowerSound, 0.4f * effectVolume);
-                SetSoundVolume(sounds.buttonSound, 0.4f * effectVolume);
+                SetSoundVolume(sounds.slowTowerSound, 0.2f * effectVolume);
+                SetSoundVolume(sounds.explosiveTowerSound, 0.2f * effectVolume);
+                SetSoundVolume(sounds.buttonSound, effectVolume);
             }
             if (buttonSelected == 5)
             {
                 PlaySound(sounds.buttonSound);
                 effectVolume = cut(effectVolume - 0.05f, 0.0f, 1.0f);
                 SetSoundVolume(sounds.classicTowerSound, 0.4f * effectVolume);
-                SetSoundVolume(sounds.slowTowerSound, 0.4f * effectVolume);
-                SetSoundVolume(sounds.explosiveTowerSound, 0.4f * effectVolume);
-                SetSoundVolume(sounds.buttonSound, 0.4f * effectVolume);
+                SetSoundVolume(sounds.slowTowerSound, 0.2f * effectVolume);
+                SetSoundVolume(sounds.explosiveTowerSound, 0.2f * effectVolume);
+                SetSoundVolume(sounds.buttonSound, effectVolume);
             }
             if (buttonSelected == 6)
             {
                 PlaySound(sounds.buttonSound);
                 musicVolume = cut(musicVolume + 0.05f, 0.0f, 1.0f);
-                SetMusicVolume(sounds.gameplayMusic, 0.4f * musicVolume);
+                SetMusicVolume(sounds.gameplayMusic, musicVolume);
             }
             if (buttonSelected == 7)
             {
                 PlaySound(sounds.buttonSound);
                 musicVolume = cut(musicVolume - 0.05f, 0.0f, 1.0f);
-                SetMusicVolume(sounds.gameplayMusic, 0.4f * musicVolume);
+                SetMusicVolume(sounds.gameplayMusic, musicVolume);
             }
             if (buttonSelected == 8)
             {
@@ -343,32 +351,31 @@ void DataHolder::handleGameState()
                 PlaySound(sounds.buttonSound);
                 effectVolume = cut(effectVolume + 0.05f, 0.0f, 1.0f);
                 SetSoundVolume(sounds.classicTowerSound, 0.4f * effectVolume);
-                SetSoundVolume(sounds.slowTowerSound, 0.4f * effectVolume);
-                SetSoundVolume(sounds.explosiveTowerSound, 0.4f * effectVolume);
-                SetSoundVolume(sounds.buttonSound, 0.4f * effectVolume);
+                SetSoundVolume(sounds.slowTowerSound, 0.2f * effectVolume);
+                SetSoundVolume(sounds.explosiveTowerSound, 0.2f * effectVolume);
+                SetSoundVolume(sounds.buttonSound, effectVolume);
             }
             if (buttonSelected == 5)
             {
                 PlaySound(sounds.buttonSound);
                 effectVolume = cut(effectVolume - 0.05f, 0.0f, 1.0f);
                 SetSoundVolume(sounds.classicTowerSound, 0.4f * effectVolume);
-                SetSoundVolume(sounds.slowTowerSound, 0.4f * effectVolume);
-                SetSoundVolume(sounds.explosiveTowerSound, 0.4f * effectVolume);
-                SetSoundVolume(sounds.buttonSound, 0.4f * effectVolume);
+                SetSoundVolume(sounds.slowTowerSound, 0.2f * effectVolume);
+                SetSoundVolume(sounds.explosiveTowerSound, 0.2f * effectVolume);
+                SetSoundVolume(sounds.buttonSound, effectVolume);
             }
             if (buttonSelected == 6)
             {
                 PlaySound(sounds.buttonSound);
                 musicVolume = cut(musicVolume + 0.05f, 0.0f, 1.0f);
-                SetMusicVolume(sounds.gameplayMusic, 0.4f * musicVolume);
+                SetMusicVolume(sounds.gameplayMusic, musicVolume);
             }
             if (buttonSelected == 7)
             {
                 PlaySound(sounds.buttonSound);
                 musicVolume = cut(musicVolume - 0.05f, 0.0f, 1.0f);
-                SetMusicVolume(sounds.gameplayMusic, 0.4f * musicVolume);
+                SetMusicVolume(sounds.gameplayMusic, musicVolume);
             }
-            
         }
     }
     else if (gameState == CREDIT)
@@ -394,8 +401,9 @@ void DataHolder::handleGameState()
             else if (buttonSelected >= 2 && buttonSelected <= 4)
             {
                 loadFile(lists.saveDatas,buttonSelected-2);
+                timeCounter.setTime(lists.saveDatas.timePlayed);
                 PlaySound(sounds.buttonSound);
-                gameState = MENU;
+                gameState = MENUMAP;
             }
         }
     }
@@ -581,10 +589,19 @@ void DataHolder::handleGameState()
                 for (int i = 0; i < (MAP_HEIGHT*MAP_WIDTH); i++) lists.map.tilesWithTower[i] = false;
                 selectedTower = nullptr;
                 gameSpeed = 1;
-
                 PlaySound(sounds.buttonSound);
                 StopMusicStream(sounds.gameplayMusic);
-                gameState = MENU;
+                life = 20;
+                money = 20;
+                if (difficulty > 3 && wave > lists.saveDatas.maxWave) {
+                    lists.saveDatas.maxWave = wave;
+                    gameState = SAVE;
+                }
+                else
+                {
+                    gameState = MENU;
+                }
+                wave = 0;
             }
         }
     }
@@ -601,10 +618,17 @@ void DataHolder::handleGameState()
             lists.missiles.clear();
             lists.buffer.clear();
             lists.particles.clear();
+            life = 20;
+            wave = 0;
+            money = 20;
             for (int i = 0; i < (MAP_HEIGHT*MAP_WIDTH); i++) lists.map.tilesWithTower[i] = false;
             selectedTower = nullptr;
             gameSpeed = 1;
             PlaySound(sounds.buttonSound);
+            for (int i = 0; i < 3; i++)
+            {
+                loadFile(lists.renderDatas[i], i);
+            }
             gameState = SAVE;
         }
     }

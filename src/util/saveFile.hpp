@@ -2,7 +2,8 @@
 #include <stddef.h>
 struct SaveData
 {
-    char maxLevel = 0;
+    int maxLevel = 0;
+    int maxWave = 0;
     size_t timePlayed = 0;
 };
 

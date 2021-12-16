@@ -73,15 +73,14 @@ bool drawButton(const char* text, Vec2D pos, Vec2D size, Vec2D mousePos) {
 bool drawButtonMenu(DataHolder& in, const char* text, Vec2D textSize, Vec2D pos, Vec2D size, Vec2D mousePos) {
     Vec2D tmp = pos+size;
     bool isInside = (mousePos.x > pos.x && mousePos.y > pos.y && mousePos.x <= tmp.x && mousePos.y <= tmp.y);
-    DrawTexturePro(in.textures.button, Rectangle{0,0,2800,2600}, Rectangle{pos.x-22,pos.y-90,size.x+25,size.y+150}, Vector2{0,0}, 0, WHITE);
-    DrawTextEx(in.fontButton, text, Vector2{textSize.x,textSize.y},50,2,isInside?Fade(BLACK,getFade(in.framecounter)):BLACK);
+    DrawTexturePro(isInside ? in.textures.buttonDown : in.textures.button, Rectangle{0,0,2800,2600}, Rectangle{pos.x-22,pos.y-90+isInside*12,size.x+25,size.y+150}, Vector2{0,0}, 0, WHITE);
+    DrawTextEx(in.fontButton, text, Vector2{textSize.x,textSize.y+isInside*12},50,2,isInside?Fade(BLACK,getFade(in.framecounter)):BLACK);
     return isInside;
 }
 
 bool drawButtonInvisible(Vec2D pos, Vec2D size, Vec2D mousePos) {
     Vec2D tmp = pos+size;
     bool isInside = (mousePos.x > pos.x && mousePos.y > pos.y && mousePos.x <= tmp.x && mousePos.y <= tmp.y);
-    //DrawRectangleRec(toRayLibRectangle(pos,size),Fade(BLACK,0.5));
     return isInside;
 }
 
@@ -95,14 +94,14 @@ void drawMapElements(DataHolder& in, bool editor)
     DrawTileMap(in,in.tileRenderType);
     if (!editor)
     {
-        bool drawBoss = false;
+        char drawBoss = 0;
         Enemy* boss;
         for (std::list<Enemy*>::iterator i = in.lists.enemies.begin(); i != in.lists.enemies.end(); i++)
         {
-            if ((*i)->isUnderGround()) continue;
             int tx = (*i)->getTexture();
             int color = (*i)->getColor();
             if (tx != TOWER_BASE) {
+                if ((*i)->isUnderGround()) continue;
                 if (tx != 52)
                 {
                     DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(53),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(48,48)),Vec2D(24,24),(*i)->getRotation()*RAD2DEG+90.0f,LIGHTGRAY);
@@ -118,7 +117,7 @@ void drawMapElements(DataHolder& in, bool editor)
             }
             else
             {
-                drawBoss = true;
+                drawBoss = 1+(*i)->isUnderGround();
                 boss = *i;
             }
         }
@@ -136,11 +135,18 @@ void drawMapElements(DataHolder& in, bool editor)
             DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(54),toRayLibRectangle((*i)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(80,80)),Vec2D(40,40),(*i)->getRotation()*RAD2DEG+90.0f,GetColor((*i)->getColor()));
         }
         DrawSpecialTiles(in);
+        if (drawBoss == 2)
+        {
+            DrawTexturePro(in.textures.boss,in.lists.tiles.tileCrops.at(boss->getTexture()),toRayLibRectangle((boss)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(192,192)),Vec2D(96,96),(boss)->getRotation()*RAD2DEG-90.0f,WHITE);
+            DrawRectangleRec(toRayLibRectangle((boss)->getPosition()*Vec2D(48,48)+Vec2D(6,-8),Vec2D(88,18)),BLACK);
+            DrawRectangleRec(toRayLibRectangle((boss)->getPosition()*Vec2D(48,48)+Vec2D(7,-7),Vec2D(86,16)),RED);
+            DrawRectangleRec(toRayLibRectangle((boss)->getPosition()*Vec2D(48,48)+Vec2D(7,-7),Vec2D(86.0f*((boss)->getHealth()),16)),GREEN);
+        }
         for (std::forward_list<Particle*>::iterator i = in.lists.particles.begin(); i != in.lists.particles.end(); i++)
         {
             (*i)->drawParticle(in.textures.tileTexture, in.lists.tiles);
         }
-        if (drawBoss)
+        if (drawBoss == 1)
         {
             DrawTexturePro(in.textures.boss,in.lists.tiles.tileCrops.at(boss->getTexture()),toRayLibRectangle((boss)->getPosition()*Vec2D(48,48)+Vec2D(50,50),Vec2D(192,192)),Vec2D(96,96),(boss)->getRotation()*RAD2DEG-90.0f,WHITE);
             DrawRectangleRec(toRayLibRectangle((boss)->getPosition()*Vec2D(48,48)+Vec2D(6,-8),Vec2D(88,18)),BLACK);
@@ -155,7 +161,6 @@ void drawMapElements(DataHolder& in, bool editor)
         }
     }
     EndMode2D();
-    //DrawRectangleRec(toRayLibRectangle(Vec2D(50,50),Vec2D(1202.0f,626.0f)),GetColor(0x000014c0));
     DrawTexture(in.textures.gameUI,0,0,WHITE);
 }
 

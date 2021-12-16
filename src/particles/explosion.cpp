@@ -8,7 +8,7 @@ ExplosionParticle::ExplosionParticle()
     counter = 0;
 }
 
-ExplosionParticle::ExplosionParticle( Vec2D pos)
+ExplosionParticle::ExplosionParticle(Vec2D pos)
 {
     subColor = GetRandomValue(0,7);
     position = pos + Vec2D(GetRandomValue(-100,100) / 350.0f, GetRandomValue(-100,100) / 350.0f);
