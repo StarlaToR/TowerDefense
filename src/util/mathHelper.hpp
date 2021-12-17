@@ -1,21 +1,10 @@
 #pragma once
 
-
 #include <math.h>
-
 #include <stdbool.h>
 
 #define VEC2D_COLLINEAR_PRECISION 0.001f
 #define VEC2D_HIGH_VALUE 1e20f
-
-class RotationMatrix {
-    private:
-        float content[2][2];
-    public:
-        RotationMatrix(float angle);
-
-        friend class Vec2D;
-};
 
 class Vec2D {
     public:
@@ -72,8 +61,6 @@ class Vec2D {
 
         // return true if 'a' converted to int is equivalent to 'in' converted to int
         bool isIntEquivalent(Vec2D a);
-
-        Vec2D applyRotation(RotationMatrix matrix);
 
         #ifdef VEC2_TO_RAYLIB_VECTOR2
             VEC2_TO_RAYLIB_VECTOR2

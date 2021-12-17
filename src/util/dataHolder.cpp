@@ -1,6 +1,41 @@
-#include "dataHolder.hpp"
-#include "../towers/classicTower.hpp"
 #include <string>
+#include "../towers/classicTower.hpp"
+#include "dataHolder.hpp"
+
+static void handleIntro(DataHolder &in);
+static void handleMenu(DataHolder &in);
+static void handleMenuPlay(DataHolder &in);
+static void handleMenuMap(DataHolder &in);
+static void handleMenuMapCustom(DataHolder &in);
+static void handleGamePlay(DataHolder &in);
+static void handleGamePause(DataHolder &in);
+static void handleGameOver(DataHolder &in);
+static void handleVictory(DataHolder &in);
+static void handleEditor(DataHolder &in);
+static void handleLoad(DataHolder &in);
+static void handleOption(DataHolder &in);
+static void handleGameOption(DataHolder &in);
+static void handleSave(DataHolder &in);
+static void handleCredit(DataHolder &in);
+
+void (*handlers[15])(DataHolder &in) =
+    {
+        &handleIntro,
+        &handleMenu,
+        &handleMenuPlay,
+        &handleMenuMap,
+        &handleMenuMapCustom,
+        &handleGamePlay,
+        &handleGamePause,
+        &handleGameOver,
+        &handleVictory,
+        &handleEditor,
+        &handleLoad,
+        &handleOption,
+        &handleGameOption,
+        &handleSave,
+        &handleCredit,
+};
 
 void InputHelper::handleInputs()
 {
@@ -42,7 +77,6 @@ void DataHolder::unloadDatas()
     UnloadTexture(textures.tileTexture);
     UnloadTexture(textures.background);
     UnloadTexture(textures.title);
-    UnloadTexture(textures.credit);
     UnloadTexture(textures.button);
     UnloadTexture(textures.buttonDown);
     UnloadTexture(textures.boss);
@@ -66,7 +100,6 @@ void DataHolder::initDatas()
     textures.boss = LoadTexture("assets/textures/boss.png");
     textures.background = LoadTexture("assets/textures/background.png");
     textures.title = LoadTexture("assets/textures/title.png");
-    textures.credit = LoadTexture("assets/textures/credit.png");
     textures.tileTexture = LoadTexture("assets/textures/tileSheet.png");
     textures.button = LoadTexture("assets/textures/button.png");
     textures.buttonDown = LoadTexture("assets/textures/button_down.png");
@@ -111,635 +144,644 @@ void DataHolder::handleGameState()
         StopMusicStream(sounds.introSong);
     mousePos = Vec2D(GetMousePosition().x, GetMousePosition().y);
 
-    if (gameState == INTRO)
+    if (gameState < EXIT)
     {
-        if (inputs.isLeftPressed() || framecounter > 360)
-        {
-            StopMusicStream(sounds.introSong);
-            gameState = MENU;
-        }
+        handlers[gameState](*this);
     }
-    else if (gameState == MENU)
+    framecounter++;
+}
+
+void handleIntro(DataHolder &in)
+{
+    if (in.inputs.isLeftPressed() || in.framecounter > 360)
     {
-        if (inputs.isLeftPressed())
-        {
-            if (buttonSelected == 1)
-            {
-                PlaySound(sounds.buttonSound);
-                gameState = MENUPLAY;
-            }
-            else if (buttonSelected == 2)
-            {
-                PlaySound(sounds.buttonSound);
-                gameState = OPTION;
-            }
-            else if (buttonSelected == 3)
-            {
-                PlaySound(sounds.buttonSound);
-                gameState = CREDIT;
-            }
-            else if (buttonSelected == 4)
-            {
-                PlaySound(sounds.buttonSound);
-                gameState = EXIT;
-            }
-            else if (buttonSelected == 5)
-            {
-                PlaySound(sounds.buttonSound);
-                if (IsMusicStreamPlaying(sounds.musicTroll))
-                {
-                    StopMusicStream(sounds.musicTroll);
-                }
-                else
-                {
-                    PlayMusicStream(sounds.musicTroll);
-                }
-            }
-            else if (buttonSelected == 6)
-            {
-                framecounter = 0;
-                PlaySound(sounds.buttonSound);
-                PlayMusicStream(sounds.introSong);
-                gameState = INTRO;
-            }
-        }
+        StopMusicStream(in.sounds.introSong);
+        in.gameState = MENU;
     }
-    else if (gameState == MENUPLAY)
+}
+
+void handleMenu(DataHolder &in)
+{
+    if (in.inputs.isLeftPressed())
     {
-        if (inputs.isLeftPressed())
+        if (in.buttonSelected == 1)
         {
-            if (buttonSelected == 1)
-            {
-                PlaySound(sounds.buttonSound);
-                life = 20;
-                wave = 0;
-                money = 20;
-                lists.saveDatas.maxLevel = 0;
-                lists.saveDatas.timePlayed = 0;
-                tileRenderType = NORMAL;
-                gameState = MENUMAP;
-            }
-            if (buttonSelected == 2)
-            {
-                PlaySound(sounds.buttonSound);
-                for (int i = 0; i < 3; i++)
-                {
-                    loadFile(lists.renderDatas[i], i);
-                }
-                gameState = LOAD;
-            }
-            else if (buttonSelected == 3)
-            {
-                PlaySound(sounds.buttonSound);
-                lists.map.loadFromFile("saves/maps/game/default.bin");
-                tileRenderType = EXTENDED;
-                gameState = EDITOR;
-            }
-            else if (buttonSelected == 4)
-            {
-                PlaySound(sounds.buttonSound);
-                gameState = MENU;
-            }
+            PlaySound(in.sounds.buttonSound);
+            in.gameState = MENUPLAY;
         }
-    }
-    else if (gameState == MENUMAP)
-    {
-        if (inputs.isLeftPressed())
+        else if (in.buttonSelected == 2)
         {
-            if (buttonSelected >= 1 && buttonSelected <= 10)
-            {
-                std::string path = {"saves/maps/game/game0.bin"};
-                path[20] = buttonSelected - 1 + '0';
-                currentLevel = buttonSelected - 1;
-                lists.map.loadFromFile(path.data());
-                timeCounter.start();
-                PlaySound(sounds.buttonSound);
-                gameState = GAMEPLAY;
-            }
-            else if (buttonSelected == 11)
-            {
-                PlaySound(sounds.buttonSound);
-                gameState = MENUPLAY;
-            }
-            else if (buttonSelected == 12)
-            {
-                PlaySound(sounds.buttonSound);
-                gameState = MENUMAPCUSTOM;
-            }
+            PlaySound(in.sounds.buttonSound);
+            in.gameState = OPTION;
         }
-    }
-    else if (gameState == MENUMAPCUSTOM)
-    {
-        if (inputs.isLeftPressed())
+        else if (in.buttonSelected == 3)
         {
-            if (buttonSelected == 11)
+            PlaySound(in.sounds.buttonSound);
+            in.gameState = CREDIT;
+        }
+        else if (in.buttonSelected == 4)
+        {
+            PlaySound(in.sounds.buttonSound);
+            in.gameState = EXIT;
+        }
+        else if (in.buttonSelected == 5)
+        {
+            PlaySound(in.sounds.buttonSound);
+            if (IsMusicStreamPlaying(in.sounds.musicTroll))
             {
-                PlaySound(sounds.buttonSound);
-                gameState = MENUMAP;
+                StopMusicStream(in.sounds.musicTroll);
             }
             else
             {
-                std::string path = {"saves/maps/custom/map0.bin"};
-                path[21] = buttonSelected - 1 + '0';
-                if (lists.map.loadFromFile(path.data()) >= 0)
-                {
-                    currentLevel = -1;
-                    timeCounter.start();
-                    PlaySound(sounds.buttonSound);
-                    gameState = GAMEPLAY;
-                }
+                PlayMusicStream(in.sounds.musicTroll);
             }
         }
-    }
-    else if (gameState == OPTION)
-    {
-        if (inputs.isLeftPressed())
+        else if (in.buttonSelected == 6)
         {
-            if (buttonSelected == 1)
-            {
-                PlaySound(sounds.buttonSound);
-                gameState = MENU;
-            }
-            if (buttonSelected == 2)
-            {
-                PlaySound(sounds.buttonSound);
-                masterVolume = cut(masterVolume + 0.05f, 0.0f, 1.0f);
-                SetMasterVolume(masterVolume);
-            }
-            if (buttonSelected == 3)
-            {
-                PlaySound(sounds.buttonSound);
-                masterVolume = cut(masterVolume - 0.05f, 0.0f, 1.0f);
-                SetMasterVolume(masterVolume);
-            }
-            if (buttonSelected == 4)
-            {
-                PlaySound(sounds.buttonSound);
-                effectVolume = cut(effectVolume + 0.05f, 0.0f, 1.0f);
-                SetSoundVolume(sounds.classicTowerSound, 0.4f * effectVolume);
-                SetSoundVolume(sounds.slowTowerSound, 0.2f * effectVolume);
-                SetSoundVolume(sounds.explosiveTowerSound, 0.2f * effectVolume);
-                SetSoundVolume(sounds.buttonSound, effectVolume);
-            }
-            if (buttonSelected == 5)
-            {
-                PlaySound(sounds.buttonSound);
-                effectVolume = cut(effectVolume - 0.05f, 0.0f, 1.0f);
-                SetSoundVolume(sounds.classicTowerSound, 0.4f * effectVolume);
-                SetSoundVolume(sounds.slowTowerSound, 0.2f * effectVolume);
-                SetSoundVolume(sounds.explosiveTowerSound, 0.2f * effectVolume);
-                SetSoundVolume(sounds.buttonSound, effectVolume);
-            }
-            if (buttonSelected == 6)
-            {
-                PlaySound(sounds.buttonSound);
-                musicVolume = cut(musicVolume + 0.05f, 0.0f, 1.0f);
-                SetMusicVolume(sounds.gameplayMusic, musicVolume);
-            }
-            if (buttonSelected == 7)
-            {
-                PlaySound(sounds.buttonSound);
-                musicVolume = cut(musicVolume - 0.05f, 0.0f, 1.0f);
-                SetMusicVolume(sounds.gameplayMusic, musicVolume);
-            }
-            if (buttonSelected == 8)
-            {
-                PlaySound(sounds.buttonSound);
-                if (difficulty < (3 + (lists.saveDatas.maxLevel == 10)))
-                    difficulty += 1;
-            }
-            if (buttonSelected == 9)
-            {
-                PlaySound(sounds.buttonSound);
-                if (difficulty > 1)
-                    difficulty -= 1;
-            }
+            in.framecounter = 0;
+            PlaySound(in.sounds.buttonSound);
+            PlayMusicStream(in.sounds.introSong);
+            in.gameState = INTRO;
         }
     }
-    else if (gameState == GAMEOPTION)
+}
+
+void handleMenuPlay(DataHolder &in)
+{
+    if (in.inputs.isLeftPressed())
     {
-        if (inputs.isLeftPressed())
+        if (in.buttonSelected == 1)
         {
-            if (buttonSelected == 1)
+            PlaySound(in.sounds.buttonSound);
+            in.life = 20;
+            in.wave = 0;
+            in.money = 20;
+            in.lists.saveDatas.maxLevel = 0;
+            in.lists.saveDatas.timePlayed = 0;
+            in.tileRenderType = NORMAL;
+            in.gameState = MENUMAP;
+        }
+        if (in.buttonSelected == 2)
+        {
+            PlaySound(in.sounds.buttonSound);
+            for (int i = 0; i < 3; i++)
             {
-                PlaySound(sounds.buttonSound);
-                gameState = GAMEPLAY;
+                loadFile(in.lists.renderDatas[i], i);
             }
-            if (buttonSelected == 2)
-            {
-                PlaySound(sounds.buttonSound);
-                masterVolume = cut(masterVolume + 0.05f, 0.0f, 1.0f);
-                SetMasterVolume(masterVolume);
-            }
-            if (buttonSelected == 3)
-            {
-                PlaySound(sounds.buttonSound);
-                masterVolume = cut(masterVolume - 0.05f, 0.0f, 1.0f);
-                SetMasterVolume(masterVolume);
-            }
-            if (buttonSelected == 4)
-            {
-                PlaySound(sounds.buttonSound);
-                effectVolume = cut(effectVolume + 0.05f, 0.0f, 1.0f);
-                SetSoundVolume(sounds.classicTowerSound, 0.4f * effectVolume);
-                SetSoundVolume(sounds.slowTowerSound, 0.2f * effectVolume);
-                SetSoundVolume(sounds.explosiveTowerSound, 0.2f * effectVolume);
-                SetSoundVolume(sounds.buttonSound, effectVolume);
-            }
-            if (buttonSelected == 5)
-            {
-                PlaySound(sounds.buttonSound);
-                effectVolume = cut(effectVolume - 0.05f, 0.0f, 1.0f);
-                SetSoundVolume(sounds.classicTowerSound, 0.4f * effectVolume);
-                SetSoundVolume(sounds.slowTowerSound, 0.2f * effectVolume);
-                SetSoundVolume(sounds.explosiveTowerSound, 0.2f * effectVolume);
-                SetSoundVolume(sounds.buttonSound, effectVolume);
-            }
-            if (buttonSelected == 6)
-            {
-                PlaySound(sounds.buttonSound);
-                musicVolume = cut(musicVolume + 0.05f, 0.0f, 1.0f);
-                SetMusicVolume(sounds.gameplayMusic, musicVolume);
-            }
-            if (buttonSelected == 7)
-            {
-                PlaySound(sounds.buttonSound);
-                musicVolume = cut(musicVolume - 0.05f, 0.0f, 1.0f);
-                SetMusicVolume(sounds.gameplayMusic, musicVolume);
-            }
+            in.gameState = LOAD;
+        }
+        else if (in.buttonSelected == 3)
+        {
+            PlaySound(in.sounds.buttonSound);
+            in.lists.map.loadFromFile("saves/maps/game/default.bin");
+            in.tileRenderType = EXTENDED;
+            in.gameState = EDITOR;
+        }
+        else if (in.buttonSelected == 4)
+        {
+            PlaySound(in.sounds.buttonSound);
+            in.gameState = MENU;
         }
     }
-    else if (gameState == CREDIT)
+}
+
+void handleMenuMap(DataHolder &in)
+{
+    if (in.inputs.isLeftPressed())
     {
-        if (inputs.isLeftPressed())
+        if (in.buttonSelected >= 1 && in.buttonSelected <= 10)
         {
-            if (buttonSelected == 1)
-            {
-                PlaySound(sounds.buttonSound);
-                gameState = MENU;
-            }
+            std::string path = {"saves/maps/game/game0.bin"};
+            path[20] = in.buttonSelected - 1 + '0';
+            in.currentLevel = in.buttonSelected - 1;
+            in.lists.map.loadFromFile(path.data());
+            in.timeCounter.start();
+            PlaySound(in.sounds.buttonSound);
+            in.gameState = GAMEPLAY;
+        }
+        else if (in.buttonSelected == 11)
+        {
+            PlaySound(in.sounds.buttonSound);
+            in.gameState = MENUPLAY;
+        }
+        else if (in.buttonSelected == 12)
+        {
+            PlaySound(in.sounds.buttonSound);
+            in.gameState = MENUMAPCUSTOM;
         }
     }
-    else if (gameState == LOAD)
+}
+
+void handleMenuMapCustom(DataHolder &in)
+{
+    if (in.inputs.isLeftPressed())
     {
-        if (inputs.isLeftPressed())
+        if (in.buttonSelected == 11)
         {
-            if (buttonSelected == 1)
-            {
-                PlaySound(sounds.buttonSound);
-                gameState = MENUPLAY;
-            }
-            else if (buttonSelected >= 2 && buttonSelected <= 4)
-            {
-                loadFile(lists.saveDatas, buttonSelected - 2);
-                timeCounter.setTime(lists.saveDatas.timePlayed);
-                PlaySound(sounds.buttonSound);
-                gameState = MENUMAP;
-            }
-        }
-    }
-    else if (gameState == GAMEPLAY)
-    {
-        if (!onPause)
-        {
-            PlayMusicStream(sounds.gameplayMusic);
-            int counter = 0;
-            while (counter < gameSpeed)
-            {
-                handleEnemiesBuffer(lists.map, lists.enemies, lists.buffer, wave, difficulty);
-                selectedTower = handleTowers(lists.towers, lists.enemies, lists.missiles, lists.particles, selectedTower, cameraPos, cameraScale);
-                handleMissiles(lists.missiles, lists.enemies, lists.particles);
-                handleEnemies(lists.map, money, lists.enemies, lists.particles, life);
-                handleParticles(lists.particles);
-                counter++;
-            }
-            if (IsMouseButtonDown(MOUSE_BUTTON_MIDDLE) || IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
-            {
-                cameraPos = cameraPos - Vec2D(GetMouseDelta().x, GetMouseDelta().y) / cameraScale;
-            }
-            if (GetMouseWheelMove() > 0.1 && cameraScale < 3)
-            {
-                cameraScale++;
-                cameraPos = cameraPos + Vec2D(300, 160) / (cameraScale == 2 ? 1 : 3);
-            }
-            if (GetMouseWheelMove() < -0.1 && cameraScale > 1)
-            {
-                cameraScale--;
-                cameraPos = cameraPos - Vec2D(300, 160) / (cameraScale == 1 ? 1 : 3);
-            }
-            if (inputs.isLeftPressed())
-            {
-                Vec2D tilePos = (mousePos) / (48 * cameraScale) - (Vec2D(50, 50) - cameraPos) / 48.0f;
-                tilePos = Vec2D((int)(tilePos.x), (int)(tilePos.y));
-                if (buttonSelected == 2)
-                {
-                    if (money >= selectedTower->getCost())
-                    {
-                        selectedTower->upgrade();
-                        money -= selectedTower->getCost();
-                        selectedTower->setCost(selectedTower->getCost() * 2);
-                    }
-                }
-                else if (buttonSelected == 1)
-                {
-                    std::forward_list<Tower *>::iterator oldT = lists.towers.before_begin();
-                    for (std::forward_list<Tower *>::iterator i = lists.towers.begin(); i != lists.towers.end(); i++)
-                    {
-                        if ((*i) == selectedTower)
-                        {
-                            Vec2D tmpPos = (*i)->getPosition();
-                            money += (*i)->getCost() * (*i)->getLevel() / 4;
-                            lists.map.removeTowerFromTile(Vec2D((int)(tmpPos.x), (int)(tmpPos.y)));
-                            delete (*i);
-                            i = lists.towers.erase_after(oldT);
-                            selectedTower = nullptr;
-                            break;
-                        }
-                        oldT = i;
-                    }
-                }
-                else if (buttonSelected == 3)
-                {
-                    onPause = true;
-                }
-                else if (buttonSelected == 4)
-                {
-                    gameSpeed *= 2;
-                    if (gameSpeed == 0)
-                        gameSpeed = 1;
-                }
-                else if (buttonSelected == 5)
-                {
-                    gameSpeed /= 2;
-                }
-                if (gameSpeed > 16)
-                    gameSpeed = 16;
-                if (gameSpeed < 1)
-                    gameSpeed = 1;
-            }
-            if (selectedTower == nullptr)
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    lists.towerHolders.holders[i].update(lists.towers, lists.map, money, cameraPos, cameraScale);
-                }
-            }
-            if (life <= 0)
-            {
-                timeCounter.stop();
-                gameState = GAMEOVER;
-            }
-            if (wave >= 26)
-            {
-                timeCounter.stop();
-                lists.saveDatas.timePlayed = timeCounter.getTime();
-                if (currentLevel == lists.saveDatas.maxLevel)
-                    lists.saveDatas.maxLevel++;
-                gameState = VICTORY;
-            }
+            PlaySound(in.sounds.buttonSound);
+            in.gameState = MENUMAP;
         }
         else
         {
-            gameSpeed = 0;
-            if (inputs.isLeftPressed())
+            std::string path = {"saves/maps/custom/map0.bin"};
+            path[21] = in.buttonSelected - 1 + '0';
+            if (in.lists.map.loadFromFile(path.data()) >= 0)
             {
-                if (buttonSelected == 1)
-                {
-                    onPause = false;
-                    gameSpeed = 1;
-                }
-                else if (buttonSelected == 2)
-                {
-                    gameState = GAMEOPTION;
-                }
-                else if (buttonSelected == 3)
-                {
-                    onPause = false;
-                    for (std::list<Enemy *>::iterator i = lists.enemies.begin(); i != lists.enemies.end(); i++)
-                        delete *i;
-                    for (std::forward_list<Tower *>::iterator i = lists.towers.begin(); i != lists.towers.end(); i++)
-                        delete *i;
-                    for (std::forward_list<Missile *>::iterator i = lists.missiles.begin(); i != lists.missiles.end(); i++)
-                        delete *i;
-                    for (std::forward_list<Particle *>::iterator i = lists.particles.begin(); i != lists.particles.end(); i++)
-                        delete *i;
-                    lists.enemies.clear();
-                    lists.towers.clear();
-                    lists.missiles.clear();
-                    lists.buffer.clear();
-                    lists.particles.clear();
-                    for (int i = 0; i < (MAP_HEIGHT * MAP_WIDTH); i++)
-                        lists.map.tilesWithTower[i] = false;
-                    selectedTower = nullptr;
-                    gameSpeed = 1;
-
-                    PlaySound(sounds.buttonSound);
-                    StopMusicStream(sounds.gameplayMusic);
-                    timeCounter.stop();
-                    gameState = MENU;
-                }
-                else if (buttonSelected == 4)
-                {
-                    onPause = false;
-                    life = 20;
-                    wave = 0;
-                    money = 20;
-                    for (std::list<Enemy *>::iterator i = lists.enemies.begin(); i != lists.enemies.end(); i++)
-                        delete *i;
-                    for (std::forward_list<Tower *>::iterator i = lists.towers.begin(); i != lists.towers.end(); i++)
-                        delete *i;
-                    for (std::forward_list<Missile *>::iterator i = lists.missiles.begin(); i != lists.missiles.end(); i++)
-                        delete *i;
-                    for (std::forward_list<Particle *>::iterator i = lists.particles.begin(); i != lists.particles.end(); i++)
-                        delete *i;
-                    lists.enemies.clear();
-                    lists.towers.clear();
-                    lists.missiles.clear();
-                    lists.buffer.clear();
-                    lists.particles.clear();
-                    for (int i = 0; i < (MAP_HEIGHT * MAP_WIDTH); i++)
-                        lists.map.tilesWithTower[i] = false;
-                    selectedTower = nullptr;
-                    gameSpeed = 1;
-
-                    PlaySound(sounds.buttonSound);
-                    StopMusicStream(sounds.gameplayMusic);
-                    gameState = GAMEPLAY;
-                }
+                in.currentLevel = -1;
+                in.timeCounter.start();
+                PlaySound(in.sounds.buttonSound);
+                in.gameState = GAMEPLAY;
             }
         }
     }
-    else if (gameState == SAVE)
+}
+
+void handleGamePlay(DataHolder &in)
+{
+    PlayMusicStream(in.sounds.gameplayMusic);
+    int counter = 0;
+    while (counter < in.gameSpeed)
     {
-        if (inputs.isLeftPressed())
+        handleEnemiesBuffer(in.lists.map, in.lists.enemies, in.lists.buffer, in.wave, in.difficulty);
+        in.selectedTower = handleTowers(in.lists.towers, in.lists.enemies, in.lists.missiles, in.lists.particles, in.selectedTower, in.cameraPos, in.cameraScale);
+        handleMissiles(in.lists.missiles, in.lists.enemies, in.lists.particles);
+        handleEnemies(in.lists.map, in.money, in.lists.enemies, in.lists.particles, in.life);
+        handleParticles(in.lists.particles);
+        counter++;
+    }
+    if (IsMouseButtonDown(MOUSE_BUTTON_MIDDLE) || IsMouseButtonDown(MOUSE_BUTTON_RIGHT))
+    {
+        in.cameraPos = in.cameraPos - Vec2D(GetMouseDelta().x, GetMouseDelta().y) / in.cameraScale;
+    }
+    if (GetMouseWheelMove() > 0.1 && in.cameraScale < 3)
+    {
+        in.cameraScale++;
+        in.cameraPos = in.cameraPos + Vec2D(300, 160) / (in.cameraScale == 2 ? 1 : 3);
+    }
+    if (GetMouseWheelMove() < -0.1 && in.cameraScale > 1)
+    {
+        in.cameraScale--;
+        in.cameraPos = in.cameraPos - Vec2D(300, 160) / (in.cameraScale == 1 ? 1 : 3);
+    }
+    if (in.inputs.isLeftPressed())
+    {
+        Vec2D tilePos = (in.mousePos) / (48 * in.cameraScale) - (Vec2D(50, 50) - in.cameraPos) / 48.0f;
+        tilePos = Vec2D((int)(tilePos.x), (int)(tilePos.y));
+        if (in.buttonSelected == 2)
         {
-            if (buttonSelected == 1)
+            if (in.money >= in.selectedTower->getCost())
             {
-                PlaySound(sounds.buttonSound);
-                gameState = MENUMAP;
-            }
-            if (buttonSelected >= 2 && buttonSelected <= 4)
-            {
-                PlaySound(sounds.buttonSound);
-                saveFile(lists.saveDatas, buttonSelected - 2);
-                gameState = MENUMAP;
+                in.selectedTower->upgrade();
+                in.money -= in.selectedTower->getCost();
+                in.selectedTower->setCost(in.selectedTower->getCost() * 2);
             }
         }
-    }
-    else if (gameState == GAMEOVER)
-    {
-
-        if (inputs.isLeftPressed())
+        else if (in.buttonSelected == 1)
         {
-            if (buttonSelected == 1)
+            std::forward_list<Tower *>::iterator oldT = in.lists.towers.before_begin();
+            for (std::forward_list<Tower *>::iterator i = in.lists.towers.begin(); i != in.lists.towers.end(); i++)
             {
-                for (std::list<Enemy *>::iterator i = lists.enemies.begin(); i != lists.enemies.end(); i++)
-                    delete *i;
-                for (std::forward_list<Tower *>::iterator i = lists.towers.begin(); i != lists.towers.end(); i++)
-                    delete *i;
-                for (std::forward_list<Missile *>::iterator i = lists.missiles.begin(); i != lists.missiles.end(); i++)
-                    delete *i;
-                for (std::forward_list<Particle *>::iterator i = lists.particles.begin(); i != lists.particles.end(); i++)
-                    delete *i;
-                lists.enemies.clear();
-                lists.towers.clear();
-                lists.missiles.clear();
-                lists.buffer.clear();
-                lists.particles.clear();
-                for (int i = 0; i < (MAP_HEIGHT * MAP_WIDTH); i++)
-                    lists.map.tilesWithTower[i] = false;
-                selectedTower = nullptr;
-                gameSpeed = 1;
-                PlaySound(sounds.buttonSound);
-                StopMusicStream(sounds.gameplayMusic);
-                life = 20;
-                money = 20;
-                if (difficulty > 3 && wave > lists.saveDatas.maxWave)
+                if ((*i) == in.selectedTower)
                 {
-                    lists.saveDatas.maxWave = wave;
-                    gameState = SAVE;
+                    Vec2D tmpPos = (*i)->getPosition();
+                    in.money += (*i)->getCost() / 2;
+                    in.lists.map.removeTowerFromTile(Vec2D((int)(tmpPos.x), (int)(tmpPos.y)));
+                    delete (*i);
+                    i = in.lists.towers.erase_after(oldT);
+                    in.selectedTower = nullptr;
+                    break;
                 }
-                else
-                {
-                    gameState = MENU;
-                }
-                wave = 0;
+                oldT = i;
             }
         }
-    }
-    else if (gameState == VICTORY)
-    {
-
-        if (inputs.isLeftPressed())
+        else if (in.buttonSelected == 3)
         {
-            for (std::list<Enemy *>::iterator i = lists.enemies.begin(); i != lists.enemies.end(); i++)
+            in.gameState = GAMEPAUSE;
+        }
+        else if (in.buttonSelected == 4)
+        {
+            in.gameSpeed *= 2;
+            if (in.gameSpeed == 0)
+                in.gameSpeed = 1;
+        }
+        else if (in.buttonSelected == 5)
+        {
+            in.gameSpeed /= 2;
+        }
+        if (in.gameSpeed > 16)
+            in.gameSpeed = 16;
+        if (in.gameSpeed < 1)
+            in.gameSpeed = 1;
+    }
+    if (in.selectedTower == nullptr)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            in.lists.towerHolders.holders[i].update(in.lists.towers, in.lists.map, in.money, in.cameraPos, in.cameraScale);
+        }
+    }
+    if (in.life <= 0)
+    {
+        in.timeCounter.stop();
+        in.gameState = GAMEOVER;
+    }
+    if (in.wave >= 26)
+    {
+        in.timeCounter.stop();
+        in.lists.saveDatas.timePlayed = in.timeCounter.getTime();
+        if (in.currentLevel == in.lists.saveDatas.maxLevel)
+            in.lists.saveDatas.maxLevel++;
+        in.gameState = VICTORY;
+    }
+}
+
+void handleGamePause(DataHolder &in)
+{
+    if (in.inputs.isLeftPressed())
+    {
+        if (in.buttonSelected == 1)
+        {
+            in.gameState = GAMEPLAY;
+        }
+        else if (in.buttonSelected == 2)
+        {
+            in.gameState = GAMEOPTION;
+        }
+        else if (in.buttonSelected == 3)
+        {
+            for (std::list<Enemy *>::iterator i = in.lists.enemies.begin(); i != in.lists.enemies.end(); i++)
                 delete *i;
-            for (std::forward_list<Tower *>::iterator i = lists.towers.begin(); i != lists.towers.end(); i++)
+            for (std::forward_list<Tower *>::iterator i = in.lists.towers.begin(); i != in.lists.towers.end(); i++)
                 delete *i;
-            for (std::forward_list<Missile *>::iterator i = lists.missiles.begin(); i != lists.missiles.end(); i++)
+            for (std::forward_list<Missile *>::iterator i = in.lists.missiles.begin(); i != in.lists.missiles.end(); i++)
                 delete *i;
-            lists.enemies.clear();
-            lists.towers.clear();
-            lists.missiles.clear();
-            lists.buffer.clear();
-            lists.particles.clear();
-            life = 20;
-            wave = 0;
-            money = 20;
+            for (std::forward_list<Particle *>::iterator i = in.lists.particles.begin(); i != in.lists.particles.end(); i++)
+                delete *i;
+            in.lists.enemies.clear();
+            in.lists.towers.clear();
+            in.lists.missiles.clear();
+            in.lists.buffer.clear();
+            in.lists.particles.clear();
             for (int i = 0; i < (MAP_HEIGHT * MAP_WIDTH); i++)
-                lists.map.tilesWithTower[i] = false;
-            selectedTower = nullptr;
-            gameSpeed = 1;
-            PlaySound(sounds.buttonSound);
-            for (int i = 0; i < 3; i++)
-            {
-                loadFile(lists.renderDatas[i], i);
-            }
-            gameState = SAVE;
+                in.lists.map.tilesWithTower[i] = false;
+            in.selectedTower = nullptr;
+
+            PlaySound(in.sounds.buttonSound);
+            StopMusicStream(in.sounds.gameplayMusic);
+            in.timeCounter.stop();
+            in.gameState = MENU;
+        }
+        else if (in.buttonSelected == 4)
+        {
+            in.life = 20;
+            in.wave = 0;
+            in.money = 20;
+            for (std::list<Enemy *>::iterator i = in.lists.enemies.begin(); i != in.lists.enemies.end(); i++)
+                delete *i;
+            for (std::forward_list<Tower *>::iterator i = in.lists.towers.begin(); i != in.lists.towers.end(); i++)
+                delete *i;
+            for (std::forward_list<Missile *>::iterator i = in.lists.missiles.begin(); i != in.lists.missiles.end(); i++)
+                delete *i;
+            for (std::forward_list<Particle *>::iterator i = in.lists.particles.begin(); i != in.lists.particles.end(); i++)
+                delete *i;
+            in.lists.enemies.clear();
+            in.lists.towers.clear();
+            in.lists.missiles.clear();
+            in.lists.buffer.clear();
+            in.lists.particles.clear();
+            for (int i = 0; i < (MAP_HEIGHT * MAP_WIDTH); i++)
+                in.lists.map.tilesWithTower[i] = false;
+            in.selectedTower = nullptr;
+
+            PlaySound(in.sounds.buttonSound);
+            StopMusicStream(in.sounds.gameplayMusic);
+            in.gameState = GAMEPLAY;
         }
     }
-    else if (gameState == EDITOR)
+}
+
+void handleGameOver(DataHolder &in)
+{
+    if (in.inputs.isLeftPressed())
     {
-        if (inputs.isLeftPressed())
+        if (in.buttonSelected == 1)
         {
-            if (holderHovered >= 0 || buttonSelected != 0)
-                PlaySound(sounds.buttonSound);
-            if (holderHovered >= 0)
+            for (std::list<Enemy *>::iterator i = in.lists.enemies.begin(); i != in.lists.enemies.end(); i++)
+                delete *i;
+            for (std::forward_list<Tower *>::iterator i = in.lists.towers.begin(); i != in.lists.towers.end(); i++)
+                delete *i;
+            for (std::forward_list<Missile *>::iterator i = in.lists.missiles.begin(); i != in.lists.missiles.end(); i++)
+                delete *i;
+            for (std::forward_list<Particle *>::iterator i = in.lists.particles.begin(); i != in.lists.particles.end(); i++)
+                delete *i;
+            in.lists.enemies.clear();
+            in.lists.towers.clear();
+            in.lists.missiles.clear();
+            in.lists.buffer.clear();
+            in.lists.particles.clear();
+            for (int i = 0; i < (MAP_HEIGHT * MAP_WIDTH); i++)
+                in.lists.map.tilesWithTower[i] = false;
+            in.selectedTower = nullptr;
+            in.gameSpeed = 1;
+            PlaySound(in.sounds.buttonSound);
+            StopMusicStream(in.sounds.gameplayMusic);
+            in.life = 20;
+            in.money = 20;
+            if (in.difficulty > 3 && in.wave > in.lists.saveDatas.maxWave)
             {
-                holderSelected = holderHovered;
+                in.lists.saveDatas.maxWave = in.wave;
+                in.gameState = SAVE;
             }
-            else if (buttonSelected == 1)
+            else
             {
-                std::string path = {"saves/maps/custom/map0.bin"};
-                path[21] = saveSlot + '0';
-                lists.map.saveToFile(path.data());
+                in.gameState = MENU;
             }
-            else if (buttonSelected == 2)
-            {
-                lists.map = TileMap();
-            }
-            else if (buttonSelected == 3)
-            {
-                switch (tileRenderType)
-                {
-                case BORDER:
-                    tileRenderType = DEBUG;
-                    break;
-                case DEBUG:
-                    tileRenderType = NORMAL;
-                    break;
-                case NORMAL:
-                    tileRenderType = EXTENDED;
-                    break;
-                case EXTENDED:
-                    tileRenderType = BORDER;
-                    break;
-                }
-            }
-            else if (buttonSelected == 4)
-            {
-                holderSelected = 0;
-                gameState = MENUPLAY;
-            }
-            else if (buttonSelected == 5)
-            {
-                saveSlot++;
-                if (saveSlot > 9)
-                    saveSlot = 9;
-            }
-            else if (buttonSelected == 6)
-            {
-                saveSlot--;
-                if (saveSlot < 0)
-                    saveSlot = 0;
-            }
+            in.wave = 0;
         }
-        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
-        {
-            if (holderSelected >= 0)
-            {
-                Vec2D tilePos = (mousePos) / (48 * cameraScale) - (Vec2D(50, 50) - cameraPos) / 48.0f;
-                tilePos = Vec2D((int)(tilePos.x), (int)(tilePos.y));
-                placeTileAt(lists.map, tilePos, dragPos, lists.tHolders.holders.at(holderSelected).tile, lists.tHolders.holders.at(holderSelected).isDeco);
-            }
-        }
-        if (inputs.isRightPressed())
-        {
-            Vec2D tilePos = (mousePos) / (48 * cameraScale) - (Vec2D(50, 50) - cameraPos) / 48.0f;
-            if (tilePos.x > 0 && tilePos.y > 0 && tilePos.x < lists.map.getWidth() && tilePos.y < lists.map.getHeight())
-            {
-                lists.map.setAltTile(tilePos);
-            }
-        }
-        if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
-        {
-            dragPos = Vec2D(-1, -1);
-        }
-        if (IsMouseButtonDown(MOUSE_BUTTON_MIDDLE))
-        {
-            cameraPos = cameraPos - Vec2D(GetMouseDelta().x, GetMouseDelta().y) / cameraScale;
-        }
-        cameraScale = cut(GetMouseWheelMove() + cameraScale, 1, 3);
     }
-    framecounter++;
+}
+
+void handleVictory(DataHolder &in)
+{
+    if (in.inputs.isLeftPressed())
+    {
+        for (std::list<Enemy *>::iterator i = in.lists.enemies.begin(); i != in.lists.enemies.end(); i++)
+            delete *i;
+        for (std::forward_list<Tower *>::iterator i = in.lists.towers.begin(); i != in.lists.towers.end(); i++)
+            delete *i;
+        for (std::forward_list<Missile *>::iterator i = in.lists.missiles.begin(); i != in.lists.missiles.end(); i++)
+            delete *i;
+        in.lists.enemies.clear();
+        in.lists.towers.clear();
+        in.lists.missiles.clear();
+        in.lists.buffer.clear();
+        in.lists.particles.clear();
+        in.life = 20;
+        in.wave = 0;
+        in.money = 20;
+        for (int i = 0; i < (MAP_HEIGHT * MAP_WIDTH); i++)
+            in.lists.map.tilesWithTower[i] = false;
+        in.selectedTower = nullptr;
+        in.gameSpeed = 1;
+        PlaySound(in.sounds.buttonSound);
+        for (int i = 0; i < 3; i++)
+        {
+            loadFile(in.lists.renderDatas[i], i);
+        }
+        in.gameState = SAVE;
+    }
+}
+
+void handleEditor(DataHolder &in)
+{
+    if (in.inputs.isLeftPressed())
+    {
+        if (in.holderHovered >= 0 || in.buttonSelected != 0)
+            PlaySound(in.sounds.buttonSound);
+        if (in.holderHovered >= 0)
+        {
+            in.holderSelected = in.holderHovered;
+        }
+        else if (in.buttonSelected == 1)
+        {
+            std::string path = {"saves/maps/custom/map0.bin"};
+            path[21] = in.saveSlot + '0';
+            in.lists.map.saveToFile(path.data());
+        }
+        else if (in.buttonSelected == 2)
+        {
+            in.lists.map = TileMap();
+        }
+        else if (in.buttonSelected == 3)
+        {
+            switch (in.tileRenderType)
+            {
+            case BORDER:
+                in.tileRenderType = DEBUG;
+                break;
+            case DEBUG:
+                in.tileRenderType = NORMAL;
+                break;
+            case NORMAL:
+                in.tileRenderType = EXTENDED;
+                break;
+            case EXTENDED:
+                in.tileRenderType = BORDER;
+                break;
+            }
+        }
+        else if (in.buttonSelected == 4)
+        {
+            in.holderSelected = 0;
+            in.gameState = MENUPLAY;
+        }
+        else if (in.buttonSelected == 5)
+        {
+            in.saveSlot++;
+            if (in.saveSlot > 9)
+                in.saveSlot = 9;
+        }
+        else if (in.buttonSelected == 6)
+        {
+            in.saveSlot--;
+            if (in.saveSlot < 0)
+                in.saveSlot = 0;
+        }
+    }
+    if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+    {
+        if (in.holderSelected >= 0)
+        {
+            Vec2D tilePos = (in.mousePos) / (48 * in.cameraScale) - (Vec2D(50, 50) - in.cameraPos) / 48.0f;
+            tilePos = Vec2D((int)(tilePos.x), (int)(tilePos.y));
+            placeTileAt(in.lists.map, tilePos, in.dragPos, in.lists.tHolders.holders.at(in.holderSelected).tile, in.lists.tHolders.holders.at(in.holderSelected).isDeco);
+        }
+    }
+    if (in.inputs.isRightPressed())
+    {
+        Vec2D tilePos = (in.mousePos) / (48 * in.cameraScale) - (Vec2D(50, 50) - in.cameraPos) / 48.0f;
+        if (tilePos.x > 0 && tilePos.y > 0 && tilePos.x < in.lists.map.getWidth() && tilePos.y < in.lists.map.getHeight())
+        {
+            in.lists.map.setAltTile(tilePos);
+        }
+    }
+    if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
+    {
+        in.dragPos = Vec2D(-1, -1);
+    }
+    if (IsMouseButtonDown(MOUSE_BUTTON_MIDDLE))
+    {
+        in.cameraPos = in.cameraPos - Vec2D(GetMouseDelta().x, GetMouseDelta().y) / in.cameraScale;
+    }
+    in.cameraScale = cut(GetMouseWheelMove() + in.cameraScale, 1, 3);
+}
+
+void handleLoad(DataHolder &in)
+{
+    if (in.inputs.isLeftPressed())
+    {
+        if (in.buttonSelected == 1)
+        {
+            PlaySound(in.sounds.buttonSound);
+            in.gameState = MENUPLAY;
+        }
+        else if (in.buttonSelected >= 2 && in.buttonSelected <= 4)
+        {
+            loadFile(in.lists.saveDatas, in.buttonSelected - 2);
+            in.timeCounter.setTime(in.lists.saveDatas.timePlayed);
+            PlaySound(in.sounds.buttonSound);
+            in.gameState = MENUMAP;
+        }
+    }
+}
+
+void handleOption(DataHolder &in)
+{
+    if (in.inputs.isLeftPressed())
+    {
+        if (in.buttonSelected == 1)
+        {
+            PlaySound(in.sounds.buttonSound);
+            in.gameState = MENU;
+        }
+        if (in.buttonSelected == 2)
+        {
+            PlaySound(in.sounds.buttonSound);
+            in.masterVolume = cut(in.masterVolume + 0.05f, 0.0f, 1.0f);
+            SetMasterVolume(in.masterVolume);
+        }
+        if (in.buttonSelected == 3)
+        {
+            PlaySound(in.sounds.buttonSound);
+            in.masterVolume = cut(in.masterVolume - 0.05f, 0.0f, 1.0f);
+            SetMasterVolume(in.masterVolume);
+        }
+        if (in.buttonSelected == 4)
+        {
+            PlaySound(in.sounds.buttonSound);
+            in.effectVolume = cut(in.effectVolume + 0.05f, 0.0f, 1.0f);
+            SetSoundVolume(in.sounds.classicTowerSound, 0.4f * in.effectVolume);
+            SetSoundVolume(in.sounds.slowTowerSound, 0.2f * in.effectVolume);
+            SetSoundVolume(in.sounds.explosiveTowerSound, 0.2f * in.effectVolume);
+            SetSoundVolume(in.sounds.buttonSound, in.effectVolume);
+        }
+        if (in.buttonSelected == 5)
+        {
+            PlaySound(in.sounds.buttonSound);
+            in.effectVolume = cut(in.effectVolume - 0.05f, 0.0f, 1.0f);
+            SetSoundVolume(in.sounds.classicTowerSound, 0.4f * in.effectVolume);
+            SetSoundVolume(in.sounds.slowTowerSound, 0.2f * in.effectVolume);
+            SetSoundVolume(in.sounds.explosiveTowerSound, 0.2f * in.effectVolume);
+            SetSoundVolume(in.sounds.buttonSound, in.effectVolume);
+        }
+        if (in.buttonSelected == 6)
+        {
+            PlaySound(in.sounds.buttonSound);
+            in.musicVolume = cut(in.musicVolume + 0.05f, 0.0f, 1.0f);
+            SetMusicVolume(in.sounds.gameplayMusic, in.musicVolume);
+        }
+        if (in.buttonSelected == 7)
+        {
+            PlaySound(in.sounds.buttonSound);
+            in.musicVolume = cut(in.musicVolume - 0.05f, 0.0f, 1.0f);
+            SetMusicVolume(in.sounds.gameplayMusic, in.musicVolume);
+        }
+        if (in.buttonSelected == 8)
+        {
+            PlaySound(in.sounds.buttonSound);
+            if (in.difficulty < (3 + (in.lists.saveDatas.maxLevel == 10)))
+                in.difficulty += 1;
+        }
+        if (in.buttonSelected == 9)
+        {
+            PlaySound(in.sounds.buttonSound);
+            if (in.difficulty > 1)
+                in.difficulty -= 1;
+        }
+    }
+}
+
+void handleGameOption(DataHolder &in)
+{
+    if (in.inputs.isLeftPressed())
+    {
+        if (in.buttonSelected == 1)
+        {
+            PlaySound(in.sounds.buttonSound);
+            in.gameState = GAMEPLAY;
+        }
+        if (in.buttonSelected == 2)
+        {
+            PlaySound(in.sounds.buttonSound);
+            in.masterVolume = cut(in.masterVolume + 0.05f, 0.0f, 1.0f);
+            SetMasterVolume(in.masterVolume);
+        }
+        if (in.buttonSelected == 3)
+        {
+            PlaySound(in.sounds.buttonSound);
+            in.masterVolume = cut(in.masterVolume - 0.05f, 0.0f, 1.0f);
+            SetMasterVolume(in.masterVolume);
+        }
+        if (in.buttonSelected == 4)
+        {
+            PlaySound(in.sounds.buttonSound);
+            in.effectVolume = cut(in.effectVolume + 0.05f, 0.0f, 1.0f);
+            SetSoundVolume(in.sounds.classicTowerSound, 0.4f * in.effectVolume);
+            SetSoundVolume(in.sounds.slowTowerSound, 0.2f * in.effectVolume);
+            SetSoundVolume(in.sounds.explosiveTowerSound, 0.2f * in.effectVolume);
+            SetSoundVolume(in.sounds.buttonSound, in.effectVolume);
+        }
+        if (in.buttonSelected == 5)
+        {
+            PlaySound(in.sounds.buttonSound);
+            in.effectVolume = cut(in.effectVolume - 0.05f, 0.0f, 1.0f);
+            SetSoundVolume(in.sounds.classicTowerSound, 0.4f * in.effectVolume);
+            SetSoundVolume(in.sounds.slowTowerSound, 0.2f * in.effectVolume);
+            SetSoundVolume(in.sounds.explosiveTowerSound, 0.2f * in.effectVolume);
+            SetSoundVolume(in.sounds.buttonSound, in.effectVolume);
+        }
+        if (in.buttonSelected == 6)
+        {
+            PlaySound(in.sounds.buttonSound);
+            in.musicVolume = cut(in.musicVolume + 0.05f, 0.0f, 1.0f);
+            SetMusicVolume(in.sounds.gameplayMusic, in.musicVolume);
+        }
+        if (in.buttonSelected == 7)
+        {
+            PlaySound(in.sounds.buttonSound);
+            in.musicVolume = cut(in.musicVolume - 0.05f, 0.0f, 1.0f);
+            SetSoundVolume(in.sounds.classicTowerSound, 0.4f * in.effectVolume);
+            SetMusicVolume(in.sounds.gameplayMusic, in.musicVolume);
+        }
+    }
+}
+
+void handleSave(DataHolder &in)
+{
+    if (in.inputs.isLeftPressed())
+    {
+        if (in.buttonSelected == 1)
+        {
+            PlaySound(in.sounds.buttonSound);
+            in.gameState = MENUMAP;
+        }
+        if (in.buttonSelected >= 2 && in.buttonSelected <= 4)
+        {
+            PlaySound(in.sounds.buttonSound);
+            saveFile(in.lists.saveDatas, in.buttonSelected - 2);
+            in.gameState = MENUMAP;
+        }
+    }
+}
+
+void handleCredit(DataHolder &in)
+{
+    if (in.inputs.isLeftPressed())
+    {
+        if (in.buttonSelected == 1)
+        {
+            PlaySound(in.sounds.buttonSound);
+            in.gameState = MENU;
+        }
+    }
 }

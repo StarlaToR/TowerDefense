@@ -1,8 +1,8 @@
 #pragma once
+#include <list>
+#include <forward_list>
 #include "../entities/entity.hpp"
 #include "../enemies/enemy.hpp"
-#include <forward_list>
-#include <list>
 #include "../object/missile.hpp"
 
 class Tower: public Entity

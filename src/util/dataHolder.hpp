@@ -6,11 +6,6 @@
 #include <list>
 #include "../tile/tileMap.hpp"
 #include "../tile/tiles.hpp"
-#include "../enemies/enemy.hpp"
-#include "../towers/tower.hpp"
-#include "../object/missile.hpp"
-#include "../particles/particle.hpp"
-#include "../particles/explosion.hpp"
 #include "gameUtil.hpp"
 #include "../tile/tileHolder.hpp"
 #include "../towers/towerHolder.hpp"
@@ -25,6 +20,7 @@ typedef enum GameState : int
     MENUMAP,
     MENUMAPCUSTOM,
     GAMEPLAY,
+    GAMEPAUSE,
     GAMEOVER,
     VICTORY,
     EDITOR,
@@ -45,7 +41,6 @@ struct TextureHolder
     Texture2D background;
     Texture2D button;
     Texture2D buttonDown;
-    Texture2D credit;
     Texture2D title;
     Texture2D logoIsart;
     Texture2D gameUI;
@@ -72,11 +67,11 @@ struct ListHolder
 {
     TileMap map;
     Tiles tiles = Tiles();
-    std::list<Enemy*> enemies = std::list<Enemy*>();
-    std::forward_list<Tower*> towers = std::forward_list<Tower*>();
-    std::forward_list<Missile*> missiles = std::forward_list<Missile*>();
-    std::forward_list<Particle*> particles = std::forward_list<Particle*>();
-    std::forward_list<EnemySpawner> buffer = std::forward_list<EnemySpawner>();
+    std::list<Enemy*> enemies;
+    std::forward_list<Tower*> towers;
+    std::forward_list<Missile*> missiles;
+    std::forward_list<Particle*> particles;
+    std::forward_list<EnemySpawner> buffer;
     TileHolders tHolders = TileHolders();
     TowerHolders towerHolders = TowerHolders();
     SaveData saveDatas;
@@ -126,7 +121,6 @@ public:
     int wave = 0;
     Tower* selectedTower =nullptr;
     int gameSpeed = 1;
-    bool onPause = false;
     int money = 20;
     int life = 20;
 

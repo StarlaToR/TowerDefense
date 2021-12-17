@@ -1,9 +1,9 @@
 #include <raylib.h>
+#include <cstdio>
+#include <time.h>
 #include "util/mathHelper.hpp"
 #include "util/dataHolder.hpp"
 #include "render.hpp"
-#include <cstdio>
-#include <time.h>
 
 int main(void)
 {

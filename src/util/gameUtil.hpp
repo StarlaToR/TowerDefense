@@ -1,16 +1,5 @@
 #pragma once
 
-#include "../enemies/enemy.hpp"
-#include "../towers/tower.hpp"
-#include "../object/missile.hpp"
-#include "../particles/particle.hpp"
-#include "../particles/explosion.hpp"
-#include "../particles/enemyExplosion.hpp"
-#include "../particles/bigExplosion.hpp"
-#include "../enemies/classicEnemy.hpp"
-#include "../enemies/bigEnemy.hpp"
-#include "../enemies/healerEnemy.hpp"
-#include "../enemies/bossEnemy.hpp"
 #include <forward_list>
 #include <list>
 #include "../tile/tileMap.hpp"
@@ -20,6 +9,11 @@ struct EnemySpawner
     int id;
     int time;
 };
+
+class Tower;
+class Enemy;
+class Missile;
+class Particle;
 
 Tower* handleTowers(std::forward_list<Tower*>& towers, std::list<Enemy*>& enemies, std::forward_list<Missile*>& missiles, std::forward_list<Particle*>& particles, Tower* selectedTower, Vec2D camPos, float camScale);
 void handleMissiles(std::forward_list<Missile*>& missiles, std::list<Enemy*>& enemies, std::forward_list<Particle*>& particles);

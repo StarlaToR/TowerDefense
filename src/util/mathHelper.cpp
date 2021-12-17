@@ -73,18 +73,6 @@
         return Vec2D(-y, x);
     }
 
-    Vec2D Vec2D::applyRotation(RotationMatrix matrix)
-    {
-        float res[2] = {0};
-        float input[2] = {x, y};
-        for (int j = 0; j < 2; j++) {
-            for (int i = 0; i < 2; i++) {
-                res[j] += input[i]*matrix.content[j][i];
-            }
-        }
-        return Vec2D(res[0], res[1]);
-    }
-
     bool Vec2D::isIntEquivalent(Vec2D a)
     {
         int x1 = (int)(x>=0?x:x-1);
@@ -92,16 +80,6 @@
         int x2 = (int)a.x;
         int y2 = (int)a.y;
         return (x1 == x2 && y1 == y2);
-    }
-
-    RotationMatrix::RotationMatrix(float angle)
-    {
-        float tmpCos = cosf(toRadians(angle));
-        float tmpSin = sinf(toRadians(angle));
-        content[0][0] = tmpCos;
-        content[0][1] = -tmpSin;
-        content[1][0] = tmpSin;
-        content[1][1] = tmpCos;
     }
 
     float toRadians(float in)

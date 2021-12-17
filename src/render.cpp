@@ -2,66 +2,58 @@
     Vec2D(const Vector2& f) { x = f.x; y = f.y; }                        \
     operator Vector2() const { return Vector2{x,y}; }
 
-#include "render.hpp"
 #include <raylib.h>
 #include "util/renderUtil.hpp"
+#include "render.hpp"
 
-const char* difficultyString[4] = {"             Easy", "           Medium","             Hard", "       NIGHTMARE"};
+void renderStartAnim(DataHolder& in);
+void renderMainMenu(DataHolder& in);
+void renderEditor(DataHolder& in);
+void renderPlay(DataHolder& in);
+void renderGameplay(DataHolder& in);
+void renderGamePause(DataHolder& in);
+void renderGameOver(DataHolder& in);
+void renderVictory(DataHolder& in);
+void renderCredit(DataHolder& in);
+void renderOption(DataHolder& in);
+void renderGameOption(DataHolder& in);
+void renderLoad(DataHolder& in);
+void renderSave(DataHolder& in);
+void renderMenuMap(DataHolder& in);
+void renderMenuMapCustom(DataHolder& in);
+
+void (*renders[15])(DataHolder &in) =
+    {
+        &renderStartAnim,
+        &renderMainMenu,
+        &renderPlay,
+        &renderMenuMap,
+        &renderMenuMapCustom,
+        &renderGameplay,
+        &renderGamePause,
+        &renderGameOver,
+        &renderVictory,
+        &renderEditor,
+        &renderLoad,
+        &renderOption,
+        &renderGameOption,
+        &renderSave,
+        &renderCredit,
+};
+
+const char* difficultyString[4] = {"             Easy", "           Medium","             Hard", "       NIGHTMARE "};
 
 void renderMain(DataHolder& in) 
 {
     BeginDrawing();
     ClearBackground(RAYWHITE);
-    switch (in.gameState)
+    if (in.gameState < EXIT)
     {
-    case INTRO:
-        renderStartAnim(in);
-        break;
-    case MENU:
-        renderMainMenu(in);
-        menuMain(in);
-        break;
-    case MENUPLAY:
-        renderPlay(in);
-        break;
-    case EDITOR:
-        renderEditor(in);
-        break;
-    case GAMEPLAY:
-        renderGameplay(in);
-        break;
-    case LOAD:
-        renderLoad(in);
-        break;
-    case SAVE:
-        renderSave(in);
-        break;
-    case MENUMAP:
-        renderMenuMap(in);
-        break;
-    case MENUMAPCUSTOM:
-        renderMenuMapCustom(in);
-        break;
-    case GAMEOVER:
-        renderGameOver(in);
-        break;
-    case VICTORY:
-        renderVictory(in);
-        break;
-    case OPTION:
-        renderOption(in);
-        break;
-    case GAMEOPTION:
-        renderGameOption(in);
-        break;
-    case CREDIT:
-        renderCredit(in);
-        break;
-    case EXIT:
+        renders[in.gameState](in);
+    }
+    if (in.gameState == EXIT)
+    {
         in.closeWindow = true;
-        break;
-    default:
-        break;
     }
     DrawFPS(10, 10);
     EndDrawing();
@@ -94,7 +86,31 @@ void renderMainMenu(DataHolder& in)
     DrawTexturePro(in.textures.title, Rectangle{0,0,500,500},Rectangle{450, 0,1000,450},Vector2{150,150}, 0, WHITE);
     DrawTexturePro(in.textures.logo, Rectangle{0,0,300,300},Rectangle{width, heigth,100,100},Vector2{100,100}, 0, WHITE);
     DrawTextEx(in.fontTitle, "Tower Defense", Vector2{480,27},70,4,BLACK);
-    
+    in.buttonSelected = 0;
+    if (drawButtonMenu(in, "Play", Vec2D(498, 345), Vec2D(455, 320),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 1;
+    }
+    if (drawButtonMenu(in, "Option",Vec2D(873, 345), Vec2D(860, 320),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 2;
+    }
+    if (drawButtonMenu(in, "Credit",Vec2D(475, 565), Vec2D(455, 540),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 3;
+    }
+    if (drawButtonMenu(in, "Exit",Vec2D(920, 565), Vec2D(860, 540),Vec2D(250,100), in.mousePos))
+    {
+        in.buttonSelected = 4;
+    }
+    if (drawButtonInvisible(Vec2D(mod(1295-in.framecounter/3.0f,0,1920), 140),Vec2D(50,50), in.mousePos))
+    {
+        in.buttonSelected = 5;
+    }
+    if (drawButtonInvisible(Vec2D(1500, 800), Vec2D(100, 100), in.mousePos))
+    {
+        in.buttonSelected = 6;
+    }
 }
 
 void renderGameOver(DataHolder& in)
@@ -196,87 +212,62 @@ void renderGameplay(DataHolder& in)
     DrawRectangleRec(toRayLibRectangle(Vec2D(50,750),Vec2D(1156,74)),BLACK);
     DrawRectangleRec(toRayLibRectangle(Vec2D(52,752),Vec2D(1152,70)),RED);
     DrawRectangleRec(toRayLibRectangle(Vec2D(52,752),Vec2D(57.6 * in.life,70)),GREEN);
-    if (in.onPause)
-    {
-        if (drawButtonMenu(in, "Resume", Vec2D(657,150), Vec2D(650, 100),Vec2D(270,150), in.mousePos))
-        {
-            in.buttonSelected = 1;
-        }
-        if (drawButtonMenu(in, "Option",  Vec2D(670,450), Vec2D(650, 400),Vec2D(270,150), in.mousePos))
-        {
-            in.buttonSelected = 2;
-        }
-        if (drawButtonMenu(in, "Menu", Vec2D(700, 630), Vec2D(650, 580),Vec2D(270,150), in.mousePos))
-        {
-            in.buttonSelected = 3;
-        }
-        if (drawButtonMenu(in, "Restart", Vec2D(638, 300), Vec2D(620, 250),Vec2D(320,150), in.mousePos))
-        {
-            in.buttonSelected = 4;
-        }
-    }
-    else
-    {
-        DrawTexturePro(in.textures.buttonPause, Rectangle{0,0,300,300}, Rectangle{1400,750,150,150}, Vector2{50,50},0,WHITE);
-        DrawTexturePro(in.textures.buttonAccelerateSpeed, Rectangle{0,0,300,300}, Rectangle{750,715,100,100}, Vector2{50,50},0,WHITE);
-        DrawTexturePro(in.textures.buttonSlowSpeed, Rectangle{0,0,300,300}, Rectangle{500,715,100,100}, Vector2{50,50},0,WHITE);
-        DrawTexturePro(in.textures.speedCounter, Rectangle{0,0,300,300}, Rectangle{625,715,100,100}, Vector2{50,50},0,WHITE);
-        DrawTextEx(in.fontButton, TextFormat("%d", in.gameSpeed), Vec2D(602, 700), 40, 0, BLACK);
-        drawTowerUpgradeMenu(in, in.buttonSelected);
-        for (int i = 0; i < 3; i++)
-        {
-            TowerHolder* tmpHolder = &in.lists.towerHolders.holders[i];
-            if (tmpHolder->isUsed)
-            {
-                bool valid = (in.mousePos.x > 50 && in.mousePos.y > 50 && in.mousePos.x < 1202 && in.mousePos.y < 626 && !in.lists.map.isRoad(in.lists.map.getTileAt(mTilePos))
-                && in.lists.map.getTileAt(mTilePos,true) == UNDEFINED && !in.lists.map.isTileWithTower(mTilePos));
-                DrawCircleV(in.mousePos, tmpHolder->getRange()*48*in.cameraScale,Fade(valid ? GREEN : RED,0.3f));
-                DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(tmpHolder->getTexture()),toRayLibRectangle(in.mousePos,Vec2D(80,80)),Vec2D(40,40),0,Fade(valid ? GREEN : RED,0.6f));
-            }
-        }
-        if (drawButtonInvisible(Vec2D(1375, 725),Vec2D(100, 100) , in.mousePos))
-        {
-            in.buttonSelected = 3;
-        }
-        if (drawButtonInvisible(Vec2D(710, 680),Vec2D(70, 70) , in.mousePos))
-        {
-            in.buttonSelected = 4;
-        }
-        if (drawButtonInvisible(Vec2D(465, 680),Vec2D(70, 70) , in.mousePos))
-        {
-            in.buttonSelected = 5;
-        }
-    }
 
-}
-
-void menuMain(DataHolder& in)
-{
-    in.buttonSelected = 0;
-    
-    if (drawButtonMenu(in, "Play", Vec2D(498, 345), Vec2D(455, 320),Vec2D(250,100), in.mousePos))
+    DrawTexturePro(in.textures.buttonPause, Rectangle{0,0,300,300}, Rectangle{1400,750,150,150}, Vector2{50,50},0,WHITE);
+    DrawTexturePro(in.textures.buttonAccelerateSpeed, Rectangle{0,0,300,300}, Rectangle{750,715,100,100}, Vector2{50,50},0,WHITE);
+    DrawTexturePro(in.textures.buttonSlowSpeed, Rectangle{0,0,300,300}, Rectangle{500,715,100,100}, Vector2{50,50},0,WHITE);
+    DrawTexturePro(in.textures.speedCounter, Rectangle{0,0,300,300}, Rectangle{625,715,100,100}, Vector2{50,50},0,WHITE);
+    DrawTextEx(in.fontButton, TextFormat("%d", in.gameSpeed), Vec2D(602, 700), 40, 0, BLACK);
+    drawTowerUpgradeMenu(in, in.buttonSelected);
+    for (int i = 0; i < 3; i++)
     {
-        in.buttonSelected = 1;
+        TowerHolder* tmpHolder = &in.lists.towerHolders.holders[i];
+        if (tmpHolder->isUsed)
+        {
+            bool valid = (in.mousePos.x > 50 && in.mousePos.y > 50 && in.mousePos.x < 1202 && in.mousePos.y < 626 && !in.lists.map.isRoad(in.lists.map.getTileAt(mTilePos))
+            && in.lists.map.getTileAt(mTilePos,true) == UNDEFINED && !in.lists.map.isTileWithTower(mTilePos));
+            DrawCircleV(in.mousePos, tmpHolder->getRange()*48*in.cameraScale,Fade(valid ? GREEN : RED,0.3f));
+            DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(tmpHolder->getTexture()),toRayLibRectangle(in.mousePos,Vec2D(80,80)),Vec2D(40,40),0,Fade(valid ? GREEN : RED,0.6f));
+        }
     }
-    if (drawButtonMenu(in, "Option",Vec2D(873, 345), Vec2D(860, 320),Vec2D(250,100), in.mousePos))
-    {
-        in.buttonSelected = 2;
-    }
-    if (drawButtonMenu(in, "Credit",Vec2D(475, 565), Vec2D(455, 540),Vec2D(250,100), in.mousePos))
+    if (drawButtonInvisible(Vec2D(1375, 725),Vec2D(100, 100) , in.mousePos))
     {
         in.buttonSelected = 3;
     }
-    if (drawButtonMenu(in, "Exit",Vec2D(920, 565), Vec2D(860, 540),Vec2D(250,100), in.mousePos))
+    if (drawButtonInvisible(Vec2D(710, 680),Vec2D(70, 70) , in.mousePos))
     {
         in.buttonSelected = 4;
     }
-    if (drawButtonInvisible(Vec2D(mod(1295-in.framecounter/3.0f,0,1920), 140),Vec2D(50,50), in.mousePos))
+    if (drawButtonInvisible(Vec2D(465, 680),Vec2D(70, 70) , in.mousePos))
     {
         in.buttonSelected = 5;
     }
-    if (drawButtonInvisible(Vec2D(1500, 800), Vec2D(100, 100), in.mousePos))
+}
+
+void renderGamePause(DataHolder &in)
+{
+    drawMapElements(in, false);
+    in.buttonSelected = 0;
+    DrawText(TextFormat("Money : %d",in.money),50,680,30,BLACK);
+    DrawText(TextFormat("Wave : %d",in.wave),1080,680,30,BLACK);
+    DrawRectangleRec(toRayLibRectangle(Vec2D(50,750),Vec2D(1156,74)),BLACK);
+    DrawRectangleRec(toRayLibRectangle(Vec2D(52,752),Vec2D(1152,70)),RED);
+    DrawRectangleRec(toRayLibRectangle(Vec2D(52,752),Vec2D(57.6 * in.life,70)),GREEN);
+    if (drawButtonMenu(in, "Resume", Vec2D(657,150), Vec2D(650, 100),Vec2D(270,150), in.mousePos))
     {
-        in.buttonSelected = 6;
+        in.buttonSelected = 1;
+    }
+    if (drawButtonMenu(in, "Option",  Vec2D(670,450), Vec2D(650, 400),Vec2D(270,150), in.mousePos))
+    {
+        in.buttonSelected = 2;
+    }
+    if (drawButtonMenu(in, "Menu", Vec2D(700, 630), Vec2D(650, 580),Vec2D(270,150), in.mousePos))
+    {
+        in.buttonSelected = 3;
+    }
+    if (drawButtonMenu(in, "Restart", Vec2D(638, 300), Vec2D(620, 250),Vec2D(320,150), in.mousePos))
+    {
+        in.buttonSelected = 4;
     }
 }
 

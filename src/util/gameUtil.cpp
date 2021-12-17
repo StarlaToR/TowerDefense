@@ -1,3 +1,16 @@
+#include "../enemies/enemy.hpp"
+#include "../towers/tower.hpp"
+#include "../object/missile.hpp"
+#include "../particles/particle.hpp"
+#include "../particles/explosion.hpp"
+#include "../particles/explosion.hpp"
+#include "../particles/enemyExplosion.hpp"
+#include "../particles/bigExplosion.hpp"
+#include "../enemies/classicEnemy.hpp"
+#include "../enemies/bigEnemy.hpp"
+#include "../enemies/healerEnemy.hpp"
+#include "../enemies/bossEnemy.hpp"
+
 #include "gameUtil.hpp"
 
 Tower* handleTowers(std::forward_list<Tower*>& towers, std::list<Enemy*>& enemies, std::forward_list<Missile*>& missiles, std::forward_list<Particle*>& particles, Tower* selectedTower, Vec2D camPos, float camScale)
