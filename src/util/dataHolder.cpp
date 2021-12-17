@@ -409,6 +409,9 @@ void handleGamePause(DataHolder &in)
         }
         else if (in.buttonSelected == 3)
         {
+            in.life = 20;
+            in.wave = 0;
+            in.money = 20;
             for (std::list<Enemy *>::iterator i = in.lists.enemies.begin(); i != in.lists.enemies.end(); i++)
                 delete *i;
             for (std::forward_list<Tower *>::iterator i = in.lists.towers.begin(); i != in.lists.towers.end(); i++)
@@ -573,6 +576,7 @@ void handleEditor(DataHolder &in)
         else if (in.buttonSelected == 4)
         {
             in.holderSelected = 0;
+            in.tileRenderType = NORMAL;
             in.gameState = MENUPLAY;
         }
         else if (in.buttonSelected == 5)

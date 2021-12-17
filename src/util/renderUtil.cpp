@@ -125,8 +125,8 @@ void drawMapElements(DataHolder &in, bool editor)
             }
             else
             {
-                drawBoss = 1 + (*i)->isUnderGround();
                 boss = *i;
+                drawBoss = 1 + boss->isUnderGround();
             }
         }
         for (Tower *tower : in.lists.towers)
@@ -147,6 +147,7 @@ void drawMapElements(DataHolder &in, bool editor)
         DrawSpecialTiles(in);
         if (drawBoss == 2)
         {
+            DrawTexturePro(in.textures.boss, in.lists.tiles.tileCrops.at(boss->getTexture()), toRayLibRectangle((boss)->getPosition() * Vec2D(48, 48) + Vec2D(70, 70), Vec2D(192, 192)), Vec2D(96, 96), (boss)->getRotation() * RAD2DEG - 90.0f, Fade(BLACK,0.5));
             DrawTexturePro(in.textures.boss, in.lists.tiles.tileCrops.at(boss->getTexture()), toRayLibRectangle((boss)->getPosition() * Vec2D(48, 48) + Vec2D(50, 50), Vec2D(192, 192)), Vec2D(96, 96), (boss)->getRotation() * RAD2DEG - 90.0f, WHITE);
             DrawRectangleRec(toRayLibRectangle((boss)->getPosition() * Vec2D(48, 48) + Vec2D(6, -8), Vec2D(88, 18)), BLACK);
             DrawRectangleRec(toRayLibRectangle((boss)->getPosition() * Vec2D(48, 48) + Vec2D(7, -7), Vec2D(86, 16)), RED);
@@ -158,6 +159,7 @@ void drawMapElements(DataHolder &in, bool editor)
         }
         if (drawBoss == 1)
         {
+            DrawTexturePro(in.textures.boss, in.lists.tiles.tileCrops.at(boss->getTexture()), toRayLibRectangle((boss)->getPosition() * Vec2D(48, 48) + Vec2D(70, 70), Vec2D(192, 192)), Vec2D(96, 96), (boss)->getRotation() * RAD2DEG - 90.0f, Fade(BLACK,0.5));
             DrawTexturePro(in.textures.boss, in.lists.tiles.tileCrops.at(boss->getTexture()), toRayLibRectangle((boss)->getPosition() * Vec2D(48, 48) + Vec2D(50, 50), Vec2D(192, 192)), Vec2D(96, 96), (boss)->getRotation() * RAD2DEG - 90.0f, WHITE);
             DrawRectangleRec(toRayLibRectangle((boss)->getPosition() * Vec2D(48, 48) + Vec2D(6, -8), Vec2D(88, 18)), BLACK);
             DrawRectangleRec(toRayLibRectangle((boss)->getPosition() * Vec2D(48, 48) + Vec2D(7, -7), Vec2D(86, 16)), RED);
