@@ -174,7 +174,6 @@ void DataHolder::handleGameState()
                 life = 20;
                 wave = 0;
                 money = 20;
-                difficulty = 2;
                 lists.saveDatas.maxLevel = 0;
                 lists.saveDatas.timePlayed = 0;
                 tileRenderType = NORMAL;

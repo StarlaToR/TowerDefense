@@ -105,12 +105,11 @@ void renderGameOver(DataHolder& in)
     DrawTexturePro(in.textures.title, Rectangle{0,0,500,500},Rectangle{450, 0,1000,450},Vector2{150,150}, 0, WHITE);
     DrawTexturePro(in.textures.board, Rectangle{0,0,720,900},Rectangle{680, 350,500,500},Vector2{150,150}, 0, WHITE);
     DrawTextEx(in.fontTitle, "Game Over", Vector2{560,27},70,4,BLACK);
-    DrawTextEx(in.fontButton, TextFormat("Wave : %d",in.wave),Vector2{650,450},40,0, BLACK);
+    DrawTextEx(in.fontButton, TextFormat("Wave : %d",in.wave),Vector2{675,395},40,0, BLACK);
     if (in.difficulty > 3 && in.wave > in.lists.saveDatas.maxWave) DrawText("New High Score!",650,500,20,getRGB(in.framecounter));
     if (in.difficulty < 3)
     {
-        DrawTextEx(in.fontButton, "You noob,",Vector2{650,300},40,0, BLACK);
-        DrawTextEx(in.fontButton, "Try again",Vector2{650,350},40,0, BLACK);
+        DrawTextEx(in.fontButton, "Try again",Vector2{650,300},40,0, BLACK);
     }
     if (drawButtonMenu(in, "Return", Vec2D(652, 785), Vec2D(640, 760),Vec2D(270,100), in.mousePos))
     {
