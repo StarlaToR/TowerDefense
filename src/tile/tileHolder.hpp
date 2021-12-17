@@ -14,7 +14,8 @@ class TileHolder
         unsigned char getTile() {return tile;}
 };
 
-class TileHolders {
+class TileHolders
+{
     public:
         std::vector<TileHolder> holders = std::vector<TileHolder>();
 
