@@ -37,8 +37,6 @@ You leave the game.
 
 *Left-click* on the sun in the background to launch a music **a bit special**.
 
-![Image](assets/textures/Marie-Antoine.png)
-
 
 ---
 # Play Menu
@@ -54,6 +52,8 @@ You open the `Map editor` where you can **create your own map**.
 ## Return
 You come back in the `Main menu`.
 
+# Load Menu
+
 
 # Level selection Menu
 You have **10 different levels** that you can test.
@@ -62,7 +62,7 @@ You also can go in the `Custom maps Menu` where you can play on your **home made
 
 When you have selected the map you want to play with, you enter the **game**.
 
-
+---
 # Gameplay
 
 ![Image](assets/readme/gameplay.png)
@@ -112,6 +112,7 @@ In the bottom right corner, you can open the pause menu. It will stop the game a
 - **Option** : go in the option where you can adjust the sound.
 - **Main menu** : Come back to main menu. It will erase your current game.
 
+---
 # Map Editor
 
 ![Image](assets/readme/editor.png)
