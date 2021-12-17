@@ -51,6 +51,10 @@ struct TextureHolder
     Texture2D gameUI;
     Texture2D board;
     Texture2D optionButton;
+    Texture2D buttonPause;
+    Texture2D buttonSlowSpeed;
+    Texture2D buttonAccelerateSpeed;
+    Texture2D speedCounter;
 };
 
 struct SoundHolder

@@ -139,30 +139,30 @@ void renderEditor(DataHolder& in)
     drawMapElements(in, true);
     in.buttonSelected = 0;
     in.holderHovered = -1;
-    if (drawButton("Save Map", Vec2D(1300,570),Vec2D(200,50), in.mousePos))
+    if (drawButton(in, "Save Map", Vec2D(1300,570),Vec2D(200,50), in.mousePos))
     {
         in.buttonSelected = 1;
     }
-    if (drawButton("Clear Map", Vec2D(1300,670),Vec2D(200,50), in.mousePos))
+    if (drawButton(in, "Clear Map", Vec2D(1300,670),Vec2D(200,50), in.mousePos))
     {
         in.buttonSelected = 2;
     }
-    if (drawButton("Change view", Vec2D(1300,770),Vec2D(200,50), in.mousePos))
+    if (drawButton(in, "Change view", Vec2D(1300,770),Vec2D(200,50), in.mousePos))
     {
         in.buttonSelected = 3;
     }
-    if (drawButton("Back", Vec2D(150, 730),Vec2D(250,70), in.mousePos))
+    if (drawButton(in, "Back", Vec2D(150, 730),Vec2D(250,70), in.mousePos))
     {
         in.buttonSelected = 4;
     }
     DrawRectangleRounded(toRayLibRectangle(Vec2D(600,740),Vec2D(250,50)),0.2,10,LIGHTGRAY);
     DrawRectangleRoundedLines(toRayLibRectangle(Vec2D(600,740),Vec2D(250,50)),0.2,10,2,BLACK);
     DrawText(TextFormat("Save slot: %d",in.saveSlot+1),610,755,30,BLACK);
-    if (drawButton("+", Vec2D(900, 740), Vec2D(50,50), in.mousePos))
+    if (drawButton(in, "+", Vec2D(900, 740), Vec2D(50,50), in.mousePos))
     {
         in.buttonSelected = 5;
     }
-    if (drawButton("-", Vec2D(1000, 740), Vec2D(50,50), in.mousePos))
+    if (drawButton(in, "-", Vec2D(1000, 740), Vec2D(50,50), in.mousePos))
     {
         in.buttonSelected = 6;
     }
@@ -192,8 +192,8 @@ void renderGameplay(DataHolder& in)
     mTilePos = Vec2D((int)(mTilePos.x),(int)(mTilePos.y));
     drawMapElements(in, false);
     in.buttonSelected = 0;
-    DrawText(TextFormat("Money : %d",in.money),50,680,30,BLACK);
-    DrawText(TextFormat("Wave : %d",in.wave),1080,680,30,BLACK);
+    DrawTextEx(in.fontButton, TextFormat("Money : %d",in.money),Vec2D(1330,40),30,0,BLACK);
+    DrawTextEx(in.fontButton,TextFormat("Wave : %d",in.wave),Vec2D(1350,90),30,0,BLACK);
     DrawRectangleRec(toRayLibRectangle(Vec2D(50,750),Vec2D(1156,74)),BLACK);
     DrawRectangleRec(toRayLibRectangle(Vec2D(52,752),Vec2D(1152,70)),RED);
     DrawRectangleRec(toRayLibRectangle(Vec2D(52,752),Vec2D(57.6 * in.life,70)),GREEN);
@@ -218,6 +218,11 @@ void renderGameplay(DataHolder& in)
     }
     else
     {
+        DrawTexturePro(in.textures.buttonPause, Rectangle{0,0,300,300}, Rectangle{1400,750,150,150}, Vector2{50,50},0,WHITE);
+        DrawTexturePro(in.textures.buttonAccelerateSpeed, Rectangle{0,0,300,300}, Rectangle{750,715,100,100}, Vector2{50,50},0,WHITE);
+        DrawTexturePro(in.textures.buttonSlowSpeed, Rectangle{0,0,300,300}, Rectangle{500,715,100,100}, Vector2{50,50},0,WHITE);
+        DrawTexturePro(in.textures.speedCounter, Rectangle{0,0,300,300}, Rectangle{625,715,100,100}, Vector2{50,50},0,WHITE);
+        DrawTextEx(in.fontButton, TextFormat("%d", in.gameSpeed), Vec2D(602, 700), 40, 0, BLACK);
         drawTowerUpgradeMenu(in, in.buttonSelected);
         for (int i = 0; i < 3; i++)
         {
@@ -225,14 +230,22 @@ void renderGameplay(DataHolder& in)
             if (tmpHolder->isUsed)
             {
                 bool valid = (in.mousePos.x > 50 && in.mousePos.y > 50 && in.mousePos.x < 1202 && in.mousePos.y < 626 && !in.lists.map.isRoad(in.lists.map.getTileAt(mTilePos))
-                 && in.lists.map.getTileAt(mTilePos,true) == UNDEFINED && !in.lists.map.isTileWithTower(mTilePos));
+                && in.lists.map.getTileAt(mTilePos,true) == UNDEFINED && !in.lists.map.isTileWithTower(mTilePos));
                 DrawCircleV(in.mousePos, tmpHolder->getRange()*48*in.cameraScale,Fade(valid ? GREEN : RED,0.3f));
                 DrawTexturePro(in.textures.tileTexture,in.lists.tiles.tileCrops.at(tmpHolder->getTexture()),toRayLibRectangle(in.mousePos,Vec2D(80,80)),Vec2D(40,40),0,Fade(valid ? GREEN : RED,0.6f));
             }
         }
-        if (drawButton("Pause", Vec2D(1350, 750),Vec2D(150, 75) , in.mousePos))
+        if (drawButtonInvisible(Vec2D(1375, 725),Vec2D(100, 100) , in.mousePos))
         {
             in.buttonSelected = 3;
+        }
+        if (drawButtonInvisible(Vec2D(710, 680),Vec2D(70, 70) , in.mousePos))
+        {
+            in.buttonSelected = 4;
+        }
+        if (drawButtonInvisible(Vec2D(465, 680),Vec2D(70, 70) , in.mousePos))
+        {
+            in.buttonSelected = 5;
         }
     }
 

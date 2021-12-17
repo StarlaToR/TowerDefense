@@ -73,6 +73,10 @@ void DataHolder::initDatas()
     textures.gameUI = LoadTexture("assets/textures/ui.png");
     textures.board = LoadTexture("assets/textures/board.png");
     textures.optionButton = LoadTexture("assets/textures/optionButton.png");
+    textures.buttonPause = LoadTexture("assets/textures/pause.png");
+    textures.buttonSlowSpeed = LoadTexture("assets/textures/slowspeed.png");
+    textures.buttonAccelerateSpeed = LoadTexture("assets/textures/acceleratespeed.png");
+    textures.speedCounter = LoadTexture("assets/textures/speedcounter.png");
     sounds.buttonSound = LoadSound("assets/sounds/button.ogg");
     sounds.musicTroll = LoadMusicStream("assets/sounds/ouioui.ogg");
     sounds.gameplayMusic = LoadMusicStream("assets/sounds/gameplayMusic.ogg");
@@ -97,24 +101,14 @@ void DataHolder::initDatas()
 
 void DataHolder::handleGameState()
 {
-
-    if (IsKeyPressed(KEY_RIGHT))
-    {
-        gameSpeed *= 2;
-        if (gameSpeed == 0)
-            gameSpeed = 1;
-    }
-    if (IsKeyPressed(KEY_LEFT))
-        gameSpeed /= 2;
-    if (gameSpeed > 16)
-        gameSpeed = 16;
-    if (gameSpeed < 1) gameSpeed = 1;
     inputs.handleInputs();
     UpdateMusicStream(sounds.musicTroll);
     UpdateMusicStream(sounds.gameplayMusic);
     UpdateMusicStream(sounds.introSong);
-    if(GetMusicTimePlayed(sounds.musicTroll) >= GetMusicTimeLength(sounds.musicTroll)-0.05f) StopMusicStream(sounds.musicTroll);
-    if(GetMusicTimePlayed(sounds.introSong) >= GetMusicTimeLength(sounds.introSong)-0.05f) StopMusicStream(sounds.introSong);
+    if (GetMusicTimePlayed(sounds.musicTroll) >= GetMusicTimeLength(sounds.musicTroll) - 0.05f)
+        StopMusicStream(sounds.musicTroll);
+    if (GetMusicTimePlayed(sounds.introSong) >= GetMusicTimeLength(sounds.introSong) - 0.05f)
+        StopMusicStream(sounds.introSong);
     mousePos = Vec2D(GetMousePosition().x, GetMousePosition().y);
 
     if (gameState == INTRO)
@@ -216,8 +210,8 @@ void DataHolder::handleGameState()
             if (buttonSelected >= 1 && buttonSelected <= 10)
             {
                 std::string path = {"saves/maps/game/game0.bin"};
-                path[20] = buttonSelected-1 + '0';
-                currentLevel = buttonSelected-1;
+                path[20] = buttonSelected - 1 + '0';
+                currentLevel = buttonSelected - 1;
                 lists.map.loadFromFile(path.data());
                 timeCounter.start();
                 PlaySound(sounds.buttonSound);
@@ -247,7 +241,7 @@ void DataHolder::handleGameState()
             else
             {
                 std::string path = {"saves/maps/custom/map0.bin"};
-                path[21] = buttonSelected-1 + '0';
+                path[21] = buttonSelected - 1 + '0';
                 if (lists.map.loadFromFile(path.data()) >= 0)
                 {
                     currentLevel = -1;
@@ -312,16 +306,14 @@ void DataHolder::handleGameState()
             if (buttonSelected == 8)
             {
                 PlaySound(sounds.buttonSound);
-                if(difficulty < (3 + (lists.saveDatas.maxLevel == 10)))
+                if (difficulty < (3 + (lists.saveDatas.maxLevel == 10)))
                     difficulty += 1;
-                
             }
             if (buttonSelected == 9)
             {
                 PlaySound(sounds.buttonSound);
-                if(difficulty > 1)
+                if (difficulty > 1)
                     difficulty -= 1;
-                
             }
         }
     }
@@ -400,7 +392,7 @@ void DataHolder::handleGameState()
             }
             else if (buttonSelected >= 2 && buttonSelected <= 4)
             {
-                loadFile(lists.saveDatas,buttonSelected-2);
+                loadFile(lists.saveDatas, buttonSelected - 2);
                 timeCounter.setTime(lists.saveDatas.timePlayed);
                 PlaySound(sounds.buttonSound);
                 gameState = MENUMAP;
@@ -416,7 +408,7 @@ void DataHolder::handleGameState()
             while (counter < gameSpeed)
             {
                 handleEnemiesBuffer(lists.map, lists.enemies, lists.buffer, wave, difficulty);
-                selectedTower = handleTowers(lists.towers, lists.enemies, lists.missiles, lists.particles, selectedTower, cameraPos, cameraScale); 
+                selectedTower = handleTowers(lists.towers, lists.enemies, lists.missiles, lists.particles, selectedTower, cameraPos, cameraScale);
                 handleMissiles(lists.missiles, lists.enemies, lists.particles);
                 handleEnemies(lists.map, money, lists.enemies, lists.particles, life);
                 handleParticles(lists.particles);
@@ -458,8 +450,8 @@ void DataHolder::handleGameState()
                         {
                             Vec2D tmpPos = (*i)->getPosition();
                             money += (*i)->getCost() * (*i)->getLevel() / 4;
-                            lists.map.removeTowerFromTile(Vec2D((int)(tmpPos.x),(int)(tmpPos.y)));
-                            delete(*i);
+                            lists.map.removeTowerFromTile(Vec2D((int)(tmpPos.x), (int)(tmpPos.y)));
+                            delete (*i);
                             i = lists.towers.erase_after(oldT);
                             selectedTower = nullptr;
                             break;
@@ -467,10 +459,24 @@ void DataHolder::handleGameState()
                         oldT = i;
                     }
                 }
-                else if(buttonSelected == 3)
+                else if (buttonSelected == 3)
                 {
                     onPause = true;
                 }
+                else if (buttonSelected == 4)
+                {
+                    gameSpeed *= 2;
+                    if (gameSpeed == 0)
+                        gameSpeed = 1;
+                }
+                else if (buttonSelected == 5)
+                {
+                    gameSpeed /= 2;
+                }
+                if (gameSpeed > 16)
+                    gameSpeed = 16;
+                if (gameSpeed < 1)
+                    gameSpeed = 1;
             }
             if (selectedTower == nullptr)
             {
@@ -484,11 +490,12 @@ void DataHolder::handleGameState()
                 timeCounter.stop();
                 gameState = GAMEOVER;
             }
-            if(wave >= 26)
+            if (wave >= 26)
             {
                 timeCounter.stop();
                 lists.saveDatas.timePlayed = timeCounter.getTime();
-                if (currentLevel == lists.saveDatas.maxLevel) lists.saveDatas.maxLevel++;
+                if (currentLevel == lists.saveDatas.maxLevel)
+                    lists.saveDatas.maxLevel++;
                 gameState = VICTORY;
             }
         }
@@ -509,16 +516,21 @@ void DataHolder::handleGameState()
                 else if (buttonSelected == 3)
                 {
                     onPause = false;
-                    for (std::list<Enemy*>::iterator i = lists.enemies.begin(); i != lists.enemies.end(); i++) delete *i;
-                    for (std::forward_list<Tower*>::iterator i = lists.towers.begin(); i != lists.towers.end(); i++) delete *i;
-                    for (std::forward_list<Missile*>::iterator i = lists.missiles.begin(); i != lists.missiles.end(); i++) delete *i;
-                    for (std::forward_list<Particle *>::iterator i = lists.particles.begin(); i != lists.particles.end(); i++) delete *i;
+                    for (std::list<Enemy *>::iterator i = lists.enemies.begin(); i != lists.enemies.end(); i++)
+                        delete *i;
+                    for (std::forward_list<Tower *>::iterator i = lists.towers.begin(); i != lists.towers.end(); i++)
+                        delete *i;
+                    for (std::forward_list<Missile *>::iterator i = lists.missiles.begin(); i != lists.missiles.end(); i++)
+                        delete *i;
+                    for (std::forward_list<Particle *>::iterator i = lists.particles.begin(); i != lists.particles.end(); i++)
+                        delete *i;
                     lists.enemies.clear();
                     lists.towers.clear();
                     lists.missiles.clear();
                     lists.buffer.clear();
                     lists.particles.clear();
-                    for (int i = 0; i < (MAP_HEIGHT*MAP_WIDTH); i++) lists.map.tilesWithTower[i] = false;
+                    for (int i = 0; i < (MAP_HEIGHT * MAP_WIDTH); i++)
+                        lists.map.tilesWithTower[i] = false;
                     selectedTower = nullptr;
                     gameSpeed = 1;
 
@@ -533,16 +545,21 @@ void DataHolder::handleGameState()
                     life = 20;
                     wave = 0;
                     money = 20;
-                    for (std::list<Enemy*>::iterator i = lists.enemies.begin(); i != lists.enemies.end(); i++) delete *i;
-                    for (std::forward_list<Tower*>::iterator i = lists.towers.begin(); i != lists.towers.end(); i++) delete *i;
-                    for (std::forward_list<Missile*>::iterator i = lists.missiles.begin(); i != lists.missiles.end(); i++) delete *i;
-                    for (std::forward_list<Particle *>::iterator i = lists.particles.begin(); i != lists.particles.end(); i++) delete *i;
+                    for (std::list<Enemy *>::iterator i = lists.enemies.begin(); i != lists.enemies.end(); i++)
+                        delete *i;
+                    for (std::forward_list<Tower *>::iterator i = lists.towers.begin(); i != lists.towers.end(); i++)
+                        delete *i;
+                    for (std::forward_list<Missile *>::iterator i = lists.missiles.begin(); i != lists.missiles.end(); i++)
+                        delete *i;
+                    for (std::forward_list<Particle *>::iterator i = lists.particles.begin(); i != lists.particles.end(); i++)
+                        delete *i;
                     lists.enemies.clear();
                     lists.towers.clear();
                     lists.missiles.clear();
                     lists.buffer.clear();
                     lists.particles.clear();
-                    for (int i = 0; i < (MAP_HEIGHT*MAP_WIDTH); i++) lists.map.tilesWithTower[i] = false;
+                    for (int i = 0; i < (MAP_HEIGHT * MAP_WIDTH); i++)
+                        lists.map.tilesWithTower[i] = false;
                     selectedTower = nullptr;
                     gameSpeed = 1;
 
@@ -565,7 +582,7 @@ void DataHolder::handleGameState()
             if (buttonSelected >= 2 && buttonSelected <= 4)
             {
                 PlaySound(sounds.buttonSound);
-                saveFile(lists.saveDatas, buttonSelected-2);
+                saveFile(lists.saveDatas, buttonSelected - 2);
                 gameState = MENUMAP;
             }
         }
@@ -577,23 +594,29 @@ void DataHolder::handleGameState()
         {
             if (buttonSelected == 1)
             {
-                for (std::list<Enemy*>::iterator i = lists.enemies.begin(); i != lists.enemies.end(); i++) delete *i;
-                for (std::forward_list<Tower*>::iterator i = lists.towers.begin(); i != lists.towers.end(); i++) delete *i;
-                for (std::forward_list<Missile*>::iterator i = lists.missiles.begin(); i != lists.missiles.end(); i++) delete *i;
-                for (std::forward_list<Particle *>::iterator i = lists.particles.begin(); i != lists.particles.end(); i++) delete *i;
+                for (std::list<Enemy *>::iterator i = lists.enemies.begin(); i != lists.enemies.end(); i++)
+                    delete *i;
+                for (std::forward_list<Tower *>::iterator i = lists.towers.begin(); i != lists.towers.end(); i++)
+                    delete *i;
+                for (std::forward_list<Missile *>::iterator i = lists.missiles.begin(); i != lists.missiles.end(); i++)
+                    delete *i;
+                for (std::forward_list<Particle *>::iterator i = lists.particles.begin(); i != lists.particles.end(); i++)
+                    delete *i;
                 lists.enemies.clear();
                 lists.towers.clear();
                 lists.missiles.clear();
                 lists.buffer.clear();
                 lists.particles.clear();
-                for (int i = 0; i < (MAP_HEIGHT*MAP_WIDTH); i++) lists.map.tilesWithTower[i] = false;
+                for (int i = 0; i < (MAP_HEIGHT * MAP_WIDTH); i++)
+                    lists.map.tilesWithTower[i] = false;
                 selectedTower = nullptr;
                 gameSpeed = 1;
                 PlaySound(sounds.buttonSound);
                 StopMusicStream(sounds.gameplayMusic);
                 life = 20;
                 money = 20;
-                if (difficulty > 3 && wave > lists.saveDatas.maxWave) {
+                if (difficulty > 3 && wave > lists.saveDatas.maxWave)
+                {
                     lists.saveDatas.maxWave = wave;
                     gameState = SAVE;
                 }
@@ -607,12 +630,15 @@ void DataHolder::handleGameState()
     }
     else if (gameState == VICTORY)
     {
-        
+
         if (inputs.isLeftPressed())
         {
-            for (std::list<Enemy*>::iterator i = lists.enemies.begin(); i != lists.enemies.end(); i++) delete *i;
-            for (std::forward_list<Tower*>::iterator i = lists.towers.begin(); i != lists.towers.end(); i++) delete *i;
-            for (std::forward_list<Missile*>::iterator i = lists.missiles.begin(); i != lists.missiles.end(); i++) delete *i;
+            for (std::list<Enemy *>::iterator i = lists.enemies.begin(); i != lists.enemies.end(); i++)
+                delete *i;
+            for (std::forward_list<Tower *>::iterator i = lists.towers.begin(); i != lists.towers.end(); i++)
+                delete *i;
+            for (std::forward_list<Missile *>::iterator i = lists.missiles.begin(); i != lists.missiles.end(); i++)
+                delete *i;
             lists.enemies.clear();
             lists.towers.clear();
             lists.missiles.clear();
@@ -621,7 +647,8 @@ void DataHolder::handleGameState()
             life = 20;
             wave = 0;
             money = 20;
-            for (int i = 0; i < (MAP_HEIGHT*MAP_WIDTH); i++) lists.map.tilesWithTower[i] = false;
+            for (int i = 0; i < (MAP_HEIGHT * MAP_WIDTH); i++)
+                lists.map.tilesWithTower[i] = false;
             selectedTower = nullptr;
             gameSpeed = 1;
             PlaySound(sounds.buttonSound);
@@ -636,7 +663,8 @@ void DataHolder::handleGameState()
     {
         if (inputs.isLeftPressed())
         {
-            if (holderHovered >= 0 || buttonSelected != 0) PlaySound(sounds.buttonSound);
+            if (holderHovered >= 0 || buttonSelected != 0)
+                PlaySound(sounds.buttonSound);
             if (holderHovered >= 0)
             {
                 holderSelected = holderHovered;
@@ -669,22 +697,23 @@ void DataHolder::handleGameState()
                     break;
                 }
             }
-            else if (buttonSelected == 4) 
+            else if (buttonSelected == 4)
             {
                 holderSelected = 0;
                 gameState = MENUPLAY;
             }
-            else if (buttonSelected == 5) 
+            else if (buttonSelected == 5)
             {
                 saveSlot++;
-                if (saveSlot > 9) saveSlot = 9;
+                if (saveSlot > 9)
+                    saveSlot = 9;
             }
-            else if (buttonSelected == 6) 
+            else if (buttonSelected == 6)
             {
                 saveSlot--;
-                if (saveSlot < 0) saveSlot = 0;
+                if (saveSlot < 0)
+                    saveSlot = 0;
             }
-            
         }
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
         {
