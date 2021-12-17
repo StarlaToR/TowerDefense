@@ -7,9 +7,9 @@ In this game, you have to defend a base against waves of enemies that follow a r
 To acheive this goal, you have different types of tower which you can place on the map.
 These towers will attack this enemies et kill them before they can reach your base.
 If the enemies reach the base, it is damaged and if too many of them reach it, you lose.
-Your goal is to survive 25 waves without having your base destroyed.
+Your goal is to survive **25 waves** without having your base destroyed.
 
-This game was made by **Quentin Lepine, Umut Osmanoglu and Antoine Mordant** with raylib library.
+This game was made by **Quentin Lepine, Umut Osmanoglu** and **Antoine Mordant** with **raylib** library.
 
 ---
 # Introduction's cinematic
@@ -18,19 +18,23 @@ This game was made by **Quentin Lepine, Umut Osmanoglu and Antoine Mordant** wit
 ---
 # Main menu
 
-After the cinematic, you arrive in the `Main Menu`. You have 4 options :
-
 ## Play
 You open the `Menu Play`.
 
 ## Options
-You open the `Options` where you can adjust the **sound** of the game and the **difficulty**.
+You open the `Options` where you can adjust the **sound** of the game :
+- The **main volume**
+- The **music volume**
+- The **effects volume**
+
+and the **difficulty** :
+- **Easy**, for beginners in Tower Defense games, the enemies give lots of money and aren't very resistant.
+- **Medium**, original difficulty of the game.
+- **Hard**, enemies give less money and are really tanky.
+- **Nightmare**, difficulty that need to be unlock by ending the whole game in any difficulty.
 
 ## Credits
-You open the `Credits`.
-
-## Exit
-You leave the game.
+You open the `Credits` with the names of the creators, the logos of the team and the school **ISART Digital**.
 
 ## Easter eggs
 *Left-click* on our logo in the bottom right corner of the menu to **play again** the introduction's cinematic.
@@ -49,14 +53,14 @@ You open the `Load Menu` where you can **load your own map**.
 ## Editor
 You open the `Map editor` where you can **create your own map**.
 
-## Return
-You come back in the `Main menu`.
-
 # Load Menu
+You can here load your old games to continue it.
+
+>From the beginning, a file can already **be loaded**. This file is a game where **everything is unlocked**.
 
 
 # Level selection Menu
-You have **10 different levels** that you can test.
+You have **10 different levels** in this game but you need to **win** the current level to **unlock** the following one.
 
 You also can go in the `Custom maps Menu` where you can play on your **home made maps**.
 
@@ -103,9 +107,9 @@ For that, left click on a tower. It will open the upgrade menu in the right side
 You have now the option to upgrade your tower and its cost and to delete this tower. This last option will give you back a part of the money you used to buy and upgrade this tower.
 To leave this menu, you just have to click on any tile of the map since it doesn't have a tower on.
 
-You can set the speed of the game with the direction arrows. The right one will increase it and the left one will slow it.
+You can set the speed of the game with the buttons over the health bar. The right one will increase it and the left one will slow it.
 
->You can accelerate the game to x16 or you can stop the game while putting it in x0. It allows you to place, delete or upgrade towers without care of the waves.
+>You can accelerate the game to x16.
 
 In the bottom right corner, you can open the pause menu. It will stop the game and you will have 3 options:
 - **Return** : come back to the game.
@@ -136,5 +140,9 @@ Place the road has a special **functioning** : you must *maintain the click* and
 For the Decoration, *right-click* on it will **change** its **style**.
 
 # Sources
+
+itch.io
+
+kenney.nl/assets
 
 ![Image](assets/textures/Marie-Antoine.png)
