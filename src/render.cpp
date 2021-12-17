@@ -122,7 +122,8 @@ void renderGameOver(DataHolder& in)
     DrawTexturePro(in.textures.board, Rectangle{0,0,720,900},Rectangle{680, 350,500,500},Vector2{150,150}, 0, WHITE);
     DrawTextEx(in.fontTitle, "Game Over", Vector2{560,27},70,4,BLACK);
     DrawTextEx(in.fontButton, TextFormat("Wave : %d",in.wave),Vector2{675,395},40,0, BLACK);
-    if (in.difficulty > 3 && in.wave > in.lists.saveDatas.maxWave) DrawText("New High Score!",650,500,20,getRGB(in.framecounter));
+    if (in.difficulty > 3 && in.wave > in.lists.saveDatas.maxWave)
+        DrawTextEx(in.fontButton, "New High Score!",Vec2D(50,500),150,0,getRGB(in.framecounter));  
     if (in.difficulty < 3)
     {
         DrawTextEx(in.fontButton, "Try again",Vector2{650,300},40,0, BLACK);
@@ -141,9 +142,11 @@ void renderVictory(DataHolder& in)
     DrawTexturePro(in.textures.background, Rectangle{(float)(in.framecounter/3.0f),0,1600,1000},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
     DrawTexturePro(in.textures.title, Rectangle{0,0,500,500},Rectangle{450, 0,1000,450},Vector2{150,150}, 0, WHITE);
     DrawTexturePro(in.textures.board, Rectangle{0,0,720,900},Rectangle{680, 350,500,500},Vector2{150,150}, 0, WHITE);
-    DrawTextEx(in.fontTitle, "Victory", Vector2{560,27},70,4,BLACK);
-    DrawTextEx(in.fontButton, TextFormat("Wave : %d",in.wave-1),Vector2{650,450},40,0, BLACK);
-    if (drawButtonMenu(in, "Continue", Vec2D(652, 785), Vec2D(640, 760),Vec2D(270,100), in.mousePos))
+    DrawTextEx(in.fontButton, "Good Job", Vector2{648,290},40,4,BLACK);
+    DrawTextEx(in.fontButton, "You have unlocked\n   the next level", Vector2{640,450},17,4,BLACK);
+    DrawTextEx(in.fontTitle, "Victory", Vector2{610,27},70,4,BLACK);
+    DrawTextEx(in.fontButton, TextFormat("Wave : %d",in.wave-1),Vector2{670,380},40,0, BLACK);
+    if (drawButtonMenu(in, "Continue", Vec2D(627, 785), Vec2D(610, 760),Vec2D(330,100), in.mousePos))
     {
         in.buttonSelected = 1;
     }
@@ -166,13 +169,13 @@ void renderEditor(DataHolder& in)
     {
         in.buttonSelected = 3;
     }
-    if (drawButton(in, "Back", Vec2D(150, 730),Vec2D(250,70), in.mousePos))
+    if (drawButton(in, "Back", Vec2D(150, 730),Vec2D(200,70), in.mousePos))
     {
         in.buttonSelected = 4;
     }
     DrawRectangleRounded(toRayLibRectangle(Vec2D(600,740),Vec2D(250,50)),0.2,10,LIGHTGRAY);
     DrawRectangleRoundedLines(toRayLibRectangle(Vec2D(600,740),Vec2D(250,50)),0.2,10,2,BLACK);
-    DrawText(TextFormat("Save slot: %d",in.saveSlot+1),610,755,30,BLACK);
+    DrawTextEx(in.fontButton, TextFormat("Save slot: %d",in.saveSlot+1), Vec2D(610,755),30,0,BLACK);
     if (drawButton(in, "+", Vec2D(900, 740), Vec2D(50,50), in.mousePos))
     {
         in.buttonSelected = 5;
@@ -181,9 +184,9 @@ void renderEditor(DataHolder& in)
     {
         in.buttonSelected = 6;
     }
-    DrawText("Terrain", 1300, 70, 20, BLACK);
-    DrawText("Road element", 1300, 200, 20, BLACK);
-    DrawText("Decoration", 1300, 380, 20, BLACK);
+    DrawTextEx(in.fontButton, "Terrain", Vec2D(1300, 70), 20, 0,BLACK);
+    DrawTextEx(in.fontButton,"Road element", Vec2D(1300, 200), 20, 0,BLACK);
+    DrawTextEx(in.fontButton,"Decoration", Vec2D(1300, 3800), 20, 0,BLACK);
     for (unsigned int i = 0; i < in.lists.tHolders.holders.size(); i++)
     {
         TileHolder* tmp = &in.lists.tHolders.holders.at(i);
@@ -214,10 +217,10 @@ void renderGameplay(DataHolder& in)
     DrawRectangleRec(toRayLibRectangle(Vec2D(52,752),Vec2D(57.6 * in.life,70)),GREEN);
 
     DrawTexturePro(in.textures.buttonPause, Rectangle{0,0,300,300}, Rectangle{1400,750,150,150}, Vector2{50,50},0,WHITE);
-    DrawTexturePro(in.textures.buttonAccelerateSpeed, Rectangle{0,0,300,300}, Rectangle{750,715,100,100}, Vector2{50,50},0,WHITE);
-    DrawTexturePro(in.textures.buttonSlowSpeed, Rectangle{0,0,300,300}, Rectangle{500,715,100,100}, Vector2{50,50},0,WHITE);
-    DrawTexturePro(in.textures.speedCounter, Rectangle{0,0,300,300}, Rectangle{625,715,100,100}, Vector2{50,50},0,WHITE);
-    DrawTextEx(in.fontButton, TextFormat("%d", in.gameSpeed), Vec2D(602, 700), 40, 0, BLACK);
+    DrawTexturePro(in.textures.buttonAccelerateSpeed, Rectangle{0,0,300,300}, Rectangle{750,710,100,100}, Vector2{50,50},0,WHITE);
+    DrawTexturePro(in.textures.buttonSlowSpeed, Rectangle{0,0,300,300}, Rectangle{500,710,100,100}, Vector2{50,50},0,WHITE);
+    DrawTexturePro(in.textures.speedCounter, Rectangle{0,0,300,300}, Rectangle{625,710,100,100}, Vector2{50,50},0,WHITE);
+    DrawTextEx(in.fontButton, TextFormat("%d", in.gameSpeed), Vec2D(602, 690), 40, 0, BLACK);
     drawTowerUpgradeMenu(in, in.buttonSelected);
     for (int i = 0; i < 3; i++)
     {
@@ -248,8 +251,6 @@ void renderGamePause(DataHolder &in)
 {
     drawMapElements(in, false);
     in.buttonSelected = 0;
-    DrawText(TextFormat("Money : %d",in.money),50,680,30,BLACK);
-    DrawText(TextFormat("Wave : %d",in.wave),1080,680,30,BLACK);
     DrawRectangleRec(toRayLibRectangle(Vec2D(50,750),Vec2D(1156,74)),BLACK);
     DrawRectangleRec(toRayLibRectangle(Vec2D(52,752),Vec2D(1152,70)),RED);
     DrawRectangleRec(toRayLibRectangle(Vec2D(52,752),Vec2D(57.6 * in.life,70)),GREEN);
@@ -455,8 +456,8 @@ void renderSave(DataHolder& in)
     float heigth = in.screenHeight;
     DrawTexturePro(in.textures.background, Rectangle{in.framecounter/3.0f,0,1600,1000},Rectangle{0,0,width,heigth},Vector2{0,0}, 0, WHITE);
     DrawTexturePro(in.textures.title, Rectangle{0,0,500,500},Rectangle{450, 0,1000,450},Vector2{150,150}, 0, WHITE);
-    DrawTextEx(in.fontTitle, "Save to File", Vector2{650,0},100,4,BLACK);
-    if (drawButtonMenu(in, "Continue", Vec2D(652, 785), Vec2D(640, 760),Vec2D(270,100), in.mousePos))
+    DrawTextEx(in.fontTitle, "Save to File", Vector2{440,0},100,4,BLACK);
+    if (drawButtonMenu(in, "Continue", Vec2D(627, 785), Vec2D(610, 760),Vec2D(330,100), in.mousePos))
     {
         in.buttonSelected = 1;
     }
